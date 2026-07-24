@@ -1,0 +1,460 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review Industry Discovery History API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Industry Discovery History
+paths:
+  /api/v1/history/industry:
+    get:
+      operationId: core_api_company_lookup_get_industry_lookups_history
+      summary: Get Industry Lookups History
+      parameters:
+      - in: query
+        name: min_datetime
+        schema:
+          title: Min Datetime
+          type: string
+          format: date-time
+        required: false
+      - in: query
+        name: max_datetime
+        schema:
+          title: Max Datetime
+          type: string
+          format: date-time
+        required: false
+      - in: query
+        name: search_term
+        schema:
+          title: Search Term
+          type: string
+        required: false
+      - in: query
+        name: include_errored
+        schema:
+          title: Include Errored
+          default: false
+          type: boolean
+        required: false
+      - in: query
+        name: limit
+        schema:
+          title: Limit
+          default: 50
+          type: integer
+        required: false
+      - in: query
+        name: offset
+        schema:
+          title: Offset
+          default: 0
+          type: integer
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedIndustryLookup'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+      - Industry Discovery History
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+  /api/v1/history/industry/{request_id}:
+    get:
+      operationId: core_api_company_lookup_get_industry_lookup_history
+      summary: Get Industry Lookup History
+      parameters:
+      - in: path
+        name: request_id
+        schema:
+          title: Request Id
+          type: string
+          format: uuid
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndustryLookup'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndustryLookup'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+      - Industry Discovery History
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+components:
+  schemas:
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    MCC:
+      title: MCC
+      type: object
+      properties:
+        code:
+          title: Code
+          description: The Merchant Category Code.
+          type: string
+        description:
+          title: Description
+          description: The description of the Merchant Category.
+          type: string
+      required:
+      - code
+      - description
+    PagedIndustryLookup:
+      title: PagedIndustryLookup
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/IndustryLookup'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    BusinessSearchResultExtended:
+      title: BusinessSearchResultExtended
+      description: Extends BusinessSearchResult to allow optional business_name and business_description for lookup.
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          type: string
+        business_description:
+          title: Business Description
+          type: string
+        business_address:
+          title: Business Address
+        website:
+          title: Website
+          description: The website of the business.
+          nullable: true
+          type: string
+        primary_mcc:
+          $ref: '#/components/schemas/MCC'
+        additional_mccs:
+          title: Additional Mccs
+          type: array
+          items:
+            $ref: '#/components/schemas/MCC'
+    CreateSearchInputExtended:
+      title: CreateSearchInputExtended
+      description: Extends CreateSearchInput to allow optional business name for lookup.
+      type: object
+      properties:
+        submitted_business_name:
+          title: Submitted Business Name
+          type: string
+        submitted_website:
+          title: Submitted Website
+          description: The website of the business to search for.
+          nullable: true
+          type: string
+        city:
+          title: City
+          description: The city where the business is located.
+          nullable: true
+          type: string
+        state_province:
+          title: State Province
+          description: The state or province where the business is located.
+          nullable: true
+          type: string
+        postal_code:
+          title: Postal Code
+          description: The postal code of the business location.
+          nullable: true
+          type: string
+        country:
+          title: Country
+          description: The country where the business is located.
+          type: string
+        external_tracking_ref:
+          title: External Tracking Ref
+          type: string
+      required:
+      - country
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    IndustryLookup:
+      title: IndustryLookup
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        status:
+          title: Status
+          enum:
+          - PROCESSING
+          - FINISHED
+          - ERROR
+          - QUEUED
+          type: string
+        search_term:
+          title: Search Term
+          type: string
+        search_query:
+          $ref: '#/components/schemas/CreateSearchInputExtended'
+        response_code:
+          title: Response Code
+          type: integer
+        response_data:
+          $ref: '#/components/schemas/BusinessSearchResultExtended'
+      required:
+      - id
+      - created_at
+      - response_code
+      additionalProperties: false
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review

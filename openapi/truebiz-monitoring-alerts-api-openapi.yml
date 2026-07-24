@@ -1,0 +1,745 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review Monitoring Alerts API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Monitoring Alerts
+  description: '
+
+    Monitoring alerts endpoints allow you to see what alerts TrueBiz has found during monitoring.
+
+    '
+paths:
+  /api/v1/monitoring/alerts/{alert_id}:
+    get:
+      operationId: monitoring_api_router_alerts_routes_get_alert_get_monitoring_alert
+      summary: Get Monitoring Alert
+      parameters:
+      - in: path
+        name: alert_id
+        schema:
+          title: Alert Id
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitoringAlert'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotReady'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'Get details about a particular monitoring alert.
+
+        This endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Monitoring Alerts
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+  /api/v1/monitoring/alerts:
+    get:
+      operationId: monitoring_api_router_alerts_routes_list_alerts_list_monitoring_alerts
+      summary: List Monitoring Alerts
+      parameters:
+      - in: query
+        name: created_before
+        schema:
+          title: Created Before
+          q: created_at__lt
+          type: string
+          format: date-time
+        required: false
+      - in: query
+        name: created_after
+        schema:
+          title: Created After
+          q: created_at__gte
+          type: string
+          format: date-time
+        required: false
+      - in: query
+        name: domain
+        schema:
+          title: Domain
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - enum:
+              - '[]'
+              type: string
+        required: false
+      - in: query
+        name: external_ref_id
+        schema:
+          title: External Ref Id
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - enum:
+              - '[]'
+              type: string
+        required: false
+      - in: query
+        name: flagged_categories
+        schema:
+          title: Flagged Categories
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - enum:
+              - '[]'
+              type: string
+        required: false
+      - in: query
+        name: order_by
+        schema:
+          type: array
+          items:
+            title: AlertsOrderingField
+            description: An enumeration.
+            enum:
+            - created_at
+            - -created_at
+            - domain
+            - -domain
+            - external_ref_id
+            - -external_ref_id
+            - flagged_categories
+            - -flagged_categories
+            type: string
+        required: false
+      - in: query
+        name: limit
+        schema:
+          title: Limit
+          default: 50
+          type: integer
+        required: false
+      - in: query
+        name: offset
+        schema:
+          title: Offset
+          default: 0
+          type: integer
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedMonitoringAlert'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotReady'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'List all monitoring alerts.
+
+        This endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Monitoring Alerts
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+components:
+  schemas:
+    PagedMonitoringAlert:
+      title: PagedMonitoringAlert
+      type: object
+      properties:
+        alerts:
+          title: Alerts
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitoringAlert'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+        prev_alerts_link:
+          $ref: '#/components/schemas/PrevLink'
+        next_alerts_link:
+          $ref: '#/components/schemas/NextLink'
+      required:
+      - alerts
+      - count
+      - limit
+      - offset
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    EmploymentRecord:
+      title: EmploymentRecord
+      type: object
+      properties:
+        company_name:
+          title: Company name
+          description: The company name.
+          example: ACME LLC.
+          type: string
+        title:
+          title: Job title
+          description: The job title.
+          example: Co-founder & CEO
+          type: string
+        start_date:
+          title: Start date
+          description: The date the person started at the job.
+          example: '2018-09-01'
+          type: string
+          format: date
+      required:
+      - company_name
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    PrevLink:
+      title: PrevLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.prev-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Forbidden.
+    FlaggedContent:
+      title: FlaggedContent
+      type: object
+      properties:
+        link:
+          $ref: '#/components/schemas/FlaggedPageLink'
+        content:
+          title: Content
+          type: string
+      required:
+      - link
+      - content
+    UIPortalLink:
+      title: UIPortalLink
+      type: object
+      properties:
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.ui-detail
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - type
+      - href
+    Person:
+      title: Person
+      type: object
+      properties:
+        name:
+          title: Name
+          description: The person's full name.
+          maxLength: 1024
+          minLength: 1
+          example: Dara Khosrowshahi
+          type: string
+        job_title:
+          title: Job title
+          description: A name that describes someone's job or position.
+          maxLength: 255
+          minLength: 1
+          example: Chief Executive Officer
+          type: string
+        linkedin_url:
+          title: LinkedIn URL
+          description: The person's LinkedIn profile URL.
+          maxLength: 1024
+          minLength: 29
+          example: https://www.linkedin.com/in/dara-khosrowshahi-9b1a8b/
+          type: string
+        profile_picture:
+          title: LinkedIn photo URL
+          description: The URL of the person's LinkedIn profile photo.
+          maxLength: 1024
+          minLength: 34
+          example: https://media.licdn.com/dms/image/D4D03AQGDnwFEps6idg/profile-displayphoto-shrink_200_200/0/1673360179524?e=1688601600&v=beta&t=bpXAkQdRR7liIMck3FQ7maRE-XeMwtChfWt73oB7YZ0
+          type: string
+        state_province:
+          title: State
+          description: The state or province where the person is located.
+          maxLength: 255
+          minLength: 1
+          example: California
+          type: string
+        city:
+          title: City
+          description: The city where the person is located.
+          maxLength: 255
+          minLength: 1
+          example: San Francisco
+          type: string
+        country:
+          title: Country
+          description: The country where the person is located.
+          maxLength: 255
+          minLength: 1
+          example: United States
+          type: string
+        start_date:
+          title: Start date
+          description: The date the person started at the company.
+          example: '1995-07-14'
+          nullable: true
+          type: string
+          format: date
+        other_active_positions:
+          title: Other active positions
+          description: Other jobs listed as currently active.
+          example: '[{"title": "CEO", "company_name": "ACME LLC.", "start_date": "2018-09-01"}]'
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/EmploymentRecord'
+        source:
+          title: Source
+          description: The data source for this person.
+          example: website
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/DataSource'
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    FlaggedPageLink:
+      title: FlaggedPageLink
+      type: object
+      properties:
+        type:
+          title: Type
+          enum:
+          - io.truebiz.monitoring.link.page
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - type
+      - href
+    DataSource:
+      title: DataSource
+      description: An enumeration.
+      enum:
+      - website
+      - social
+      - other
+      - submitted
+      type: string
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    MonitoringAlert:
+      title: MonitoringAlert
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        domain:
+          title: Domain
+          type: string
+        external_ref_id:
+          title: External Ref Id
+          type: string
+        flagged_categories:
+          title: Flagged Categories
+          type: array
+          items:
+            $ref: '#/components/schemas/FlaggedCategory'
+        flagged_content:
+          title: Flagged Content
+          type: array
+          items:
+            $ref: '#/components/schemas/FlaggedContent'
+        flagged_page_links:
+          title: Flagged Page Links
+          type: array
+          items:
+            $ref: '#/components/schemas/FlaggedPageLink'
+        flagged_people:
+          title: Flagged People
+          type: array
+          items:
+            $ref: '#/components/schemas/Person'
+        ui_portal_link:
+          $ref: '#/components/schemas/UIPortalLink'
+      required:
+      - id
+      - created_at
+      - domain
+      - flagged_categories
+      - flagged_content
+      - flagged_page_links
+      - flagged_people
+      - ui_portal_link
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    NextLink:
+      title: NextLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.next-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is in conflict with another resource.
+    FlaggedCategory:
+      title: FlaggedCategory
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        description:
+          title: Description
+          type: string
+      required:
+      - name
+      - description
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review

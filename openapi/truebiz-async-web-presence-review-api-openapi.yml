@@ -1,0 +1,376 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Async Web Presence Review
+  description: "\nWeb Presence Review endpoints allow you to provide information about a business for TrueBiz to review.\n We look at the content on the website, find social media profiles, review sites, and other\nbroader web presence. For security reasons, any domain provided will be reduced to the registered domain known\nto Mozilla's Public Suffix List (e.g. https://www.bbc.co.uk/some/page -> bbc.co.uk). These endpoints will then\nreview the web presence starting with the index page for that domain (e.g. bbc.co.uk -> https://bbc.co.uk/).\n\nThis asynchronous endpoint allows you to submit a request to TrueBiz without having to wait for the response to\ncomplete. Your submission will instead get a response containing a brief message and a tracking ID. You may either\npoll for status updates using the url provided in the response's `Location` header, or, if you have\na webhook configured, wait for us to notify you when the web presence review is completed. (You may then request\nthe details from the Web Presence Review History endpoint.)\n"
+paths:
+  /api/v1/company/async/search:
+    post:
+      operationId: core_api_async_company_async_review_company
+      summary: Async Review Company
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '412':
+          description: Precondition Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreconditionFailed'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: "This API endpoint allows you to enqueue a web presence review based on either a website (as a URL, domain,\nor email) or both a business name and address. Other optional information about the company and\n applicant (phone, email, applicant name) can help identify the business and locate additional detail.\nYou may either poll for status updates using the url provided in the response's `Location` header, or,\nif you have a webhook configured, wait for us to notify you when the web presence review is completed.\n(You may then request the details from the Web Presence Review History endpoint.)\nThis API requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests\nper second."
+      tags:
+      - Async Web Presence Review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncCompanyQuery'
+        required: true
+      security:
+      - AsyncApiKeyAuth: []
+      - AsyncPropelAuthBearer: []
+components:
+  schemas:
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    PreconditionFailed:
+      title: PreconditionFailed
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    AsyncCompanyQuery:
+      title: AsyncCompanyQuery
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The business's domain. **Required unless you provide `submitted_business_name` together with an address.** Accepts a bare domain, full URL, or email — we reduce it to the registered domain per Mozilla's Public Suffix List. (RFC 1034/1035 for ASCII, IDNA2008 for internationalized.)
+          nullable: true
+          example: example.net
+          maxLength: 255
+          type: string
+        submitted_business_name:
+          title: Submitted Business Name
+          description: The business's name. **Required (along with an address) if you do not provide `domain`.**
+          nullable: true
+          example: Bob's Burritos
+          maxLength: 1024
+          type: string
+        submitted_description:
+          title: Submitted Description
+          description: A description of the business's industry/operations
+          nullable: true
+          example: Bob's Burritos is a local institution proudly serving top quality Mexican street food to the Memphis area since 1967.
+          maxLength: 2048
+          type: string
+        address_line_1:
+          title: Address Line 1
+          description: Line 1 of the business address. **At least one address field is required when identifying the business by name instead of domain.**
+          nullable: true
+          example: 123 Main St.
+          maxLength: 2048
+          type: string
+        address_line_2:
+          title: Address Line 2
+          description: Line 2 of the business address.
+          nullable: true
+          example: Suite 100
+          maxLength: 2048
+          type: string
+        city:
+          title: City
+          description: City of the business address.
+          nullable: true
+          example: Memphis
+          maxLength: 255
+          type: string
+        state_province:
+          title: State/Province
+          description: State/Province of the business address.
+          nullable: true
+          example: TN
+          maxLength: 255
+          type: string
+        postal_code:
+          title: Postal Code
+          description: Postal code of the business address.
+          nullable: true
+          example: '37501'
+          maxLength: 255
+          type: string
+        country:
+          title: Country
+          description: Country of the business address
+          nullable: true
+          example: USA
+          maxLength: 255
+          type: string
+        submitted_email:
+          title: Submitted email
+          description: The email of the business or applicant. (Emails should conform to the IETF RFC 5322 spec)
+          nullable: true
+          example: bob@yahoo.com
+          maxLength: 254
+          type: string
+        submitted_phone:
+          title: Submitted Phone
+          description: The phone number of the business or applicant. (Phone numbers should conform to the ITU-T E.164 standard)
+          nullable: true
+          example: '+19015555555'
+          maxLength: 255
+          type: string
+        submitted_full_name:
+          title: Submitted Full Name
+          description: 'The full name of the applicant. '
+          nullable: true
+          example: Bob Smith
+          maxLength: 1024
+          type: string
+        match_profile_id:
+          title: Match Profile ID
+          description: ID of the TrueBiz match profile to use when processing the request.
+          nullable: true
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+          format: uuid
+        external_tracking_ref:
+          title: External tracking reference
+          description: ID used in your system to track this request.
+          nullable: true
+          example: abc_defg12345678
+          maxLength: 255
+          type: string
+      example:
+        domain: example.net
+        submitted_business_name: Bob's Burritos
+        submitted_description: Bob's Burritos is a local institution proudly serving top quality Mexican street food to the Memphis area since 1967.
+        address_line_1: 123 Main St.
+        address_line_2: Suite 100
+        city: Memphis
+        state_province: TN
+        postal_code: '37501'
+        country: USA
+        submitted_email: bob@yahoo.com
+        submitted_phone: '+19015555555'
+        submitted_full_name: Bob Smith
+        external_tracking_ref: abc_defg12345678
+        match_profile_id: 00000000-0000-0000-0000-000000000000
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    AsyncMessage:
+      title: AsyncMessage
+      type: object
+      properties:
+        message:
+          title: Message
+          description: The message response from the server.
+          default: ''
+          example: Request for info@example.com is processing.
+          type: string
+        tracking_id:
+          title: Tracking ID
+          description: ID used to track this request in TrueBiz's application.
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+          format: uuid
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review

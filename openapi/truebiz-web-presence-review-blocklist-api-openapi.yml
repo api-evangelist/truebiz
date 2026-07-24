@@ -1,0 +1,692 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review Web Presence Review Blocklist API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Web Presence Review Blocklist
+  description: '
+
+    Web Presence Review endpoints allow you to provide an input like a domain, url, or email associated with a website
+
+    for TrueBiz to review.  For business or compliance reasons, you may want to directly block a domain from ever being
+
+    reviewed by TrueBiz.  As such, we provide simple these operations for a list of domains to prevent these domains from
+
+    being evaluated.
+
+    '
+paths:
+  /api/v1/company/evaluate:
+    post:
+      operationId: core_api_async_company_blocklist_evaluate_blocked_domains
+      summary: Evaluate Blocked Domains
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluateBlockResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+      - Web Presence Review Blocklist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluateBlockInput'
+        required: true
+      security:
+      - AsyncApiKeyAuth: []
+      - AsyncPropelAuthBearer: []
+  /api/v1/company/block:
+    post:
+      operationId: core_api_company_blocklist_create_blocked_domain
+      summary: Create Blocked Domain
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'This API endpoint allows you to add a domain to a block list.
+
+        This API requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Web Presence Review Blocklist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+    delete:
+      operationId: core_api_company_blocklist_delete_blocked_domain
+      summary: Delete Blocked Domain
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockMessage'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'This API endpoint allows you to remove a domain from the block list.
+
+        This API requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Web Presence Review Blocklist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteBlockInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+    get:
+      operationId: core_api_company_blocklist_list_blocked_domains
+      summary: List Blocked Domains
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          title: Limit
+          default: 50
+          type: integer
+        required: false
+      - in: query
+        name: offset
+        schema:
+          title: Offset
+          default: 0
+          type: integer
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedBlockedDomain'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'This (paginated) API endpoint allows you to see domains that you have added to the block list.
+
+        This API requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Web Presence Review Blocklist
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+components:
+  schemas:
+    DeleteBlockInput:
+      title: DeleteBlockInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          nullable: false
+          type: string
+      required:
+      - domain
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    BlockMessage:
+      title: BlockMessage
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Block created for example.net.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    PagedBlockedDomain:
+      title: PagedBlockedDomain
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockedDomain'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    BlockInput:
+      title: BlockInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          nullable: false
+          type: string
+        phone:
+          title: Phone
+          description: The phone number to be blocked.
+          example: '3136739082'
+          nullable: true
+          type: string
+        email:
+          title: Email
+          description: The email to be blocked.
+          example: test@truebiz.io
+          nullable: true
+          type: string
+        address_line_1:
+          title: Address Line 1
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          nullable: true
+          type: string
+        address_line_2:
+          title: Address Line 2
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          nullable: true
+          type: string
+        city:
+          title: Address
+          description: The city to be blocked.
+          example: Detroit
+          nullable: true
+          type: string
+        state:
+          title: State
+          description: The state which the address belongs too
+          example: MI
+          nullable: true
+          type: string
+        zipcode:
+          title: Zip Code
+          description: The zip code to which the address belongs too.
+          example: '48178'
+          nullable: true
+          type: string
+        country:
+          title: Country Code
+          description: The country which the address belongs too.
+          example: US
+          nullable: true
+          type: string
+        reason:
+          title: Reason
+          description: "The reason for blocking this domain:\n* Credit and Financial Risk: This business is not creditworthy or interacting with them represents a financial risk to your business.\n  * Insufficient or poor credit history.\n  * Adverse financial ratios.\n  * Insufficient or unacceptable collateral.\n  * High-risk collateral location.\n  * History of bankruptcy or default.\n* Compliance and Regulatory: Interacting with this business would cause regulatory or compliance issues.\n  * Incomplete application information.\n  * Non-compliance with KYC/AML regulations.\n  * Sanctions or watchlist issues.\n  * Lack of required licenses or permits.\n  * Industry or sector restrictions.\n* Business Profile Risk: This business's profile and behavior represents a risk to interact with.\n  * Insufficient business history or experience.\n  * Inadequate or unstable revenue.\n  * Lack of a viable business plan or strategy.\n  * High employee turnover.\n  * Negative industry outlook or trends.\n  * Negative or unverified customer feedback.\n  * Poor reputation or history of unethical practices.\n  * Prior negative experience with the client.\n* Internal Policy: Interacting with this business is forbidden due to internal policies.\n  * Conflicts of interest.\n  * Lending or investment limits reached.\n  * Risk appetite or portfolio concentration concerns.\n  * Limited resources or expertise in the specific industry or sector.\n  * Strategic shift or change in focus.\n* Fraudulent Application: The person applying on behalf does not have a legitimate reason to request services.\n  * Identity theft or impersonation.\n  * Misleading or false data.\n  * Collusion or insider fraud.\n* Fraudulent Business: The business in question appears to be fraudulent.\n  * Not a real business.\n  * Fabricated financial documents.\n  * Shell companies or nominee arrangements.\n* Other: Any other reason.\n"
+          example: Fraudulent Application
+          nullable: false
+          allOf:
+          - $ref: '#/components/schemas/BlockReason'
+        other_explanation:
+          title: Other explanation
+          description: The reason for blocking this domain when other is selected.
+          example: null
+          nullable: true
+          type: string
+        notes:
+          title: Notes
+          example: null
+          nullable: true
+          type: string
+        expires_at:
+          title: Expires at
+          description: The date and time this block should expire at.  If you do not set this value, it will default to five years from the creation date.
+          example: '2028-12-31T23:59:59.999'
+          nullable: true
+          type: string
+          format: date-time
+      required:
+      - domain
+      - reason
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    EvaluateBlockResponse:
+      title: EvaluateBlockResponse
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          nullable: true
+          type: string
+        phone:
+          title: Phone
+          description: The phone number to be blocked.
+          example: '3136739082'
+          nullable: true
+          type: string
+        email:
+          title: Email
+          description: The email to be blocked.
+          example: test@truebiz.io
+          nullable: true
+          type: string
+        address:
+          title: Address
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          nullable: true
+          type: string
+        phone_without_country_code:
+          title: Phone without country code
+          description: Phone number without country code
+          example: US
+          nullable: true
+          type: string
+    BlockedDomain:
+      title: BlockedDomain
+      type: object
+      properties:
+        domain:
+          title: Domain
+          maxLength: 255
+          type: string
+          description: The domain to block.
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        expires_at:
+          title: Expires At
+          type: string
+          format: date-time
+          description: 'The time this blocked domain should expire at (default: 5 years from creation).'
+        reason:
+          title: Reason
+          maxLength: 255
+          type: string
+          description: "The reason for blocking this domain:\n* Credit and Financial Risk: This business is not creditworthy or interacting with them represents a financial risk to your business.\n  * Insufficient or poor credit history.\n  * Adverse financial ratios.\n  * Insufficient or unacceptable collateral.\n  * High-risk collateral location.\n  * History of bankruptcy or default.\n* Compliance and Regulatory: Interacting with this business would cause regulatory or compliance issues.\n  * Incomplete application information.\n  * Non-compliance with KYC/AML regulations.\n  * Sanctions or watchlist issues.\n  * Lack of required licenses or permits.\n  * Industry or sector restrictions.\n* Business Profile Risk: This business's profile and behavior represents a risk to interact with.\n  * Insufficient business history or experience.\n  * Inadequate or unstable revenue.\n  * Lack of a viable business plan or strategy.\n  * High employee turnover.\n  * Negative industry outlook or trends.\n  * Negative or unverified customer feedback.\n  * Poor reputation or history of unethical practices.\n  * Prior negative experience with the client.\n* Internal Policy: Interacting with this business is forbidden due to internal policies.\n  * Conflicts of interest.\n  * Lending or investment limits reached.\n  * Risk appetite or portfolio concentration concerns.\n  * Limited resources or expertise in the specific industry or sector.\n  * Strategic shift or change in focus.\n* Fraudulent Application: The person applying on behalf does not have a legitimate reason to request services.\n  * Identity theft or impersonation.\n  * Misleading or false data.\n  * Collusion or insider fraud.\n* Fraudulent Business: The business in question appears to be fraudulent.\n  * Not a real business.\n  * Fabricated financial documents.\n  * Shell companies or nominee arrangements.\n* Other: Any other reason.\n"
+        other_explanation:
+          title: Other Explanation
+          type: string
+          description: For what other reason did your company want to block this domain?
+        notes:
+          title: Notes
+          type: string
+          description: Notes about this block.
+      required:
+      - domain
+      - created_at
+      - reason
+    EvaluateBlockInput:
+      title: EvaluateBlockInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          nullable: true
+          type: string
+        phone:
+          title: Phone
+          description: The phone number to be blocked.
+          example: '3136739082'
+          nullable: true
+          type: string
+        email:
+          title: Email
+          description: The email to be blocked.
+          example: test@truebiz.io
+          nullable: true
+          type: string
+        address_line_1:
+          title: Address Line 1
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          nullable: true
+          type: string
+        address_line_2:
+          title: Address Line 2
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          nullable: true
+          type: string
+        city:
+          title: Address
+          description: The city to be blocked.
+          example: Detroit
+          nullable: true
+          type: string
+        state:
+          title: State
+          description: The state which the address belongs too
+          example: MI
+          nullable: true
+          type: string
+        zipcode:
+          title: Zip Code
+          description: The zip code to which the address belongs too.
+          example: '48178'
+          nullable: true
+          type: string
+        country:
+          title: Country Code
+          description: The country which the address belongs too.
+          example: US
+          nullable: true
+          type: string
+        phone_without_country_code:
+          title: Phone without country code
+          description: Phone number without country code
+          example: US
+          nullable: true
+          type: string
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    BlockReason:
+      title: BlockReason
+      description: An enumeration.
+      enum:
+      - Credit and Financial Risk
+      - Compliance and Regulatory
+      - Business Profile Risk
+      - Internal Policy
+      - Fraudulent Application
+      - Fraudulent Business
+      - Other
+      type: string
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review

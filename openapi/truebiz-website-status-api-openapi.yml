@@ -1,0 +1,325 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review Website Status API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Website Status
+  description: '
+
+    Our website status endpoints help with checking to see if a provided URL is up and that it is not part of a
+
+    website grouping that TrueBiz does not support.
+
+    '
+paths:
+  /api/v1/website/status:
+    post:
+      operationId: core_api_website_get_website_status
+      summary: Get Website Status
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'This API endpoint allows you to test if a webserver is responsive similar to popular "is it up" type sites.
+
+        It will also check to see if the website link corresponds to known social media or marketplace sites.  Given
+
+        that some pages load extremely slowly, the higher you set the timeout the more likely you are to get an accurate
+
+        result.  Our default of 7.5 seconds is accurate about 99% of the time in our testing.
+
+        This API requires a valid API key (X-API-KEY) to be provided in the headers and is rate limited to 5 requests per
+
+        second.'
+      tags:
+      - Website Status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebsiteInput'
+        required: true
+      security:
+      - AsyncApiKeyAuth: []
+      - AsyncPropelAuthBearer: []
+components:
+  schemas:
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    SocialMediaLink:
+      title: SocialMediaLink
+      type: object
+      properties:
+        is_social_media_link:
+          title: Is social media link?
+          description: Is this a known social media site?
+          default: false
+          example: false
+          type: boolean
+        platform:
+          title: Social media platform
+          description: The social media platform this link is from.
+          example: null
+          nullable: true
+          type: string
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    WebsiteInput:
+      title: WebsiteInput
+      type: object
+      properties:
+        website:
+          title: Website
+          description: The website URL to evaluate.
+          example: https://example.net/test?param1=value1
+          type: string
+        request_timeout:
+          title: Request timeout
+          description: The maximum amount of time to spend on checking if the webserver is responsive.Adjusting this parameter to be shorter may cause valid but slow responding websites to be marked as not alive.  Adjusting this parameter to be longer may allow for more websites to be recognized as alive.
+          default: 7.5
+          example: 7.5
+          minimum: 2.0
+          maximum: 30.0
+          type: number
+      required:
+      - website
+    StatusResponse:
+      title: StatusResponse
+      type: object
+      properties:
+        alive:
+          title: Alive
+          description: Indicates whether the domain's webserver responded with a valid HTTP code before the request timed out.
+          example: true
+          type: boolean
+        social_media:
+          $ref: '#/components/schemas/SocialMediaLink'
+        marketplace:
+          $ref: '#/components/schemas/MarketplaceLink'
+        is_top_domain:
+          title: Is known top domain?
+          description: A domain that is known to be one of the most popular sites on the internet.
+          example: false
+          type: boolean
+        is_hosting_provider_domain:
+          title: Is known hosting provider domain?
+          description: A domain that is known to be owned by a hosting provider.
+          example: false
+          type: boolean
+        is_link_shortener_domain:
+          title: Is known link shortening domain?
+          description: A domain that is known to be owned by a link shortening service.
+          example: false
+          type: boolean
+      required:
+      - alive
+      - social_media
+      - marketplace
+    MarketplaceLink:
+      title: MarketplaceLink
+      type: object
+      properties:
+        is_marketplace_link:
+          title: Is social media link?
+          description: Is this a known marketplace site for selling goods or services?
+          default: false
+          example: false
+          type: boolean
+        platform:
+          title: Marketplace platform
+          description: The marketplace platform this link is from.
+          example: null
+          nullable: true
+          type: string
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review

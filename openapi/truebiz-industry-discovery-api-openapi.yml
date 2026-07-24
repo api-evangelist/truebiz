@@ -1,0 +1,703 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review Industry Discovery API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Industry Discovery
+paths:
+  /api/v1/industry-searches:
+    post:
+      operationId: core_api_business_search_create_industry_search
+      summary: Create Industry Search
+      parameters: []
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessSearch'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'Create Industry Search endpoints allow you to start a new industry discovery request. You provide a business
+
+        name and location details, and TrueBiz creates a search record. The response includes a unique identifier for
+
+        the search, which can be used to retrieve the results from the corresponding retrieval endpoint once processing
+
+        is complete. In addition to the the ID returned in the response body, the full retrieval URL is also included
+
+        in the Location header sent with the response.
+
+
+        This API requires a valid API key (X-API-KEY) to be provided in the headers and is rate limited to 5
+
+        requests per second.'
+      tags:
+      - Industry Discovery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSearchInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+    get:
+      operationId: core_api_business_search_list_industry_searches
+      summary: List Industry Searches
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          title: Limit
+          default: 50
+          type: integer
+        required: false
+      - in: query
+        name: offset
+        schema:
+          title: Offset
+          default: 0
+          type: integer
+        required: false
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotReady'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedBusinessSearch'
+      description: 'The List Industry Searches endpoint retrieves a list of all industry discovery requests associated with the
+
+        account linked to the provided API key. Each entry in the list includes the unique identifier, creation and
+
+        update timestamps, current status, and a brief status description. If a search has been completed, the
+
+        result field will contain the discovered industry information; otherwise, it will be null.'
+      tags:
+      - Industry Discovery
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+  /api/v1/industry-searches/{search_id}:
+    get:
+      operationId: core_api_business_search_get_industry_search
+      summary: Get Industry Search
+      parameters:
+      - in: path
+        name: search_id
+        schema:
+          title: Search Id
+          type: string
+          format: uuid
+        required: true
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessSearch'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessSearch'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessSearch'
+      description: 'The Get Industry Search endpoint retrieves the status and results of a previously created industry discovery
+
+        request. If the discovery is still in progress, the endpoint responds with HTTP 202 (Accepted). When the discovery
+
+        is complete, the endpoint responds with HTTP 200 (OK) and returns the discovered industry information,
+
+        including name, address, description, and industry classifications (e.g., NAICS, SIC, MCC).
+
+
+        Clients should poll the Get Industry Search endpoint using exponential backoff rather than continuous requests.
+
+        We recommend starting with a short delay (2–3 seconds) after the initial 202 response, then doubling the wait
+
+        time between each subsequent attempt until reaching a maximum interval (for example, 30 seconds). Continue polling
+
+        until the endpoint returns 200 (discovery complete) or until a reasonable overall timeout is reached. This
+
+        approach reduces unnecessary load while ensuring timely retrieval of results.
+
+
+        This API requires a valid API key (X-API-KEY) to be provided in the headers and is rate limited to 5
+
+        requests per second.'
+      tags:
+      - Industry Discovery
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+components:
+  schemas:
+    BusinessSearchResult:
+      title: BusinessSearchResult
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          description: The name of the business.
+          type: string
+        business_description:
+          title: Business Description
+          description: A description of the business.
+          type: string
+        business_address:
+          title: Business Address
+          description: The long-form address of the business.
+          nullable: true
+          required: false
+          type: string
+        website:
+          title: Website
+          description: The website of the business.
+          nullable: true
+          type: string
+        primary_mcc:
+          $ref: '#/components/schemas/MCC'
+        additional_mccs:
+          title: Additional Mccs
+          type: array
+          items:
+            $ref: '#/components/schemas/MCC'
+      required:
+      - business_name
+      - business_description
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    PagedBusinessSearch:
+      title: PagedBusinessSearch
+      type: object
+      properties:
+        searches:
+          title: Searches
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessSearch'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+        prev_searches_link:
+          $ref: '#/components/schemas/PrevLink'
+        next_searches_link:
+          $ref: '#/components/schemas/NextLink'
+      required:
+      - searches
+      - count
+      - limit
+      - offset
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    PrevLink:
+      title: PrevLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.prev-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    MCC:
+      title: MCC
+      type: object
+      properties:
+        code:
+          title: Code
+          description: The Merchant Category Code.
+          type: string
+        description:
+          title: Description
+          description: The description of the Merchant Category.
+          type: string
+      required:
+      - code
+      - description
+    CreateSearchInput:
+      title: CreateSearchInput
+      type: object
+      properties:
+        submitted_business_name:
+          title: Submitted Business Name
+          description: The name of the business to search for.
+          type: string
+        submitted_website:
+          title: Submitted Website
+          description: The website of the business to search for.
+          nullable: true
+          type: string
+        city:
+          title: City
+          description: The city where the business is located.
+          nullable: true
+          type: string
+        state_province:
+          title: State Province
+          description: The state or province where the business is located.
+          nullable: true
+          type: string
+        postal_code:
+          title: Postal Code
+          description: The postal code of the business location.
+          nullable: true
+          type: string
+        country:
+          title: Country
+          description: The country where the business is located.
+          type: string
+        external_tracking_ref:
+          title: External Tracking Ref
+          type: string
+      required:
+      - submitted_business_name
+      - country
+    BusinessSearch:
+      title: BusinessSearch
+      type: object
+      properties:
+        id:
+          title: Id
+          description: The unique identifier of the industry search.
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+          format: uuid
+        external_tracking_ref:
+          title: External Tracking Ref
+          type: string
+        created_at:
+          title: Created At
+          description: The date and time when the industry search was created.
+          example: '2026-07-20T22:40:43.958Z'
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          description: The date and time when the industry search was last updated.
+          example: '2026-07-20T22:40:43.958Z'
+          type: string
+          format: date-time
+        status:
+          title: Status
+          description: The current status of the industry search.
+          enum:
+          - PROCESSING
+          - FINISHED
+          - ERROR
+          - QUEUED
+          type: string
+        status_description:
+          title: Status Description
+          description: A more detailed description of the current status.
+          type: string
+        result:
+          $ref: '#/components/schemas/BusinessSearchResult'
+        query:
+          $ref: '#/components/schemas/CreateSearchInput'
+      required:
+      - status
+      - status_description
+      - query
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    NextLink:
+      title: NextLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.next-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is in conflict with another resource.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Forbidden.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review

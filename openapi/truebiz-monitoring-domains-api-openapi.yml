@@ -1,0 +1,695 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review Monitoring Domains API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Monitoring Domains
+  description: '
+
+    Monitored domain endpoints allow you to see what domains TrueBiz is currently monitoring.
+
+    '
+paths:
+  /api/v1/monitoring/domains/{domain}:
+    get:
+      operationId: monitoring_api_router_domains_routes_get_domain_get_monitored_domain
+      summary: Get Monitored Domain
+      parameters:
+      - in: path
+        name: domain
+        schema:
+          title: Domain
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitoredDomain'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotReady'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'Get information about a particular domain TrueBiz is currently monitoring.
+
+        This endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Monitoring Domains
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+  /api/v1/monitoring/domains:
+    get:
+      operationId: monitoring_api_router_domains_routes_list_domains_list_monitored_domains
+      summary: List Monitored Domains
+      parameters:
+      - in: query
+        name: domain
+        schema:
+          title: Domain
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - enum:
+              - '[]'
+              type: string
+        required: false
+      - in: query
+        name: package_type
+        schema:
+          title: Package Type
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/PackageType'
+            - enum:
+              - '[]'
+              type: string
+        required: false
+      - in: query
+        name: external_ref_id
+        schema:
+          title: External Ref Id
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - enum:
+              - ''
+              type: string
+        required: false
+      - in: query
+        name: order_by
+        schema:
+          type: array
+          items:
+            title: DomainsOrderingField
+            description: An enumeration.
+            enum:
+            - domain
+            - -domain
+            - external_ref_id
+            - -external_ref_id
+            - package_type
+            - -package_type
+            type: string
+        required: false
+      - in: query
+        name: limit
+        schema:
+          title: Limit
+          default: 50
+          type: integer
+        required: false
+      - in: query
+        name: offset
+        schema:
+          title: Offset
+          default: 0
+          type: integer
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedMonitoredDomain'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotReady'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'List all domains currently monitored by TrueBiz.
+
+        This endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Monitoring Domains
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+  /api/v1/monitoring/start:
+    post:
+      operationId: monitoring_api_router_domains_routes_start_start_monitoring_domain
+      summary: Start Monitoring Domain
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitoredDomain'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotReady'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      description: 'Start monitoring a domain.
+
+        This endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+
+        per second.'
+      tags:
+      - Monitoring Domains
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+components:
+  schemas:
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    PackageFrequency:
+      title: PackageFrequency
+      type: object
+      properties:
+        days:
+          $ref: '#/components/schemas/PackageFrequencyDays'
+      required:
+      - days
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    PackageInput:
+      title: PackageInput
+      type: object
+      properties:
+        type:
+          title: Type
+          enum:
+          - io.truebiz.monitoring.package.basic
+          - io.truebiz.monitoring.package.extended
+          type: string
+        frequency:
+          $ref: '#/components/schemas/PackageFrequency'
+      required:
+      - type
+    MonitoredDomain:
+      title: MonitoredDomain
+      type: object
+      properties:
+        domain:
+          title: Domain
+          type: string
+        external_ref_id:
+          title: External Ref Id
+          type: string
+        packages:
+          title: Packages
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitoringPackage'
+      required:
+      - domain
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    PrevLink:
+      title: PrevLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.prev-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Forbidden.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    PagedMonitoredDomain:
+      title: PagedMonitoredDomain
+      type: object
+      properties:
+        domains:
+          title: Domains
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitoredDomain'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+        prev_domains_link:
+          $ref: '#/components/schemas/PrevLink'
+        next_domains_link:
+          $ref: '#/components/schemas/NextLink'
+      required:
+      - domains
+      - count
+      - limit
+      - offset
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    PackageFrequencyDays:
+      title: PackageFrequencyDays
+      description: An enumeration.
+      enum:
+      - 7
+      - 30
+      - 90
+      type: integer
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    StartInput:
+      title: StartInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          type: string
+        external_ref_id:
+          title: External Ref Id
+          type: string
+        packages:
+          title: Packages
+          maxItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageInput'
+      required:
+      - domain
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    NextLink:
+      title: NextLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.next-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    PackageType:
+      title: PackageType
+      description: An enumeration.
+      enum:
+      - io.truebiz.monitoring.package.basic
+      - io.truebiz.monitoring.package.extended
+      - io.truebiz.monitoring.package.website-content
+      - io.truebiz.monitoring.package.business-closure
+      - io.truebiz.monitoring.package.sentiment-analysis
+      - io.truebiz.monitoring.package.connected-entities
+      - io.truebiz.monitoring.package.people
+      - io.truebiz.monitoring.package.business-profile
+      type: string
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is in conflict with another resource.
+    MonitoringPackage:
+      title: MonitoringPackage
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PackageType'
+        frequency:
+          $ref: '#/components/schemas/PackageFrequency'
+      required:
+      - type
+      - frequency
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review

@@ -1,0 +1,737 @@
+openapi: 3.0.2
+info:
+  title: TrueBiz Web Presence Review Async Web Presence Review Fraud Searches API
+  version: 1.0.0
+  description: '# Introduction
+
+    TrueBiz provides tools to automate assessing a merchant''s web presence through the entire customer lifecycle.
+
+
+    # Authentication
+
+
+    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
+
+    '
+servers:
+- url: https://ae.truebiz.io
+  description: Production
+tags:
+- name: Fraud Searches
+paths:
+  /api/v1/fraud-searches:
+    post:
+      operationId: core_api_fraud_search_create_fraud_search
+      summary: Create Fraud Search
+      parameters: []
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudSearch'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFraudSearchInput'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+      tags:
+      - Fraud Searches
+    get:
+      operationId: core_api_fraud_search_list_fraud_searches
+      summary: List Fraud Searches
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          title: Limit
+          default: 50
+          type: integer
+        required: false
+      - in: query
+        name: offset
+        schema:
+          title: Offset
+          default: 0
+          type: integer
+        required: false
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceNotReady'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequest'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagedFraudSearch'
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+      tags:
+      - Fraud Searches
+  /api/v1/fraud-searches/{search_id}:
+    get:
+      operationId: core_api_fraud_search_get_fraud_search
+      summary: Get Fraud Search
+      parameters:
+      - in: path
+        name: search_id
+        schema:
+          title: Search Id
+          type: string
+          format: uuid
+        required: true
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudSearch'
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoContent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudSearch'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequests'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudSearch'
+      security:
+      - ApiKeyAuth: []
+      - PropelAuthBearer: []
+      tags:
+      - Fraud Searches
+components:
+  schemas:
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
+    AddressCoordinatesAccuracy:
+      title: AddressCoordinatesAccuracy
+      description: Order matters here, list from least to most accurate
+      enum:
+      - APPROXIMATE
+      - ROOFTOP
+      type: string
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    Address:
+      title: Address
+      type: object
+      properties:
+        full_address:
+          title: Full address
+          description: The primary address of the company
+          example: '5000 Market Street, #9616, San Francisco, CA 94103, United States'
+          nullable: true
+          minLength: 1
+          maxLength: 8192
+          type: string
+        line_1:
+          title: Line 1
+          description: The primary address of the company.
+          example: 5000 Market Street
+          nullable: true
+          minLength: 1
+          maxLength: 2048
+          type: string
+        line_2:
+          title: Line 2
+          description: The primary address of the company.
+          example: '#9616'
+          nullable: true
+          minLength: 1
+          maxLength: 2048
+          type: string
+        city:
+          title: City
+          description: The primary city the company operates in.
+          example: San Francisco
+          nullable: true
+          minLength: 1
+          maxLength: 255
+          type: string
+        state_province:
+          title: State / province
+          description: The primary State the company operates in.
+          example: CA
+          nullable: true
+          minLength: 1
+          maxLength: 255
+          type: string
+        postal_code:
+          title: Postal code
+          description: The Zip Code of the company.
+          example: '94103'
+          nullable: true
+          minLength: 1
+          maxLength: 255
+          type: string
+        country:
+          title: Country
+          description: The primary Country the company operates in.
+          example: United States
+          nullable: true
+          minLength: 1
+          maxLength: 255
+          type: string
+        postal_service_flags:
+          title: Postal service flags
+          description: A list of flags indicating what the local postal service knows about this address (Only US addresses supported currently).
+          default: []
+          example: []
+          type: array
+          items:
+            $ref: '#/components/schemas/PostalServiceFlag'
+        is_shared_with_registered_agent:
+          title: Is shared with registered agent?
+          description: Indicates if the discovered address is shared with a known registered agent.
+          example: null
+          nullable: true
+          type: boolean
+        coordinates:
+          title: Coordinates
+          description: Latitude and longitude object for the address.
+          example:
+            lon: -122.4179707
+            lat: 37.7756852
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Coordinates'
+        coordinates_accuracy:
+          title: Precision of coordinates
+          description: The level of precision of the coordinates
+          example: ROOFTOP
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/AddressCoordinatesAccuracy'
+        google_maps_link:
+          title: Google Maps Link
+          description: A link to view the address on google maps.
+          example: https://maps.google.com/?q=37.7756852,-122.4179707
+          nullable: true
+          minLength: 1
+          maxLength: 2083
+          format: uri
+          type: string
+        is_valid:
+          title: Is the address valid?
+          description: Is the address a valid, known address?
+          example: true
+          nullable: true
+          type: boolean
+        source:
+          title: Source
+          description: The data source for this address.
+          example: website
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/DataSource'
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    PagedFraudSearch:
+      title: PagedFraudSearch
+      type: object
+      properties:
+        searches:
+          title: Searches
+          type: array
+          items:
+            $ref: '#/components/schemas/FraudSearch'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - searches
+      - count
+      - limit
+      - offset
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Forbidden.
+    FraudSearch:
+      title: FraudSearch
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        status:
+          title: Status
+          enum:
+          - PROCESSING
+          - FINISHED
+          - ERROR
+          type: string
+        status_description:
+          title: Status Description
+          type: string
+        result:
+          $ref: '#/components/schemas/FraudSearchResult'
+        query:
+          $ref: '#/components/schemas/CreateFraudSearchInput'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - status
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    Coordinates:
+      title: Coordinates
+      type: object
+      properties:
+        lat:
+          title: Lat
+          type: number
+        lon:
+          title: Lon
+          type: number
+      required:
+      - lat
+      - lon
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    FraudSearchResult:
+      title: FraudSearchResult
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          type: string
+        business_description:
+          title: Business Description
+          type: string
+        business_address:
+          $ref: '#/components/schemas/Address'
+        website:
+          title: Website
+          type: string
+        fraud_likelihood_risk:
+          title: Fraud Likelihood Risk
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
+          type: string
+        fraud_likelihood_summary:
+          title: Fraud Likelihood Summary
+          type: string
+    DataSource:
+      title: DataSource
+      description: An enumeration.
+      enum:
+      - website
+      - social
+      - other
+      - submitted
+      type: string
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    PostalServiceFlag:
+      title: PostalServiceFlag
+      description: '"residential" indicates that the address is a residential address.
+
+        "po_box" indicates that the address is a Postoffice Box rather than a physical address.
+
+        "virtual_address" indicates that the address is a private business receiving mail for clients.
+
+        "vacant" indicates that the USPS has marked the address as being vacant.
+
+        "inactive" indicates that the USPS does not deliver to this address.
+
+        "unreliable" indicates that that there was not enough address information to validate a specific address.
+
+        "unconfirmed" indicates that the USPS does not maintain Delivery Point Validation data for this address.'
+      enum:
+      - residential
+      - po_box
+      - virtual_address
+      - vacant
+      - inactive
+      - general_delivery
+      - unreliable
+      - unconfirmed
+      type: string
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is in conflict with another resource.
+    CreateFraudSearchInput:
+      title: CreateFraudSearchInput
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          type: string
+        website:
+          title: Website
+          type: string
+        city:
+          title: City
+          type: string
+        state_province:
+          title: State Province
+          type: string
+        postal_code:
+          title: Postal Code
+          type: string
+        country:
+          title: Country
+          type: string
+        external_tracking_ref:
+          title: External Tracking Ref
+          type: string
+      required:
+      - business_name
+      - country
+  securitySchemes:
+    AsyncApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    AsyncPropelAuthBearer:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    PropelAuthBearer:
+      type: http
+      scheme: bearer
+x-tagGroups:
+- name: Web Presence Review
+  tags:
+  - Web Presence Review
+  - Web Presence Review Integration Guide
+  - Deep Search
+- name: Industry Discovery
+  tags:
+  - Industry Discovery
+- name: Monitoring
+  tags:
+  - Monitoring Integration Guide
+  - Monitoring Alerts
+  - Monitoring Domains
+  - Monitoring Enrollments
+  - Monitoring Anomalies
+- name: Website Status
+  tags:
+  - Website Status
+- name: Other
+  tags:
+  - Auth Relay Guide
+  - UI Authentication Relay
+  - Web Presence Review Blocklist
+  - Web Presence Review Static Content
+  - Web Presence Review History
+  - Web Presence Review Risk Indicator Definitions
+  - Async Web Presence Review Integration Guide
+  - Async Web Presence Review
