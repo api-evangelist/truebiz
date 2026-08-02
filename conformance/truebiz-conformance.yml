@@ -1,0 +1,36 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truebiz-openapi-original.json
+notes: >-
+  Standards conformance derived from the OpenAPI (security schemes, response
+  shapes, conventions). No published compliance program (SOC 2 / ISO 27001 /
+  PCI) was found on truebiz.io during enrichment, so no Compliance pointer is
+  emitted.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: Document is a valid OpenAPI 3.0.2 specification.
+- id: api-key-auth
+  conforms: true
+  evidence: securitySchemes define an apiKey scheme (X-API-KEY header).
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme; PropelAuth bearer JWT only.
+- id: openid-connect
+  conforms: false
+  evidence: No openIdConnect scheme; /.well-known/openid-configuration returns 404.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use application/json with named schemas, not application/problem+json.
+- id: rfc6585-429
+  conforms: true
+  evidence: A dedicated 429 Too Many Requests response is defined.
+- id: offset-limit-pagination
+  conforms: true
+  evidence: List endpoints use limit/offset query parameters.
+- id: idempotency-key
+  conforms: false
+  evidence: No Idempotency-Key header/parameter documented.
+- id: async-callbacks-webhooks
+  conforms: false
+  evidence: Asynchronous endpoints use submit-and-poll (request_id), no webhook/callback surface.

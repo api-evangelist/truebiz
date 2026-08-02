@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/truebiz-openapi-original.json
+docs: https://ae.truebiz.io/api/v1/docs
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+  notes: >-
+    All requests to TrueBiz require an API key sent in the X-API-KEY request
+    header (documented in the API reference Introduction). A PropelAuth bearer
+    JWT is accepted as an alternative for dashboard-issued sessions. There is no
+    OAuth2 authorization-code/scoped flow, so no scopes artifact applies.
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-KEY
+  description: Primary authentication. Send your TrueBiz API key in the X-API-KEY header.
+  sources:
+  - openapi/truebiz-openapi-original.json
+- name: AsyncApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-KEY
+  description: Same X-API-KEY header, applied to the asynchronous (job-submission) endpoints.
+  sources:
+  - openapi/truebiz-openapi-original.json
+- name: PropelAuthBearer
+  type: http
+  scheme: bearer
+  description: PropelAuth-issued bearer JWT accepted for dashboard/app-originated calls.
+  sources:
+  - openapi/truebiz-openapi-original.json
+- name: AsyncPropelAuthBearer
+  type: http
+  scheme: bearer
+  description: PropelAuth bearer JWT applied to the asynchronous endpoints.
+  sources:
+  - openapi/truebiz-openapi-original.json

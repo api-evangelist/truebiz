@@ -1,0 +1,36 @@
+# TrueBiz
+
+> TrueBiz automates merchant risk assessment by analyzing a business's internet footprint. Its Web Presence Review API scores a merchant's legitimacy and risk from a domain plus submitted business details, and its Monitoring API continuously watches domains and raises alerts. Used by payments providers and financial institutions to streamline underwriting and ongoing merchant due diligence.
+
+Authentication: all requests require an API key in the `X-API-KEY` header (a PropelAuth bearer JWT is also accepted). Base URL: https://ae.truebiz.io. Async endpoints return a `request_id`; results are retrieved by polling the history endpoints (submit-and-poll, no webhooks). List endpoints paginate with `limit`/`offset`.
+
+## APIs
+- [TrueBiz Web Presence Review API](https://ae.truebiz.io/api/v1/docs): merchant web-presence review, blocklist, website status, monitoring, industry discovery, and fraud search.
+
+## Specs
+- [OpenAPI 3.0.2](https://ae.truebiz.io/api/v1/openapi.json): the machine-readable API definition (19 paths, 23 operations).
+
+## Products / operation groups
+- Web Presence Review (`POST /api/v1/company/search`, `POST /api/v1/company/async/search`): assess a merchant from a domain + submitted business details.
+- Website Status (`POST /api/v1/website/status`): check whether a merchant website is reachable.
+- Blocklist (`GET/POST/DELETE /api/v1/company/block`, `POST /api/v1/company/evaluate`): manage and evaluate blocklisted domains.
+- History (`GET /api/v1/history/company`, `GET /api/v1/history/company/{request_id}`, `GET /api/v1/history/industry`, `GET /api/v1/history/combined_lookups`): retrieve stored review results.
+- Monitoring (`POST /api/v1/monitoring/start`, `GET /api/v1/monitoring/domains`, `GET /api/v1/monitoring/alerts`): continuous domain monitoring and alerts.
+- Industry Discovery (`POST/GET /api/v1/industry-searches`): discover businesses by industry.
+- Fraud Search (`POST/GET /api/v1/fraud-searches`): run fraud-oriented searches.
+
+## Docs
+- [API Reference (ReDoc)](https://ae.truebiz.io/api/v1/docs)
+- [Documentation](https://docs.truebiz.io)
+- [Blog](https://truebiz.io/blog)
+- [Contact / Support](https://truebiz.io/contact-us)
+- [Login / Sign up](https://app.truebiz.io/)
+
+## Artifacts (API Evangelist enrichment)
+- [Authentication profile](authentication/truebiz-authentication.yml)
+- [API conventions](conventions/truebiz-conventions.yml)
+- [Error catalog](errors/truebiz-problem-types.yml)
+- [Lifecycle](lifecycle/truebiz-lifecycle.yml)
+- [Data model](data-model/truebiz-data-model.yml)
+- [Conformance](conformance/truebiz-conformance.yml)
+- [MCP (candidate)](mcp/truebiz-mcp.yml)

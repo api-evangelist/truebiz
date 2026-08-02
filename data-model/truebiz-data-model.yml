@@ -1,0 +1,79 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truebiz-openapi-original.json
+notes: >-
+  Entity-relationship graph derived from OpenAPI component schema $ref links.
+  Company is the central aggregate returned by a Web Presence Review; a review
+  is correlated to a caller request by request_id and optional external_tracking_ref.
+  The review bundles a domain profile, risk analysis, website content, customer
+  reviews, and website traffic as analysis sections.
+entities:
+- name: Company
+  role: root aggregate returned by Web Presence Review / Fraud Search
+  relationships:
+  - has_many: Address
+    via: additional_addresses
+  - has_many: Phone
+    via: additional_phone_numbers
+  - has_many: Email
+    via: email_addresses
+  - has_many: NewsArticle
+    via: news_articles
+  - has_many: SocialMediaProfile
+    via: social_media_detailed_profiles
+  - has_many: Person
+    via: people
+  - has_many: ConnectedEntity
+    via: connected_entities
+- name: Domain
+  role: domain/hosting/tech profile of the reviewed website
+  relationships:
+  - has_many: HistoricalArchive
+    via: historical_archives
+  - has_many: HostingProvider
+    via: hosting_providers
+  - has_many: TechSpendRecord
+    via: estimated_tech_spend_history
+  - has_many: TechActivityMonth
+    via: website_tech_activity
+  - has_many: CredentialMatchDomain
+    via: domains_with_matching_credentials
+- name: RiskAnalysis
+  role: risk scoring and fraud signals
+  relationships:
+  - has_one: FraudRisk
+    via: fraud_risk
+- name: RiskIndicators
+  role: grouped risk/validity/notice flags
+  relationships:
+  - has_many: Risk
+    via: risk
+  - has_many: Risk
+    via: validity
+  - has_many: Risk
+    via: notice
+- name: WebsiteContent
+  role: analysis of the merchant's site content
+  relationships:
+  - has_many: ContentFlagDetail
+    via: content_flag_details
+  - has_many: DetectedBrand
+    via: detected_brands
+  - has_many: DuplicateMatch
+    via: duplicate_websites
+- name: CustomerReviews
+  role: aggregated third-party customer reviews
+  relationships:
+  - has_many: CustomerReviewsData
+    via: providers
+- name: Person
+  role: person connected to the business (owner/officer)
+  relationships:
+  - has_many: EmploymentRecord
+    via: other_active_positions
+identifiers:
+  request_id: correlates an async review submission to its stored history record
+  external_tracking_ref: caller-supplied reference echoed back for reconciliation
+  search_id: identifies an industry-search or fraud-search job
+  alert_id: identifies a monitoring alert
+  domain: natural key for blocklist and monitoring resources

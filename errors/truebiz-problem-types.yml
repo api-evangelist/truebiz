@@ -1,0 +1,49 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truebiz-openapi-original.json
+format: json
+notes: >-
+  Errors are returned as application/json objects with named schemas (not
+  RFC 9457 problem+json). Each error status maps to a component schema in the
+  OpenAPI. Titles/remediation below are derived from the response descriptions
+  and schema names in the spec.
+envelope:
+  media_type: application/json
+  detail_field: detail
+problems:
+- status: 400
+  schema: BadRequest
+  title: Bad Request
+  remediation: The request was malformed. Check the request body and query parameters.
+- status: 401
+  schema: Unauthorized
+  title: Unauthorized
+  remediation: Missing or invalid X-API-KEY header (or PropelAuth bearer). Verify your API key.
+- status: 403
+  schema: Unauthorized
+  title: Forbidden
+  remediation: The key is valid but not permitted for this resource or product.
+- status: 404
+  schema: NotFound
+  title: Not Found
+  remediation: The requested resource (request_id, domain, alert, or search) does not exist.
+- status: 409
+  schema: InvalidRequest
+  title: Conflict
+  remediation: The request conflicts with current state (e.g. a domain already blocked/monitored).
+- status: 412
+  schema: PreconditionFailed
+  title: Precondition Failed
+  remediation: A required precondition was not met before the operation could run.
+- status: 422
+  schema: InvalidInputParameter
+  title: Unprocessable Entity
+  remediation: Validation failed on one or more input parameters. Inspect the field-level detail.
+- status: 429
+  schema: TooManyRequests
+  title: Too Many Requests
+  remediation: Rate limit exceeded. Back off and retry after a delay.
+- status: 500
+  schema: InternalServerError
+  title: Internal Server Error
+  remediation: A server-side error occurred. Retry later or contact TrueBiz support.

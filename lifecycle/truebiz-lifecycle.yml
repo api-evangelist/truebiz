@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truebiz-openapi-original.json
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  docs: https://ae.truebiz.io/api/v1/docs
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No published deprecation policy or RFC 8594 Sunset/Deprecation header support was found.
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
+notes: >-
+  Probed https://status.truebiz.io and https://trust.truebiz.io (no host / no
+  response), and truebiz.io/changelog (404). No status page, SLA page, or dated
+  changelog was published at the time of enrichment. No operations in the spec
+  are marked deprecated.

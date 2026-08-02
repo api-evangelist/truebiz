@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/truebiz-openapi-original.json
+docs: https://ae.truebiz.io/api/v1/docs
+authentication:
+  style: api-key-header
+  header: X-API-KEY
+  alternative: PropelAuth bearer JWT
+  ref: authentication/truebiz-authentication.yml
+idempotency:
+  supported: false
+  notes: >-
+    No idempotency-key header or parameter is documented in the OpenAPI. Write
+    operations (block a domain, start monitoring) are naturally idempotent by
+    resource identity (domain), and async reviews are de-duplicated by the
+    caller-supplied external_tracking_ref, but there is no formal Idempotency-Key
+    contract.
+pagination:
+  style: offset-limit
+  params:
+  - limit
+  - offset
+  applies_to:
+  - GET /api/v1/company/block
+  - GET /api/v1/history/company
+  - GET /api/v1/history/industry
+  - GET /api/v1/history/combined_lookups
+  - GET /api/v1/monitoring/alerts
+  - GET /api/v1/monitoring/domains
+  - GET /api/v1/industry-searches
+  - GET /api/v1/fraud-searches
+  filtering:
+    notes: >-
+      List endpoints accept rich filters such as min_datetime/max_datetime,
+      search_term, created_before/created_after, domain, external_ref_id,
+      flagged_categories, report_type, include_errored, and order_by.
+async:
+  model: submit-and-poll
+  notes: >-
+    Asynchronous endpoints (POST /company/async/search, POST /company/evaluate,
+    POST /website/status) accept a job and return a request_id; results are
+    retrieved by polling the history endpoints (GET /history/company/{request_id},
+    GET /history/industry/{request_id}). There is no webhook/callback delivery
+    surface in the published spec.
+request_tracing:
+  client_ref_field: external_tracking_ref
+  notes: >-
+    Callers may pass external_tracking_ref (and external_ref_id on monitoring)
+    to correlate their own records with TrueBiz results and later look them up.
+versioning:
+  scheme: uri-path
+  current: v1
+  ref: lifecycle/truebiz-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  detail_field: detail
+  ref: errors/truebiz-problem-types.yml
+rate_limiting:
+  signaled: true
+  mechanism: HTTP 429 Too Many Requests
+  notes: A dedicated 429 response (TooManyRequests schema) is defined across endpoints.

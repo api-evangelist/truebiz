@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/truebiz-openapi-original.json
+skills:
+- file: truebiz-web-presence-review.md
+  name: Run a TrueBiz Web Presence Review
+  api: openapi/truebiz-openapi-original.json
+  operations:
+  - core_api_company_review_company
+  - core_api_async_company_async_review_company
+  - core_api_company_lookup_get_web_presence_review_history
+- file: truebiz-merchant-monitoring.md
+  name: Monitor a merchant domain with TrueBiz
+  api: openapi/truebiz-openapi-original.json
+  operations:
+  - monitoring_api_router_domains_routes_start_start_monitoring_domain
+  - monitoring_api_router_domains_routes_list_domains_list_monitored_domains
+  - monitoring_api_router_alerts_routes_list_alerts_list_monitoring_alerts
+  - monitoring_api_router_alerts_routes_get_alert_get_monitoring_alert
+- file: truebiz-manage-blocklist.md
+  name: Manage the TrueBiz domain blocklist
+  api: openapi/truebiz-openapi-original.json
+  operations:
+  - core_api_async_company_blocklist_evaluate_blocked_domains
+  - core_api_company_blocklist_create_blocked_domain
+  - core_api_company_blocklist_list_blocked_domains
+  - core_api_company_blocklist_delete_blocked_domain

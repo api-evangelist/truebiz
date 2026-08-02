@@ -1,0 +1,22 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for TrueBiz Web Presence Review API
+  version: 1.0.0
+extends: openapi/truebiz-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: truebiz
+    x-apievangelist-category: merchant-risk-business-verification
+    x-apievangelist-auth: api-key-header
+    x-apievangelist-pagination: offset-limit
+    x-apievangelist-async-model: submit-and-poll
+- target: $.info
+  update:
+    x-apievangelist-artifacts:
+      authentication: authentication/truebiz-authentication.yml
+      conventions: conventions/truebiz-conventions.yml
+      errors: errors/truebiz-problem-types.yml
+      lifecycle: lifecycle/truebiz-lifecycle.yml
+      data-model: data-model/truebiz-data-model.yml
+      conformance: conformance/truebiz-conformance.yml

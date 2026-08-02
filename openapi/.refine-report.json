@@ -1,0 +1,34 @@
+{
+  "provider": "truebiz",
+  "sources": [
+    "truebiz-async-web-presence-review-api-openapi.yml",
+    "truebiz-fraud-searches-api-openapi.yml",
+    "truebiz-history-api-openapi.yml",
+    "truebiz-industry-discovery-api-openapi.yml",
+    "truebiz-industry-discovery-history-api-openapi.yml",
+    "truebiz-monitoring-alerts-api-openapi.yml",
+    "truebiz-monitoring-domains-api-openapi.yml",
+    "truebiz-web-presence-review-api-openapi.yml",
+    "truebiz-web-presence-review-blocklist-api-openapi.yml",
+    "truebiz-web-presence-review-history-api-openapi.yml",
+    "truebiz-website-status-api-openapi.yml"
+  ],
+  "outputs": [
+    "truebiz-async-web-presence-review-api-openapi.yml",
+    "truebiz-fraud-searches-api-openapi.yml",
+    "truebiz-history-api-openapi.yml",
+    "truebiz-industry-discovery-api-openapi.yml",
+    "truebiz-industry-discovery-history-api-openapi.yml",
+    "truebiz-monitoring-alerts-api-openapi.yml",
+    "truebiz-monitoring-domains-api-openapi.yml",
+    "truebiz-web-presence-review-api-openapi.yml",
+    "truebiz-web-presence-review-blocklist-api-openapi.yml",
+    "truebiz-web-presence-review-history-api-openapi.yml",
+    "truebiz-website-status-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

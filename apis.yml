@@ -1,26 +1,306 @@
 aid: truebiz
 name: TrueBiz
-description: 'TrueBiz is a company surfaced as a portfolio company of homebrew and added to the API Evangelist
-  network as a stub for enrichment. Sector: security. This profile is a lead awaiting the enrichment pipeline.'
+description: >-
+  TrueBiz automates merchant risk assessment by analyzing a business's internet
+  footprint. Its Web Presence Review API scores a merchant's legitimacy and risk
+  from a domain plus submitted business details, returning a rich Company profile
+  with fraud-risk analysis, website content flags, customer reviews, connected
+  people and entities, and domain/hosting intelligence. A Monitoring API watches
+  domains continuously and raises alerts, and Blocklist, Industry Discovery, and
+  Fraud Search endpoints round out the platform. Payments providers and financial
+  institutions use TrueBiz to streamline underwriting and ongoing merchant due
+  diligence. The REST API authenticates with an X-API-KEY header and is documented
+  with an OpenAPI 3.0.2 specification.
 url: https://raw.githubusercontent.com/api-evangelist/truebiz/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - homebrew
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: real-openapi-harvested
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://truebiz.io/favicon.ico
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
 tags:
 - Company
 - Security
-apis: []
+- Fraud Prevention
+- Business Verification
+- Merchant Risk
+- KYB
+- Underwriting
+- Payments
+- Monitoring
+apis:
+- aid: truebiz:truebiz-async-web-presence-review-api
+  name: TrueBiz Async Web Presence Review API
+  description: >-
+    Web Presence Review endpoints allow you to provide information about a business for TrueBiz to review.
+     We look at the content on the website, find social media profiles, review sites, and other
+    broader web presence. For security reasons, any domain provided will be reduced to the registered
+    domain known
+
+    to Mozilla's Public Suffix List (e.g. https://www.bbc.co.uk/some/page -> bbc.co.uk). These endpoints
+    will then
+
+    review the web presence starting with the index page for that domain (e.g. bbc.co.uk -> https://bbc.co.uk/).
+
+
+    This asynchronous endpoint allows you to submit a request to TrueBiz without having to wait for the
+    response to
+
+    complete. Your submission will instead get a response containing a brief message and a tracking ID.
+    You may either
+
+    poll for status updates using the url provided in the response's `Location` header, or, if you have
+
+    a webhook configured, wait for us to notify you when the web presence review is completed. (You may
+    then request
+
+    the details from the Web Presence Review History endpoint.)
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Async Web Presence Review
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-async-web-presence-review-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-fraud-searches-api
+  name: TrueBiz Fraud Searches API
+  description: The Fraud Searches API from TrueBiz — 2 operation(s) for fraud searches.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Fraud Searches
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-fraud-searches-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-history-api
+  name: TrueBiz History API
+  description: The History API from TrueBiz — 1 operation(s) for history.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-history-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-industry-discovery-api
+  name: TrueBiz Industry Discovery API
+  description: The Industry Discovery API from TrueBiz — 2 operation(s) for industry discovery.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Industry Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-industry-discovery-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-industry-discovery-history-api
+  name: TrueBiz Industry Discovery History API
+  description: >-
+    The Industry Discovery History API from TrueBiz — 2 operation(s) for industry discovery history.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Industry Discovery History
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-industry-discovery-history-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-monitoring-alerts-api
+  name: TrueBiz Monitoring Alerts API
+  description: >-
+    Monitoring alerts endpoints allow you to see what alerts TrueBiz has found during monitoring.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Monitoring Alerts
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-monitoring-alerts-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-monitoring-domains-api
+  name: TrueBiz Monitoring Domains API
+  description: >-
+    Monitored domain endpoints allow you to see what domains TrueBiz is currently monitoring.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Monitoring Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-monitoring-domains-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-web-presence-review-api
+  name: TrueBiz Web Presence Review API
+  description: >-
+    Web Presence Review endpoints allow you to provide information about a business for TrueBiz to review.
+     We look at the content on the website, find social media profiles, review sites, and other
+    broader web presence. For security reasons, any domain provided will be reduced to the registered
+    domain known
+
+    to Mozilla's Public Suffix List (e.g. https://www.bbc.co.uk/some/page -> bbc.co.uk). These endpoints
+    will then
+
+    review the web presence starting with the index page for that domain (e.g. bbc.co.uk -> https://bbc.co.uk/).
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Web Presence Review
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-web-presence-review-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-web-presence-review-blocklist-api
+  name: TrueBiz Web Presence Review Blocklist API
+  description: >-
+    Web Presence Review endpoints allow you to provide an input like a domain, url, or email associated
+    with a website
+
+    for TrueBiz to review.  For business or compliance reasons, you may want to directly block a domain
+    from ever being
+
+    reviewed by TrueBiz.  As such, we provide simple these operations for a list of domains to prevent
+    these domains from
+
+    being evaluated.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Web Presence Review Blocklist
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-web-presence-review-blocklist-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-web-presence-review-history-api
+  name: TrueBiz Web Presence Review History API
+  description: >-
+    Web Presence Review results are stored with TrueBiz until you request their deletion.  These endpoints
+
+    are designed to allow you to access these historical results.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Web Presence Review History
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-web-presence-review-history-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
+- aid: truebiz:truebiz-website-status-api
+  name: TrueBiz Website Status API
+  description: >-
+    Our website status endpoints help with checking to see if a provided URL is up and that it is not
+    part of a
+
+    website grouping that TrueBiz does not support.
+  humanURL: https://ae.truebiz.io/api/v1/docs
+  baseURL: https://ae.truebiz.io
+  tags:
+  - Website Status
+  properties:
+  - type: OpenAPI
+    url: openapi/truebiz-website-status-api-openapi.yml
+  - type: APIReference
+    url: https://ae.truebiz.io/api/v1/docs
+  - type: Documentation
+    url: https://docs.truebiz.io
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Portal
+  url: https://ae.truebiz.io/api/v1/docs
+- type: Documentation
+  url: https://docs.truebiz.io
+- type: APIReference
+  url: https://ae.truebiz.io/api/v1/docs
+- type: Authentication
+  url: authentication/truebiz-authentication.yml
+- type: Conventions
+  url: conventions/truebiz-conventions.yml
+- type: ErrorCatalog
+  url: errors/truebiz-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/truebiz-lifecycle.yml
+- type: Conformance
+  url: conformance/truebiz-conformance.yml
+- type: DataModel
+  url: data-model/truebiz-data-model.yml
+- type: DomainSecurity
+  url: security/truebiz-domain-security.yml
+- type: MCPServer
+  url: mcp/truebiz-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/truebiz-openapi-overlay.yaml
+- type: LLMsTxt
+  url: llms/truebiz-llms.txt
+- type: Blog
+  url: https://truebiz.io/blog
+- type: GitHubOrganization
+  url: https://github.com/truebiz
+- type: Support
+  url: https://truebiz.io/contact-us
+- type: Login
+  url: https://app.truebiz.io/
+- type: TermsOfService
+  url: https://truebiz.io/terms-of-service
+- type: PrivacyPolicy
+  url: https://truebiz.io/privacy
 - type: Website
   url: https://truebiz.io

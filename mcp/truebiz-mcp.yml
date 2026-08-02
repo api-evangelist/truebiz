@@ -1,0 +1,62 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/truebiz-openapi-original.json
+notes: >-
+  No official hosted/remote MCP server was found for TrueBiz (no public
+  @modelcontextprotocol package, no mcp.truebiz.io, no MCP mention in docs).
+  The tools below are a candidate mapping derived one-per-operation from the
+  OpenAPI, for a would-be MCP server fronting the Web Presence Review API.
+server:
+  name: truebiz
+  transport: http
+  url: null
+tools:
+- name: review_company
+  description: Run a synchronous Web Presence Review for a business/domain.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_company_review_company
+- name: review_company_async
+  description: Submit an asynchronous Web Presence Review; returns a request_id to poll.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_async_company_async_review_company
+- name: evaluate_blocked_domains
+  description: Evaluate a domain against the account blocklist.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_async_company_blocklist_evaluate_blocked_domains
+- name: create_blocked_domain
+  description: Add a domain to the blocklist.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_company_blocklist_create_blocked_domain
+- name: delete_blocked_domain
+  description: Remove a domain from the blocklist.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_company_blocklist_delete_blocked_domain
+- name: list_blocked_domains
+  description: List blocklisted domains.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_company_blocklist_list_blocked_domains
+- name: get_website_status
+  description: Check whether a website is reachable/online.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_website_get_website_status
+- name: list_web_presence_reviews
+  description: List stored Web Presence Review history.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_company_lookup_get_web_presence_reviews_history
+- name: get_web_presence_review
+  description: Retrieve a stored Web Presence Review by request_id.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_company_lookup_get_web_presence_review_history
+- name: start_monitoring_domain
+  description: Start continuous monitoring of a domain.
+  source_operation: openapi/truebiz-openapi-original.json#monitoring_api_router_domains_routes_start_start_monitoring_domain
+- name: list_monitored_domains
+  description: List monitored domains.
+  source_operation: openapi/truebiz-openapi-original.json#monitoring_api_router_domains_routes_list_domains_list_monitored_domains
+- name: get_monitored_domain
+  description: Get a monitored domain by domain name.
+  source_operation: openapi/truebiz-openapi-original.json#monitoring_api_router_domains_routes_get_domain_get_monitored_domain
+- name: list_monitoring_alerts
+  description: List monitoring alerts.
+  source_operation: openapi/truebiz-openapi-original.json#monitoring_api_router_alerts_routes_list_alerts_list_monitoring_alerts
+- name: get_monitoring_alert
+  description: Get a monitoring alert by alert_id.
+  source_operation: openapi/truebiz-openapi-original.json#monitoring_api_router_alerts_routes_get_alert_get_monitoring_alert
+- name: create_industry_search
+  description: Create an Industry Discovery search.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_business_search_create_industry_search
+- name: create_fraud_search
+  description: Create a Fraud Search.
+  source_operation: openapi/truebiz-openapi-original.json#core_api_fraud_search_create_fraud_search
