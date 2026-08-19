@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TrueBiz Web Presence Review Async Web Presence Review Monitoring Domains API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitoring Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Monitored Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/monitoring/domains/:domain",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get information about a particular domain TrueBiz is currently monitoring.\nThis endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests\nper second."
+        },
+        {
+          "info": {
+            "name": "List Monitored Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/monitoring/domains",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "package_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "external_ref_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all domains currently monitored by TrueBiz.\nThis endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests\nper second."
+        },
+        {
+          "info": {
+            "name": "Start Monitoring Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ae.truebiz.io/api/v1/monitoring/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Start monitoring a domain.\nThis endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests\nper second."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

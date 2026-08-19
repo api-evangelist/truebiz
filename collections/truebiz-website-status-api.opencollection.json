@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TrueBiz Web Presence Review Async Web Presence Review Website Status API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Website Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Website Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ae.truebiz.io/api/v1/website/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "This API endpoint allows you to test if a webserver is responsive similar to popular \"is it up\" type sites.\nIt will also check to see if the website link corresponds to known social media or marketplace sites.  Given\nthat some pages load extremely slowly, the higher you set the timeout the more likely you are to get an accurate\nresult.  Our default of 7.5 seconds is accurate about 99% of the time in our testing.\nThis API requires a valid API key (X-API-KEY) to be provided in the headers and is r"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

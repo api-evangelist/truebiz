@@ -1,0 +1,677 @@
+{
+  "item": [
+    {
+      "id": "f43aca8f-f8b8-49c4-a7b0-80c44da32966",
+      "name": "History",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed808925-f42c-468d-a587-d8a225240148",
+          "name": "Get Combined Lookups History",
+          "request": {
+            "name": "Get Combined Lookups History",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "history",
+                "combined_lookups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "min_datetime",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_datetime",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "search_term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "report_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "report_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_errored",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-KEY"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ab3122e1-5efb-4a82-a7c0-d4963f980a56",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "history",
+                    "combined_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "max_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_errored",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"9538b13b-e069-55e1-b6d4-896554f6baea\",\n      \"created_at\": \"1947-04-19T13:54:55.407Z\",\n      \"status\": \"string\",\n      \"report_type\": \"string\",\n      \"term\": \"string\",\n      \"external_tracking_ref\": \"string\",\n      \"query\": {},\n      \"response\": {}\n    },\n    {\n      \"id\": \"6b9e9f83-c2ff-7922-4a52-12c1bda51939\",\n      \"created_at\": \"1982-10-29T18:48:09.979Z\",\n      \"status\": \"string\",\n      \"report_type\": \"string\",\n      \"term\": \"string\",\n      \"external_tracking_ref\": \"string\",\n      \"query\": {},\n      \"response\": {}\n    }\n  ],\n  \"count\": 6652,\n  \"limit\": 4845,\n  \"offset\": 5192\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed9a75b4-1d47-474a-af47-4948d1efaf7a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "history",
+                    "combined_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "max_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_errored",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Bad request.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "638a343f-afe9-4cc6-baf0-b4189aedc6fe",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "history",
+                    "combined_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "max_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_errored",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Unauthorized.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83e7fd14-c5cc-4f20-866c-71ca785c8c98",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "history",
+                    "combined_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "max_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_errored",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec87ee24-b771-4004-ab8a-65ad67ec935f",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "history",
+                    "combined_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "max_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_errored",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid input.\",\n  \"invalid_parameters\": [\n    {\n      \"field_name\": \"field1\",\n      \"errors\": [\n        \"This field is required.\"\n      ]\n    },\n    {\n      \"field_name\": \"non_field_errors\",\n      \"errors\": [\n        \"There's something strange in your input.\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2413b6f-3674-43da-bde2-c6d8fd39eb34",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "history",
+                    "combined_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "max_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_errored",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e42f8e9c-1764-40a9-88ba-1bde1825eff7",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "history",
+                    "combined_lookups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "max_datetime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_errored",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://ae.truebiz.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e76f2a6a-b50c-4a76-9e24-3fa1d95bf561",
+    "name": "TrueBiz Web Presence Review Async Web Presence Review History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\nTrueBiz provides tools to automate assessing a merchant's web presence through the entire customer lifecycle.\n\n# Authentication\n\nAll requests to TrueBiz require an API key to be sent as a header.  The expected header name is \"X-API-KEY\".\n",
+      "type": "text/plain"
+    }
+  }
+}

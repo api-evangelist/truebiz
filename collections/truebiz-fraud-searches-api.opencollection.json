@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TrueBiz Web Presence Review Async Web Presence Review Fraud Searches API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fraud Searches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Fraud Searches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/fraud-searches",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List Fraud Searches"
+        },
+        {
+          "info": {
+            "name": "Create Fraud Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ae.truebiz.io/api/v1/fraud-searches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create Fraud Search"
+        },
+        {
+          "info": {
+            "name": "Get Fraud Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/fraud-searches/:search_id",
+            "params": [
+              {
+                "name": "search_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Fraud Search"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

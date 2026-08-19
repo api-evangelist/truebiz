@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TrueBiz Web Presence Review Async Web Presence Review History API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Combined Lookups History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/history/combined_lookups",
+            "params": [
+              {
+                "name": "min_datetime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "max_datetime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search_term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "report_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_errored",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get Combined Lookups History"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TrueBiz Web Presence Review Async Web Presence Review Industry Discovery API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Industry Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Industry Searches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/industry-searches",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The List Industry Searches endpoint retrieves a list of all industry discovery requests associated with the\naccount linked to the provided API key. Each entry in the list includes the unique identifier, creation and\nupdate timestamps, current status, and a brief status description. If a search has been completed, the\nresult field will contain the discovered industry information; otherwise, it will be null."
+        },
+        {
+          "info": {
+            "name": "Create Industry Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ae.truebiz.io/api/v1/industry-searches",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create Industry Search endpoints allow you to start a new industry discovery request. You provide a business\nname and location details, and TrueBiz creates a search record. The response includes a unique identifier for\nthe search, which can be used to retrieve the results from the corresponding retrieval endpoint once processing\nis complete. In addition to the the ID returned in the response body, the full retrieval URL is also included\nin the Location header sent with the response.\n\nThis API re"
+        },
+        {
+          "info": {
+            "name": "Get Industry Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/industry-searches/:search_id",
+            "params": [
+              {
+                "name": "search_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "The Get Industry Search endpoint retrieves the status and results of a previously created industry discovery\nrequest. If the discovery is still in progress, the endpoint responds with HTTP 202 (Accepted). When the discovery\nis complete, the endpoint responds with HTTP 200 (OK) and returns the discovered industry information,\nincluding name, address, description, and industry classifications (e.g., NAICS, SIC, MCC).\n\nClients should poll the Get Industry Search endpoint using exponential backoff r"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -2,11 +2,9 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: openapi/truebiz-openapi-original.json
-notes: >-
-  No official hosted/remote MCP server was found for TrueBiz (no public
-  @modelcontextprotocol package, no mcp.truebiz.io, no MCP mention in docs).
-  The tools below are a candidate mapping derived one-per-operation from the
-  OpenAPI, for a would-be MCP server fronting the Web Presence Review API.
+notes: No official hosted/remote MCP server was found for TrueBiz (no public @modelcontextprotocol package,
+  no mcp.truebiz.io, no MCP mention in docs). The tools below are a candidate mapping derived one-per-operation
+  from the OpenAPI, for a would-be MCP server fronting the Web Presence Review API.
 server:
   name: truebiz
   transport: http
@@ -60,3 +58,9 @@ tools:
 - name: create_fraud_search
   description: Create a Fraud Search.
   source_operation: openapi/truebiz-openapi-original.json#core_api_fraud_search_create_fraud_search
+deployment:
+  mode: none
+  verified: derived
+  tools: 16
+  checked: '2026-08-12'
+  source: catalog MCP census

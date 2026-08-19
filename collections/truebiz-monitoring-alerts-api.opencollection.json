@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TrueBiz Web Presence Review Async Web Presence Review Monitoring Alerts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitoring Alerts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Monitoring Alert",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/monitoring/alerts/:alert_id",
+            "params": [
+              {
+                "name": "alert_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get details about a particular monitoring alert.\nThis endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests\nper second."
+        },
+        {
+          "info": {
+            "name": "List Monitoring Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://ae.truebiz.io/api/v1/monitoring/alerts",
+            "params": [
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "external_ref_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "flagged_categories",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-KEY",
+              "value": "{{X-API-KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "List all monitoring alerts.\nThis endpoint requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests\nper second."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
