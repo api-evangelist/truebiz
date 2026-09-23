@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: TrueBiz Web Presence Review Async Web Presence Review History API
+  title: TrueBiz Web Presence Review History API
   version: 1.0.0
   description: '# Introduction
 
@@ -10,9 +10,7 @@ info:
     # Authentication
 
 
-    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
-
-    '
+    All requests to TrueBiz require an API key to be sent as a header. The expected header name is "X-API-KEY".'
 servers:
 - url: https://ae.truebiz.io
   description: Production
@@ -123,8 +121,8 @@ paths:
       - History
 components:
   schemas:
-    InternalServerError:
-      title: InternalServerError
+    Unauthorized:
+      title: Unauthorized
       type: object
       properties:
         message:
@@ -133,18 +131,7 @@ components:
       required:
       - message
       example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+        message: Unauthorized.
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -164,8 +151,8 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    BadRequest:
-      title: BadRequest
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
         message:
@@ -174,7 +161,42 @@ components:
       required:
       - message
       example:
-        message: Bad request.
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
     CombinedMetaLookup:
       title: CombinedMetaLookup
       type: object
@@ -210,8 +232,8 @@ components:
       - created_at
       - status
       - report_type
-    NotFound:
-      title: NotFound
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         message:
@@ -220,7 +242,7 @@ components:
       required:
       - message
       example:
-        message: Not found.
+        message: Bad request.
     PagedCombinedMetaLookup:
       title: PagedCombinedMetaLookup
       type: object
@@ -244,32 +266,8 @@ components:
       - count
       - limit
       - offset
-    InvalidRequest:
-      title: InvalidRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
-      required:
-      - message
-      example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
-    Unauthorized:
-      title: Unauthorized
+    NotFound:
+      title: NotFound
       type: object
       properties:
         message:
@@ -278,7 +276,7 @@ components:
       required:
       - message
       example:
-        message: Unauthorized.
+        message: Not found.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

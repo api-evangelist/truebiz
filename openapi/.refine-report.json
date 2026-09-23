@@ -1,17 +1,7 @@
 {
   "provider": "truebiz",
   "sources": [
-    "truebiz-async-web-presence-review-api-openapi.yml",
-    "truebiz-fraud-searches-api-openapi.yml",
-    "truebiz-history-api-openapi.yml",
-    "truebiz-industry-discovery-api-openapi.yml",
-    "truebiz-industry-discovery-history-api-openapi.yml",
-    "truebiz-monitoring-alerts-api-openapi.yml",
-    "truebiz-monitoring-domains-api-openapi.yml",
-    "truebiz-web-presence-review-api-openapi.yml",
-    "truebiz-web-presence-review-blocklist-api-openapi.yml",
-    "truebiz-web-presence-review-history-api-openapi.yml",
-    "truebiz-website-status-api-openapi.yml"
+    "_original/truebiz-openapi-original.json"
   ],
   "outputs": [
     "truebiz-async-web-presence-review-api-openapi.yml",
@@ -29,6 +19,30 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "truebiz-openapi-original.json: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "truebiz-openapi-original.json: tagged paths GET /api/v1/history/combined_lookups -> History",
+    "truebiz-openapi-original.json: tagged paths POST /api/v1/fraud-searches -> Fraud Searches",
+    "truebiz-openapi-original.json: tagged paths GET /api/v1/fraud-searches -> Fraud Searches",
+    "truebiz-openapi-original.json: tagged paths GET /api/v1/fraud-searches/{search_id} -> Fraud Searches",
+    "truebiz-openapi-original.json: declared missing tag: Fraud Searches",
+    "truebiz-openapi-original.json: declared missing tag: History",
+    "truebiz-openapi-original.json: declared missing tag: Industry Discovery",
+    "truebiz-openapi-original.json: declared missing tag: Industry Discovery History",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "truebiz-async-web-presence-review-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-fraud-searches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-industry-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-industry-discovery-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-monitoring-alerts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-monitoring-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-web-presence-review-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-web-presence-review-blocklist-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-web-presence-review-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "truebiz-website-status-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

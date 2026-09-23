@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: TrueBiz Web Presence Review Async Web Presence Review Industry Discovery API
+  title: TrueBiz Web Presence Review Industry Discovery API
   version: 1.0.0
   description: '# Introduction
 
@@ -10,9 +10,7 @@ info:
     # Authentication
 
 
-    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
-
-    '
+    All requests to TrueBiz require an API key to be sent as a header. The expected header name is "X-API-KEY".'
 servers:
 - url: https://ae.truebiz.io
   description: Production
@@ -316,41 +314,8 @@ paths:
       - PropelAuthBearer: []
 components:
   schemas:
-    BusinessSearchResult:
-      title: BusinessSearchResult
-      type: object
-      properties:
-        business_name:
-          title: Business Name
-          description: The name of the business.
-          type: string
-        business_description:
-          title: Business Description
-          description: A description of the business.
-          type: string
-        business_address:
-          title: Business Address
-          description: The long-form address of the business.
-          nullable: true
-          required: false
-          type: string
-        website:
-          title: Website
-          description: The website of the business.
-          nullable: true
-          type: string
-        primary_mcc:
-          $ref: '#/components/schemas/MCC'
-        additional_mccs:
-          title: Additional Mccs
-          type: array
-          items:
-            $ref: '#/components/schemas/MCC'
-      required:
-      - business_name
-      - business_description
-    InternalServerError:
-      title: InternalServerError
+    ResourceNotReady:
+      title: ResourceNotReady
       type: object
       properties:
         message:
@@ -359,18 +324,49 @@ components:
       required:
       - message
       example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    NoContent:
-      title: NoContent
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    CreateSearchInput:
+      title: CreateSearchInput
       type: object
       properties:
-        message:
-          title: Message
+        submitted_business_name:
+          title: Submitted Business Name
+          description: The name of the business to search for.
+          type: string
+        submitted_website:
+          title: Submitted Website
+          description: The website of the business to search for.
+          type:
+          - string
+          - 'null'
+        city:
+          title: City
+          description: The city where the business is located.
+          type:
+          - string
+          - 'null'
+        state_province:
+          title: State Province
+          description: The state or province where the business is located.
+          type:
+          - string
+          - 'null'
+        postal_code:
+          title: Postal Code
+          description: The postal code of the business location.
+          type:
+          - string
+          - 'null'
+        country:
+          title: Country
+          description: The country where the business is located.
+          type: string
+        external_tracking_ref:
+          title: External Tracking Ref
           type: string
       required:
-      - message
-      example:
-        message: This resource does not contain any content.
+      - submitted_business_name
+      - country
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -390,35 +386,8 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    PagedBusinessSearch:
-      title: PagedBusinessSearch
-      type: object
-      properties:
-        searches:
-          title: Searches
-          type: array
-          items:
-            $ref: '#/components/schemas/BusinessSearch'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-        prev_searches_link:
-          $ref: '#/components/schemas/PrevLink'
-        next_searches_link:
-          $ref: '#/components/schemas/NextLink'
-      required:
-      - searches
-      - count
-      - limit
-      - offset
-    BadRequest:
-      title: BadRequest
+    Forbidden:
+      title: Forbidden
       type: object
       properties:
         message:
@@ -427,80 +396,75 @@ components:
       required:
       - message
       example:
-        message: Bad request.
-    PrevLink:
-      title: PrevLink
+        message: Forbidden.
+    Unauthorized:
+      title: Unauthorized
       type: object
       properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        type:
-          title: Type
-          enum:
-          - io.truebiz.link.prev-items
-          type: string
-        href:
-          title: Href
+        message:
+          title: Message
           type: string
       required:
-      - id
-      - type
-      - href
-    MCC:
-      title: MCC
+      - message
+      example:
+        message: Unauthorized.
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
-        code:
-          title: Code
-          description: The Merchant Category Code.
-          type: string
-        description:
-          title: Description
-          description: The description of the Merchant Category.
+        message:
+          title: Message
           type: string
       required:
-      - code
-      - description
-    CreateSearchInput:
-      title: CreateSearchInput
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    InvalidRequest:
+      title: InvalidRequest
       type: object
       properties:
-        submitted_business_name:
-          title: Submitted Business Name
-          description: The name of the business to search for.
+        message:
+          title: Message
           type: string
-        submitted_website:
-          title: Submitted Website
-          description: The website of the business to search for.
-          nullable: true
-          type: string
-        city:
-          title: City
-          description: The city where the business is located.
-          nullable: true
-          type: string
-        state_province:
-          title: State Province
-          description: The state or province where the business is located.
-          nullable: true
-          type: string
-        postal_code:
-          title: Postal Code
-          description: The postal code of the business location.
-          nullable: true
-          type: string
-        country:
-          title: Country
-          description: The country where the business is located.
-          type: string
-        external_tracking_ref:
-          title: External Tracking Ref
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
           type: string
       required:
-      - submitted_business_name
-      - country
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
     BusinessSearch:
       title: BusinessSearch
       type: object
@@ -547,28 +511,26 @@ components:
       - status
       - status_description
       - query
-    NotFound:
-      title: NotFound
+    PrevLink:
+      title: PrevLink
       type: object
       properties:
-        message:
-          title: Message
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.prev-items
+          type: string
+        href:
+          title: Href
           type: string
       required:
-      - message
-      example:
-        message: Not found.
-    ResourceNotReady:
-      title: ResourceNotReady
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is not yet ready. Please try again in 10 seconds.
+      - id
+      - type
+      - href
     NextLink:
       title: NextLink
       type: object
@@ -589,30 +551,59 @@ components:
       - id
       - type
       - href
-    InvalidRequest:
-      title: InvalidRequest
+    PagedBusinessSearch:
+      title: PagedBusinessSearch
+      type: object
+      properties:
+        searches:
+          title: Searches
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessSearch'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+        prev_searches_link:
+          $ref: '#/components/schemas/PrevLink'
+        next_searches_link:
+          $ref: '#/components/schemas/NextLink'
+      required:
+      - searches
+      - count
+      - limit
+      - offset
+    MCC:
+      title: MCC
+      type: object
+      properties:
+        code:
+          title: Code
+          description: The Merchant Category Code.
+          type: string
+        description:
+          title: Description
+          description: The description of the Merchant Category.
+          type: string
+      required:
+      - code
+      - description
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         message:
           title: Message
           type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
       required:
       - message
       example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
+        message: Bad request.
     Conflict:
       title: Conflict
       type: object
@@ -624,8 +615,43 @@ components:
       - message
       example:
         message: This resource is in conflict with another resource.
-    TooManyRequests:
-      title: TooManyRequests
+    BusinessSearchResult:
+      title: BusinessSearchResult
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          description: The name of the business.
+          type: string
+        business_description:
+          title: Business Description
+          description: A description of the business.
+          type: string
+        business_address:
+          title: Business Address
+          description: The long-form address of the business.
+          required: false
+          type:
+          - string
+          - 'null'
+        website:
+          title: Website
+          description: The website of the business.
+          type:
+          - string
+          - 'null'
+        primary_mcc:
+          $ref: '#/components/schemas/MCC'
+        additional_mccs:
+          title: Additional Mccs
+          type: array
+          items:
+            $ref: '#/components/schemas/MCC'
+      required:
+      - business_name
+      - business_description
+    NotFound:
+      title: NotFound
       type: object
       properties:
         message:
@@ -634,29 +660,7 @@ components:
       required:
       - message
       example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    Forbidden:
-      title: Forbidden
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Forbidden.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
+        message: Not found.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

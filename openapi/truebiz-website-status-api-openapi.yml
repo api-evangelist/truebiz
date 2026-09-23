@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: TrueBiz Web Presence Review Async Web Presence Review Website Status API
+  title: TrueBiz Web Presence Review Website Status API
   version: 1.0.0
   description: '# Introduction
 
@@ -10,21 +10,15 @@ info:
     # Authentication
 
 
-    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
-
-    '
+    All requests to TrueBiz require an API key to be sent as a header. The expected header name is "X-API-KEY".'
 servers:
 - url: https://ae.truebiz.io
   description: Production
 tags:
 - name: Website Status
-  description: '
+  description: 'Our website status endpoints help with checking to see if a provided URL is up and that it is not part of a
 
-    Our website status endpoints help with checking to see if a provided URL is up and that it is not part of a
-
-    website grouping that TrueBiz does not support.
-
-    '
+    website grouping that TrueBiz does not support.'
 paths:
   /api/v1/website/status:
     post:
@@ -76,11 +70,11 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
       description: 'This API endpoint allows you to test if a webserver is responsive similar to popular "is it up" type sites.
 
-        It will also check to see if the website link corresponds to known social media or marketplace sites.  Given
+        It will also check to see if the website link corresponds to known social media or marketplace sites. Given
 
         that some pages load extremely slowly, the higher you set the timeout the more likely you are to get an accurate
 
-        result.  Our default of 7.5 seconds is accurate about 99% of the time in our testing.
+        result. Our default of 7.5 seconds is accurate about 99% of the time in our testing.
 
         This API requires a valid API key (X-API-KEY) to be provided in the headers and is rate limited to 5 requests per
 
@@ -98,8 +92,8 @@ paths:
       - AsyncPropelAuthBearer: []
 components:
   schemas:
-    InternalServerError:
-      title: InternalServerError
+    Unauthorized:
+      title: Unauthorized
       type: object
       properties:
         message:
@@ -108,18 +102,7 @@ components:
       required:
       - message
       example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+        message: Unauthorized.
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -139,8 +122,8 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    BadRequest:
-      title: BadRequest
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
         message:
@@ -149,18 +132,7 @@ components:
       required:
       - message
       example:
-        message: Bad request.
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -185,24 +157,8 @@ components:
         - field_name: non_field_errors
           errors:
           - There's something strange in your input.
-    SocialMediaLink:
-      title: SocialMediaLink
-      type: object
-      properties:
-        is_social_media_link:
-          title: Is social media link?
-          description: Is this a known social media site?
-          default: false
-          example: false
-          type: boolean
-        platform:
-          title: Social media platform
-          description: The social media platform this link is from.
-          example: null
-          nullable: true
-          type: string
-    Unauthorized:
-      title: Unauthorized
+    TooManyRequests:
+      title: TooManyRequests
       type: object
       properties:
         message:
@@ -211,7 +167,18 @@ components:
       required:
       - message
       example:
-        message: Unauthorized.
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
     WebsiteInput:
       title: WebsiteInput
       type: object
@@ -263,6 +230,23 @@ components:
       - alive
       - social_media
       - marketplace
+    SocialMediaLink:
+      title: SocialMediaLink
+      type: object
+      properties:
+        is_social_media_link:
+          title: Is social media link?
+          description: Is this a known social media site?
+          default: false
+          example: false
+          type: boolean
+        platform:
+          title: Social media platform
+          description: The social media platform this link is from.
+          example: null
+          type:
+          - string
+          - 'null'
     MarketplaceLink:
       title: MarketplaceLink
       type: object
@@ -277,8 +261,20 @@ components:
           title: Marketplace platform
           description: The marketplace platform this link is from.
           example: null
-          nullable: true
+          type:
+          - string
+          - 'null'
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
           type: string
+      required:
+      - message
+      example:
+        message: Not found.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

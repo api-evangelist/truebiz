@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: TrueBiz Web Presence Review Async Web Presence Review Industry Discovery History API
+  title: TrueBiz Web Presence Review Industry Discovery History API
   version: 1.0.0
   description: '# Introduction
 
@@ -10,9 +10,7 @@ info:
     # Authentication
 
 
-    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
-
-    '
+    All requests to TrueBiz require an API key to be sent as a header. The expected header name is "X-API-KEY".'
 servers:
 - url: https://ae.truebiz.io
   description: Production
@@ -181,8 +179,8 @@ paths:
       - PropelAuthBearer: []
 components:
   schemas:
-    InternalServerError:
-      title: InternalServerError
+    Unauthorized:
+      title: Unauthorized
       type: object
       properties:
         message:
@@ -191,18 +189,7 @@ components:
       required:
       - message
       example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+        message: Unauthorized.
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -222,91 +209,6 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Bad request.
-    MCC:
-      title: MCC
-      type: object
-      properties:
-        code:
-          title: Code
-          description: The Merchant Category Code.
-          type: string
-        description:
-          title: Description
-          description: The description of the Merchant Category.
-          type: string
-      required:
-      - code
-      - description
-    PagedIndustryLookup:
-      title: PagedIndustryLookup
-      type: object
-      properties:
-        items:
-          title: Items
-          type: array
-          items:
-            $ref: '#/components/schemas/IndustryLookup'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - items
-      - count
-      - limit
-      - offset
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    BusinessSearchResultExtended:
-      title: BusinessSearchResultExtended
-      description: Extends BusinessSearchResult to allow optional business_name and business_description for lookup.
-      type: object
-      properties:
-        business_name:
-          title: Business Name
-          type: string
-        business_description:
-          title: Business Description
-          type: string
-        business_address:
-          title: Business Address
-        website:
-          title: Website
-          description: The website of the business.
-          nullable: true
-          type: string
-        primary_mcc:
-          $ref: '#/components/schemas/MCC'
-        additional_mccs:
-          title: Additional Mccs
-          type: array
-          items:
-            $ref: '#/components/schemas/MCC'
     CreateSearchInputExtended:
       title: CreateSearchInputExtended
       description: Extends CreateSearchInput to allow optional business name for lookup.
@@ -318,23 +220,27 @@ components:
         submitted_website:
           title: Submitted Website
           description: The website of the business to search for.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         city:
           title: City
           description: The city where the business is located.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         state_province:
           title: State Province
           description: The state or province where the business is located.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         postal_code:
           title: Postal Code
           description: The postal code of the business location.
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         country:
           title: Country
           description: The country where the business is located.
@@ -344,6 +250,17 @@ components:
           type: string
       required:
       - country
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -368,8 +285,8 @@ components:
         - field_name: non_field_errors
           errors:
           - There's something strange in your input.
-    Unauthorized:
-      title: Unauthorized
+    TooManyRequests:
+      title: TooManyRequests
       type: object
       properties:
         message:
@@ -378,7 +295,7 @@ components:
       required:
       - message
       example:
-        message: Unauthorized.
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
     IndustryLookup:
       title: IndustryLookup
       type: object
@@ -414,6 +331,92 @@ components:
       - created_at
       - response_code
       additionalProperties: false
+    BusinessSearchResultExtended:
+      title: BusinessSearchResultExtended
+      description: Extends BusinessSearchResult to allow optional business_name and business_description for lookup.
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          type: string
+        business_description:
+          title: Business Description
+          type: string
+        business_address:
+          title: Business Address
+        website:
+          title: Website
+          description: The website of the business.
+          type:
+          - string
+          - 'null'
+        primary_mcc:
+          $ref: '#/components/schemas/MCC'
+        additional_mccs:
+          title: Additional Mccs
+          type: array
+          items:
+            $ref: '#/components/schemas/MCC'
+    MCC:
+      title: MCC
+      type: object
+      properties:
+        code:
+          title: Code
+          description: The Merchant Category Code.
+          type: string
+        description:
+          title: Description
+          description: The description of the Merchant Category.
+          type: string
+      required:
+      - code
+      - description
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    PagedIndustryLookup:
+      title: PagedIndustryLookup
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/IndustryLookup'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

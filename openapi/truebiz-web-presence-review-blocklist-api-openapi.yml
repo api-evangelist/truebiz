@@ -1,6 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
-  title: TrueBiz Web Presence Review Async Web Presence Review Web Presence Review Blocklist API
+  title: TrueBiz Web Presence Review Web Presence Review Blocklist…
   version: 1.0.0
   description: '# Introduction
 
@@ -10,25 +10,19 @@ info:
     # Authentication
 
 
-    All requests to TrueBiz require an API key to be sent as a header.  The expected header name is "X-API-KEY".
-
-    '
+    All requests to TrueBiz require an API key to be sent as a header. The expected header name is "X-API-KEY".'
 servers:
 - url: https://ae.truebiz.io
   description: Production
 tags:
 - name: Web Presence Review Blocklist
-  description: '
+  description: 'Web Presence Review endpoints allow you to provide an input like a domain, url, or email associated with a website
 
-    Web Presence Review endpoints allow you to provide an input like a domain, url, or email associated with a website
+    for TrueBiz to review. For business or compliance reasons, you may want to directly block a domain from ever being
 
-    for TrueBiz to review.  For business or compliance reasons, you may want to directly block a domain from ever being
+    reviewed by TrueBiz. As such, we provide simple these operations for a list of domains to prevent these domains from
 
-    reviewed by TrueBiz.  As such, we provide simple these operations for a list of domains to prevent these domains from
-
-    being evaluated.
-
-    '
+    being evaluated.'
 paths:
   /api/v1/company/evaluate:
     post:
@@ -133,7 +127,7 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
       description: 'This API endpoint allows you to add a domain to a block list.
 
-        This API requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+        This API requires a valid API key (X-API-KEY) to be provided in the headers and is rate limited to 5 requests
 
         per second.'
       tags:
@@ -190,7 +184,7 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
       description: 'This API endpoint allows you to remove a domain from the block list.
 
-        This API requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+        This API requires a valid API key (X-API-KEY) to be provided in the headers and is rate limited to 5 requests
 
         per second.'
       tags:
@@ -261,7 +255,7 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
       description: 'This (paginated) API endpoint allows you to see domains that you have added to the block list.
 
-        This API requires a valid API key (X-API-KEY) to be  provided in the headers and is rate limited to 5 requests
+        This API requires a valid API key (X-API-KEY) to be provided in the headers and is rate limited to 5 requests
 
         per second.'
       tags:
@@ -279,32 +273,9 @@ components:
           title: Domain
           description: The domain to be blocked.
           example: example.net
-          nullable: false
           type: string
       required:
       - domain
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -324,8 +295,8 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    BlockMessage:
-      title: BlockMessage
+    Unauthorized:
+      title: Unauthorized
       type: object
       properties:
         message:
@@ -334,9 +305,9 @@ components:
       required:
       - message
       example:
-        message: Block created for example.net.
-    BadRequest:
-      title: BadRequest
+        message: Unauthorized.
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
         message:
@@ -345,127 +316,7 @@ components:
       required:
       - message
       example:
-        message: Bad request.
-    PagedBlockedDomain:
-      title: PagedBlockedDomain
-      type: object
-      properties:
-        items:
-          title: Items
-          type: array
-          items:
-            $ref: '#/components/schemas/BlockedDomain'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - items
-      - count
-      - limit
-      - offset
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    BlockInput:
-      title: BlockInput
-      type: object
-      properties:
-        domain:
-          title: Domain
-          description: The domain to be blocked.
-          example: example.net
-          nullable: false
-          type: string
-        phone:
-          title: Phone
-          description: The phone number to be blocked.
-          example: '3136739082'
-          nullable: true
-          type: string
-        email:
-          title: Email
-          description: The email to be blocked.
-          example: test@truebiz.io
-          nullable: true
-          type: string
-        address_line_1:
-          title: Address Line 1
-          description: The address to be blocked.
-          example: 104 Truebiz Lane
-          nullable: true
-          type: string
-        address_line_2:
-          title: Address Line 2
-          description: The address to be blocked.
-          example: 104 Truebiz Lane
-          nullable: true
-          type: string
-        city:
-          title: Address
-          description: The city to be blocked.
-          example: Detroit
-          nullable: true
-          type: string
-        state:
-          title: State
-          description: The state which the address belongs too
-          example: MI
-          nullable: true
-          type: string
-        zipcode:
-          title: Zip Code
-          description: The zip code to which the address belongs too.
-          example: '48178'
-          nullable: true
-          type: string
-        country:
-          title: Country Code
-          description: The country which the address belongs too.
-          example: US
-          nullable: true
-          type: string
-        reason:
-          title: Reason
-          description: "The reason for blocking this domain:\n* Credit and Financial Risk: This business is not creditworthy or interacting with them represents a financial risk to your business.\n  * Insufficient or poor credit history.\n  * Adverse financial ratios.\n  * Insufficient or unacceptable collateral.\n  * High-risk collateral location.\n  * History of bankruptcy or default.\n* Compliance and Regulatory: Interacting with this business would cause regulatory or compliance issues.\n  * Incomplete application information.\n  * Non-compliance with KYC/AML regulations.\n  * Sanctions or watchlist issues.\n  * Lack of required licenses or permits.\n  * Industry or sector restrictions.\n* Business Profile Risk: This business's profile and behavior represents a risk to interact with.\n  * Insufficient business history or experience.\n  * Inadequate or unstable revenue.\n  * Lack of a viable business plan or strategy.\n  * High employee turnover.\n  * Negative industry outlook or trends.\n  * Negative or unverified customer feedback.\n  * Poor reputation or history of unethical practices.\n  * Prior negative experience with the client.\n* Internal Policy: Interacting with this business is forbidden due to internal policies.\n  * Conflicts of interest.\n  * Lending or investment limits reached.\n  * Risk appetite or portfolio concentration concerns.\n  * Limited resources or expertise in the specific industry or sector.\n  * Strategic shift or change in focus.\n* Fraudulent Application: The person applying on behalf does not have a legitimate reason to request services.\n  * Identity theft or impersonation.\n  * Misleading or false data.\n  * Collusion or insider fraud.\n* Fraudulent Business: The business in question appears to be fraudulent.\n  * Not a real business.\n  * Fabricated financial documents.\n  * Shell companies or nominee arrangements.\n* Other: Any other reason.\n"
-          example: Fraudulent Application
-          nullable: false
-          allOf:
-          - $ref: '#/components/schemas/BlockReason'
-        other_explanation:
-          title: Other explanation
-          description: The reason for blocking this domain when other is selected.
-          example: null
-          nullable: true
-          type: string
-        notes:
-          title: Notes
-          example: null
-          nullable: true
-          type: string
-        expires_at:
-          title: Expires at
-          description: The date and time this block should expire at.  If you do not set this value, it will default to five years from the creation date.
-          example: '2028-12-31T23:59:59.999'
-          nullable: true
-          type: string
-          format: date-time
-      required:
-      - domain
-      - reason
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -498,32 +349,134 @@ components:
           title: Domain
           description: The domain to be blocked.
           example: example.net
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         phone:
           title: Phone
           description: The phone number to be blocked.
           example: '3136739082'
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         email:
           title: Email
           description: The email to be blocked.
           example: test@truebiz.io
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         address:
           title: Address
           description: The address to be blocked.
           example: 104 Truebiz Lane
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         phone_without_country_code:
           title: Phone without country code
           description: Phone number without country code
           example: US
-          nullable: true
+          type:
+          - string
+          - 'null'
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
           type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    BlockReason:
+      title: BlockReason
+      description: An enumeration.
+      enum:
+      - Credit and Financial Risk
+      - Compliance and Regulatory
+      - Business Profile Risk
+      - Internal Policy
+      - Fraudulent Application
+      - Fraudulent Business
+      - Other
+      type: string
+    EvaluateBlockInput:
+      title: EvaluateBlockInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          type:
+          - string
+          - 'null'
+        phone:
+          title: Phone
+          description: The phone number to be blocked.
+          example: '3136739082'
+          type:
+          - string
+          - 'null'
+        email:
+          title: Email
+          description: The email to be blocked.
+          example: test@truebiz.io
+          type:
+          - string
+          - 'null'
+        address_line_1:
+          title: Address Line 1
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          title: Address Line 2
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          type:
+          - string
+          - 'null'
+        city:
+          title: Address
+          description: The city to be blocked.
+          example: Detroit
+          type:
+          - string
+          - 'null'
+        state:
+          title: State
+          description: The state which the address belongs too
+          example: MI
+          type:
+          - string
+          - 'null'
+        zipcode:
+          title: Zip Code
+          description: The zip code to which the address belongs too.
+          example: '48178'
+          type:
+          - string
+          - 'null'
+        country:
+          title: Country Code
+          description: The country which the address belongs too.
+          example: US
+          type:
+          - string
+          - 'null'
+        phone_without_country_code:
+          title: Phone without country code
+          description: Phone number without country code
+          example: US
+          type:
+          - string
+          - 'null'
     BlockedDomain:
       title: BlockedDomain
       type: object
@@ -559,72 +512,8 @@ components:
       - domain
       - created_at
       - reason
-    EvaluateBlockInput:
-      title: EvaluateBlockInput
-      type: object
-      properties:
-        domain:
-          title: Domain
-          description: The domain to be blocked.
-          example: example.net
-          nullable: true
-          type: string
-        phone:
-          title: Phone
-          description: The phone number to be blocked.
-          example: '3136739082'
-          nullable: true
-          type: string
-        email:
-          title: Email
-          description: The email to be blocked.
-          example: test@truebiz.io
-          nullable: true
-          type: string
-        address_line_1:
-          title: Address Line 1
-          description: The address to be blocked.
-          example: 104 Truebiz Lane
-          nullable: true
-          type: string
-        address_line_2:
-          title: Address Line 2
-          description: The address to be blocked.
-          example: 104 Truebiz Lane
-          nullable: true
-          type: string
-        city:
-          title: Address
-          description: The city to be blocked.
-          example: Detroit
-          nullable: true
-          type: string
-        state:
-          title: State
-          description: The state which the address belongs too
-          example: MI
-          nullable: true
-          type: string
-        zipcode:
-          title: Zip Code
-          description: The zip code to which the address belongs too.
-          example: '48178'
-          nullable: true
-          type: string
-        country:
-          title: Country Code
-          description: The country which the address belongs too.
-          example: US
-          nullable: true
-          type: string
-        phone_without_country_code:
-          title: Phone without country code
-          description: Phone number without country code
-          example: US
-          nullable: true
-          type: string
-    Unauthorized:
-      title: Unauthorized
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         message:
@@ -633,19 +522,147 @@ components:
       required:
       - message
       example:
-        message: Unauthorized.
-    BlockReason:
-      title: BlockReason
-      description: An enumeration.
-      enum:
-      - Credit and Financial Risk
-      - Compliance and Regulatory
-      - Business Profile Risk
-      - Internal Policy
-      - Fraudulent Application
-      - Fraudulent Business
-      - Other
-      type: string
+        message: Bad request.
+    PagedBlockedDomain:
+      title: PagedBlockedDomain
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockedDomain'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    BlockMessage:
+      title: BlockMessage
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Block created for example.net.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    BlockInput:
+      title: BlockInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          type: string
+        phone:
+          title: Phone
+          description: The phone number to be blocked.
+          example: '3136739082'
+          type:
+          - string
+          - 'null'
+        email:
+          title: Email
+          description: The email to be blocked.
+          example: test@truebiz.io
+          type:
+          - string
+          - 'null'
+        address_line_1:
+          title: Address Line 1
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          title: Address Line 2
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          type:
+          - string
+          - 'null'
+        city:
+          title: Address
+          description: The city to be blocked.
+          example: Detroit
+          type:
+          - string
+          - 'null'
+        state:
+          title: State
+          description: The state which the address belongs too
+          example: MI
+          type:
+          - string
+          - 'null'
+        zipcode:
+          title: Zip Code
+          description: The zip code to which the address belongs too.
+          example: '48178'
+          type:
+          - string
+          - 'null'
+        country:
+          title: Country Code
+          description: The country which the address belongs too.
+          example: US
+          type:
+          - string
+          - 'null'
+        reason:
+          title: Reason
+          description: "The reason for blocking this domain:\n* Credit and Financial Risk: This business is not creditworthy or interacting with them represents a financial risk to your business.\n  * Insufficient or poor credit history.\n  * Adverse financial ratios.\n  * Insufficient or unacceptable collateral.\n  * High-risk collateral location.\n  * History of bankruptcy or default.\n* Compliance and Regulatory: Interacting with this business would cause regulatory or compliance issues.\n  * Incomplete application information.\n  * Non-compliance with KYC/AML regulations.\n  * Sanctions or watchlist issues.\n  * Lack of required licenses or permits.\n  * Industry or sector restrictions.\n* Business Profile Risk: This business's profile and behavior represents a risk to interact with.\n  * Insufficient business history or experience.\n  * Inadequate or unstable revenue.\n  * Lack of a viable business plan or strategy.\n  * High employee turnover.\n  * Negative industry outlook or trends.\n  * Negative or unverified customer feedback.\n  * Poor reputation or history of unethical practices.\n  * Prior negative experience with the client.\n* Internal Policy: Interacting with this business is forbidden due to internal policies.\n  * Conflicts of interest.\n  * Lending or investment limits reached.\n  * Risk appetite or portfolio concentration concerns.\n  * Limited resources or expertise in the specific industry or sector.\n  * Strategic shift or change in focus.\n* Fraudulent Application: The person applying on behalf does not have a legitimate reason to request services.\n  * Identity theft or impersonation.\n  * Misleading or false data.\n  * Collusion or insider fraud.\n* Fraudulent Business: The business in question appears to be fraudulent.\n  * Not a real business.\n  * Fabricated financial documents.\n  * Shell companies or nominee arrangements.\n* Other: Any other reason.\n"
+          example: Fraudulent Application
+          allOf:
+          - $ref: '#/components/schemas/BlockReason'
+        other_explanation:
+          title: Other explanation
+          description: The reason for blocking this domain when other is selected.
+          example: null
+          type:
+          - string
+          - 'null'
+        notes:
+          title: Notes
+          example: null
+          type:
+          - string
+          - 'null'
+        expires_at:
+          title: Expires at
+          description: The date and time this block should expire at.  If you do not set this value, it will default to five years from the creation date.
+          example: '2028-12-31T23:59:59.999'
+          type:
+          - string
+          - 'null'
+          format: date-time
+      required:
+      - domain
+      - reason
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey
