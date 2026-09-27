@@ -344,6 +344,207 @@ paths:
       - PropelAuthBearer: []
 components:
   schemas:
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    PackageFrequency:
+      title: PackageFrequency
+      type: object
+      properties:
+        days:
+          $ref: '#/components/schemas/PackageFrequencyDays'
+      required:
+      - days
+    PrevLink:
+      title: PrevLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.prev-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    PackageType:
+      title: PackageType
+      description: An enumeration.
+      enum:
+      - io.truebiz.monitoring.package.basic
+      - io.truebiz.monitoring.package.extended
+      - io.truebiz.monitoring.package.website-content
+      - io.truebiz.monitoring.package.business-closure
+      - io.truebiz.monitoring.package.sentiment-analysis
+      - io.truebiz.monitoring.package.connected-entities
+      - io.truebiz.monitoring.package.people
+      - io.truebiz.monitoring.package.business-profile
+      type: string
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is in conflict with another resource.
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Forbidden.
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
+    PackageFrequencyDays:
+      title: PackageFrequencyDays
+      description: An enumeration.
+      enum:
+      - 7
+      - 30
+      - 90
+      type: integer
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    PackageInput:
+      title: PackageInput
+      type: object
+      properties:
+        type:
+          title: Type
+          enum:
+          - io.truebiz.monitoring.package.basic
+          - io.truebiz.monitoring.package.extended
+          type: string
+        frequency:
+          $ref: '#/components/schemas/PackageFrequency'
+      required:
+      - type
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    NextLink:
+      title: NextLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.next-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    StartInput:
+      title: StartInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          type: string
+        external_ref_id:
+          title: External Ref Id
+          type: string
+        packages:
+          title: Packages
+          maxItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageInput'
+      required:
+      - domain
     PagedMonitoredDomain:
       title: PagedMonitoredDomain
       type: object
@@ -371,17 +572,36 @@ components:
       - count
       - limit
       - offset
-    TooManyRequests:
-      title: TooManyRequests
+    InvalidInputParameter:
+      title: InvalidInputParameter
       type: object
       properties:
-        message:
-          title: Message
+        field_name:
+          title: Field Name
           type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
       required:
-      - message
+      - field_name
       example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+        field_name: field1
+        errors:
+        - This field is required.
+    MonitoringPackage:
+      title: MonitoringPackage
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PackageType'
+        frequency:
+          $ref: '#/components/schemas/PackageFrequency'
+      required:
+      - type
+      - frequency
     MonitoredDomain:
       title: MonitoredDomain
       type: object
@@ -399,47 +619,6 @@ components:
             $ref: '#/components/schemas/MonitoringPackage'
       required:
       - domain
-    StartInput:
-      title: StartInput
-      type: object
-      properties:
-        domain:
-          title: Domain
-          type: string
-        external_ref_id:
-          title: External Ref Id
-          type: string
-        packages:
-          title: Packages
-          maxItems: 1
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/PackageInput'
-      required:
-      - domain
-    MonitoringPackage:
-      title: MonitoringPackage
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/PackageType'
-        frequency:
-          $ref: '#/components/schemas/PackageFrequency'
-      required:
-      - type
-      - frequency
-    Conflict:
-      title: Conflict
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is in conflict with another resource.
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -464,185 +643,6 @@ components:
         - field_name: non_field_errors
           errors:
           - There's something strange in your input.
-    PrevLink:
-      title: PrevLink
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        type:
-          title: Type
-          enum:
-          - io.truebiz.link.prev-items
-          type: string
-        href:
-          title: Href
-          type: string
-      required:
-      - id
-      - type
-      - href
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Bad request.
-    PackageInput:
-      title: PackageInput
-      type: object
-      properties:
-        type:
-          title: Type
-          enum:
-          - io.truebiz.monitoring.package.basic
-          - io.truebiz.monitoring.package.extended
-          type: string
-        frequency:
-          $ref: '#/components/schemas/PackageFrequency'
-      required:
-      - type
-    PackageType:
-      title: PackageType
-      description: An enumeration.
-      enum:
-      - io.truebiz.monitoring.package.basic
-      - io.truebiz.monitoring.package.extended
-      - io.truebiz.monitoring.package.website-content
-      - io.truebiz.monitoring.package.business-closure
-      - io.truebiz.monitoring.package.sentiment-analysis
-      - io.truebiz.monitoring.package.connected-entities
-      - io.truebiz.monitoring.package.people
-      - io.truebiz.monitoring.package.business-profile
-      type: string
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    NextLink:
-      title: NextLink
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        type:
-          title: Type
-          enum:
-          - io.truebiz.link.next-items
-          type: string
-        href:
-          title: Href
-          type: string
-      required:
-      - id
-      - type
-      - href
-    PackageFrequencyDays:
-      title: PackageFrequencyDays
-      description: An enumeration.
-      enum:
-      - 7
-      - 30
-      - 90
-      type: integer
-    ResourceNotReady:
-      title: ResourceNotReady
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is not yet ready. Please try again in 10 seconds.
-    PackageFrequency:
-      title: PackageFrequency
-      type: object
-      properties:
-        days:
-          $ref: '#/components/schemas/PackageFrequencyDays'
-      required:
-      - days
-    InvalidInputParameter:
-      title: InvalidInputParameter
-      type: object
-      properties:
-        field_name:
-          title: Field Name
-          type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
-      required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
-    Forbidden:
-      title: Forbidden
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Forbidden.
-    NoContent:
-      title: NoContent
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource does not contain any content.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

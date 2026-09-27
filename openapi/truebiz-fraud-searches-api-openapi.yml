@@ -270,8 +270,8 @@ paths:
       - Fraud Searches
 components:
   schemas:
-    TooManyRequests:
-      title: TooManyRequests
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         message:
@@ -280,56 +280,7 @@ components:
       required:
       - message
       example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    FraudSearchResult:
-      title: FraudSearchResult
-      type: object
-      properties:
-        business_name:
-          title: Business Name
-          type: string
-        business_description:
-          title: Business Description
-          type: string
-        business_address:
-          $ref: '#/components/schemas/Address'
-        website:
-          title: Website
-          type: string
-        fraud_likelihood_risk:
-          title: Fraud Likelihood Risk
-          enum:
-          - LOW
-          - MEDIUM
-          - HIGH
-          type: string
-        fraud_likelihood_summary:
-          title: Fraud Likelihood Summary
-          type: string
-    Conflict:
-      title: Conflict
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is in conflict with another resource.
-    Coordinates:
-      title: Coordinates
-      type: object
-      properties:
-        lat:
-          title: Lat
-          type: number
-        lon:
-          title: Lon
-          type: number
-      required:
-      - lat
-      - lon
+        message: Bad request.
     PostalServiceFlag:
       title: PostalServiceFlag
       description: '"residential" indicates that the address is a residential address.
@@ -355,67 +306,93 @@ components:
       - unreliable
       - unconfirmed
       type: string
-    InvalidRequest:
-      title: InvalidRequest
+    AddressCoordinatesAccuracy:
+      title: AddressCoordinatesAccuracy
+      description: Order matters here, list from least to most accurate
+      enum:
+      - APPROXIMATE
+      - ROOFTOP
+      type: string
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
         message:
           title: Message
           type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
       required:
       - message
       example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
-    FraudSearch:
-      title: FraudSearch
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    DataSource:
+      title: DataSource
+      description: An enumeration.
+      enum:
+      - website
+      - social
+      - other
+      - submitted
+      type: string
+    Conflict:
+      title: Conflict
       type: object
       properties:
-        id:
-          title: Id
+        message:
+          title: Message
           type: string
-          format: uuid
-        created_at:
-          title: Created At
+      required:
+      - message
+      example:
+        message: This resource is in conflict with another resource.
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
           type: string
-          format: date-time
-        updated_at:
-          title: Updated At
+      required:
+      - message
+      example:
+        message: Forbidden.
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
           type: string
-          format: date-time
-        status:
-          title: Status
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
+    FraudSearchResult:
+      title: FraudSearchResult
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          type: string
+        business_description:
+          title: Business Description
+          type: string
+        business_address:
+          $ref: '#/components/schemas/Address'
+        website:
+          title: Website
+          type: string
+        fraud_likelihood_risk:
+          title: Fraud Likelihood Risk
           enum:
-          - PROCESSING
-          - FINISHED
-          - ERROR
+          - LOW
+          - MEDIUM
+          - HIGH
           type: string
-        status_description:
-          title: Status Description
+        fraud_likelihood_summary:
+          title: Fraud Likelihood Summary
           type: string
-        result:
-          $ref: '#/components/schemas/FraudSearchResult'
-        query:
-          $ref: '#/components/schemas/CreateFraudSearchInput'
-      required:
-      - id
-      - created_at
-      - updated_at
-      - status
-    BadRequest:
-      title: BadRequest
+    TooManyRequests:
+      title: TooManyRequests
       type: object
       properties:
         message:
@@ -424,30 +401,7 @@ components:
       required:
       - message
       example:
-        message: Bad request.
-    PagedFraudSearch:
-      title: PagedFraudSearch
-      type: object
-      properties:
-        searches:
-          title: Searches
-          type: array
-          items:
-            $ref: '#/components/schemas/FraudSearch'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - searches
-      - count
-      - limit
-      - offset
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
     Address:
       title: Address
       type: object
@@ -567,6 +521,40 @@ components:
           example: website
           allOf:
           - $ref: '#/components/schemas/DataSource'
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    PagedFraudSearch:
+      title: PagedFraudSearch
+      type: object
+      properties:
+        searches:
+          title: Searches
+          type: array
+          items:
+            $ref: '#/components/schemas/FraudSearch'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - searches
+      - count
+      - limit
+      - offset
     NotFound:
       title: NotFound
       type: object
@@ -578,6 +566,52 @@ components:
       - message
       example:
         message: Not found.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    FraudSearch:
+      title: FraudSearch
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        status:
+          title: Status
+          enum:
+          - PROCESSING
+          - FINISHED
+          - ERROR
+          type: string
+        status_description:
+          title: Status Description
+          type: string
+        result:
+          $ref: '#/components/schemas/FraudSearchResult'
+        query:
+          $ref: '#/components/schemas/CreateFraudSearchInput'
+      required:
+      - id
+      - created_at
+      - updated_at
+      - status
     CreateFraudSearchInput:
       title: CreateFraudSearchInput
       type: object
@@ -606,48 +640,19 @@ components:
       required:
       - business_name
       - country
-    Unauthorized:
-      title: Unauthorized
+    Coordinates:
+      title: Coordinates
       type: object
       properties:
-        message:
-          title: Message
-          type: string
+        lat:
+          title: Lat
+          type: number
+        lon:
+          title: Lon
+          type: number
       required:
-      - message
-      example:
-        message: Unauthorized.
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    DataSource:
-      title: DataSource
-      description: An enumeration.
-      enum:
-      - website
-      - social
-      - other
-      - submitted
-      type: string
-    ResourceNotReady:
-      title: ResourceNotReady
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is not yet ready. Please try again in 10 seconds.
+      - lat
+      - lon
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -667,35 +672,30 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    Forbidden:
-      title: Forbidden
+    InvalidRequest:
+      title: InvalidRequest
       type: object
       properties:
         message:
           title: Message
           type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
       required:
       - message
       example:
-        message: Forbidden.
-    NoContent:
-      title: NoContent
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource does not contain any content.
-    AddressCoordinatesAccuracy:
-      title: AddressCoordinatesAccuracy
-      description: Order matters here, list from least to most accurate
-      enum:
-      - APPROXIMATE
-      - ROOFTOP
-      type: string
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

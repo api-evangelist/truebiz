@@ -92,93 +92,6 @@ paths:
       - AsyncPropelAuthBearer: []
 components:
   schemas:
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
-    InvalidInputParameter:
-      title: InvalidInputParameter
-      type: object
-      properties:
-        field_name:
-          title: Field Name
-          type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
-      required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    InvalidRequest:
-      title: InvalidRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
-      required:
-      - message
-      example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Bad request.
     WebsiteInput:
       title: WebsiteInput
       type: object
@@ -198,6 +111,75 @@ components:
           type: number
       required:
       - website
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    MarketplaceLink:
+      title: MarketplaceLink
+      type: object
+      properties:
+        is_marketplace_link:
+          title: Is social media link?
+          description: Is this a known marketplace site for selling goods or services?
+          default: false
+          example: false
+          type: boolean
+        platform:
+          title: Marketplace platform
+          description: The marketplace platform this link is from.
+          example: null
+          type:
+          - string
+          - 'null'
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
     StatusResponse:
       title: StatusResponse
       type: object
@@ -230,6 +212,28 @@ components:
       - alive
       - social_media
       - marketplace
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     SocialMediaLink:
       title: SocialMediaLink
       type: object
@@ -247,34 +251,30 @@ components:
           type:
           - string
           - 'null'
-    MarketplaceLink:
-      title: MarketplaceLink
-      type: object
-      properties:
-        is_marketplace_link:
-          title: Is social media link?
-          description: Is this a known marketplace site for selling goods or services?
-          default: false
-          example: false
-          type: boolean
-        platform:
-          title: Marketplace platform
-          description: The marketplace platform this link is from.
-          example: null
-          type:
-          - string
-          - 'null'
-    NotFound:
-      title: NotFound
+    InvalidRequest:
+      title: InvalidRequest
       type: object
       properties:
         message:
           title: Message
           type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
       required:
       - message
       example:
-        message: Not found.
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey
