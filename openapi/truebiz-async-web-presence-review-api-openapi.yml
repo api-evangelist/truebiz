@@ -100,85 +100,6 @@ paths:
       - AsyncPropelAuthBearer: []
 components:
   schemas:
-    AsyncMessage:
-      title: AsyncMessage
-      type: object
-      properties:
-        message:
-          title: Message
-          description: The message response from the server.
-          default: ''
-          example: Request for info@example.com is processing.
-          type: string
-        tracking_id:
-          title: Tracking ID
-          description: ID used to track this request in TrueBiz's application.
-          example: 00000000-0000-0000-0000-000000000000
-          type: string
-          format: uuid
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Bad request.
-    InvalidInputParameter:
-      title: InvalidInputParameter
-      type: object
-      properties:
-        field_name:
-          title: Field Name
-          type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
-      required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     TooManyRequests:
       title: TooManyRequests
       type: object
@@ -190,8 +111,30 @@ components:
       - message
       example:
         message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    PreconditionFailed:
-      title: PreconditionFailed
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    NotFound:
+      title: NotFound
       type: object
       properties:
         message:
@@ -201,6 +144,30 @@ components:
       - message
       example:
         message: Not found.
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
     AsyncCompanyQuery:
       title: AsyncCompanyQuery
       type: object
@@ -332,30 +299,63 @@ components:
         submitted_full_name: Bob Smith
         external_tracking_ref: abc_defg12345678
         match_profile_id: 00000000-0000-0000-0000-000000000000
-    InvalidRequest:
-      title: InvalidRequest
+    PreconditionFailed:
+      title: PreconditionFailed
       type: object
       properties:
         message:
           title: Message
           type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
       required:
       - message
       example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
+        message: Not found.
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    AsyncMessage:
+      title: AsyncMessage
+      type: object
+      properties:
+        message:
+          title: Message
+          description: The message response from the server.
+          default: ''
+          example: Request for info@example.com is processing.
+          type: string
+        tracking_id:
+          title: Tracking ID
+          description: ID used to track this request in TrueBiz's application.
+          example: 00000000-0000-0000-0000-000000000000
+          type: string
+          format: uuid
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

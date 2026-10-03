@@ -121,6 +121,97 @@ paths:
       - History
 components:
   schemas:
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    PagedCombinedMetaLookup:
+      title: PagedCombinedMetaLookup
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/CombinedMetaLookup'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
     CombinedMetaLookup:
       title: CombinedMetaLookup
       type: object
@@ -156,8 +247,8 @@ components:
       - created_at
       - status
       - report_type
-    BadRequest:
-      title: BadRequest
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
         message:
@@ -166,7 +257,7 @@ components:
       required:
       - message
       example:
-        message: Bad request.
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -186,97 +277,6 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    PagedCombinedMetaLookup:
-      title: PagedCombinedMetaLookup
-      type: object
-      properties:
-        items:
-          title: Items
-          type: array
-          items:
-            $ref: '#/components/schemas/CombinedMetaLookup'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - items
-      - count
-      - limit
-      - offset
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    InvalidRequest:
-      title: InvalidRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
-      required:
-      - message
-      example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

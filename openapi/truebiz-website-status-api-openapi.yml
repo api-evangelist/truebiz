@@ -92,27 +92,8 @@ paths:
       - AsyncPropelAuthBearer: []
 components:
   schemas:
-    WebsiteInput:
-      title: WebsiteInput
-      type: object
-      properties:
-        website:
-          title: Website
-          description: The website URL to evaluate.
-          example: https://example.net/test?param1=value1
-          type: string
-        request_timeout:
-          title: Request timeout
-          description: The maximum amount of time to spend on checking if the webserver is responsive.Adjusting this parameter to be shorter may cause valid but slow responding websites to be marked as not alive.  Adjusting this parameter to be longer may allow for more websites to be recognized as alive.
-          default: 7.5
-          example: 7.5
-          minimum: 2.0
-          maximum: 30.0
-          type: number
-      required:
-      - website
-    BadRequest:
-      title: BadRequest
+    TooManyRequests:
+      title: TooManyRequests
       type: object
       properties:
         message:
@@ -121,37 +102,7 @@ components:
       required:
       - message
       example:
-        message: Bad request.
-    InvalidInputParameter:
-      title: InvalidInputParameter
-      type: object
-      properties:
-        field_name:
-          title: Field Name
-          type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
-      required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
     MarketplaceLink:
       title: MarketplaceLink
       type: object
@@ -169,6 +120,17 @@ components:
           type:
           - string
           - 'null'
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
     Unauthorized:
       title: Unauthorized
       type: object
@@ -180,6 +142,17 @@ components:
       - message
       example:
         message: Unauthorized.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
     StatusResponse:
       title: StatusResponse
       type: object
@@ -212,17 +185,49 @@ components:
       - alive
       - social_media
       - marketplace
-    TooManyRequests:
-      title: TooManyRequests
+    InvalidRequest:
+      title: InvalidRequest
       type: object
       properties:
         message:
           title: Message
           type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
       required:
       - message
       example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    WebsiteInput:
+      title: WebsiteInput
+      type: object
+      properties:
+        website:
+          title: Website
+          description: The website URL to evaluate.
+          example: https://example.net/test?param1=value1
+          type: string
+        request_timeout:
+          title: Request timeout
+          description: The maximum amount of time to spend on checking if the webserver is responsive.Adjusting this parameter to be shorter may cause valid but slow responding websites to be marked as not alive.  Adjusting this parameter to be longer may allow for more websites to be recognized as alive.
+          default: 7.5
+          example: 7.5
+          minimum: 2.0
+          maximum: 30.0
+          type: number
+      required:
+      - website
     InternalServerError:
       title: InternalServerError
       type: object
@@ -251,30 +256,25 @@ components:
           type:
           - string
           - 'null'
-    InvalidRequest:
-      title: InvalidRequest
+    InvalidInputParameter:
+      title: InvalidInputParameter
       type: object
       properties:
-        message:
-          title: Message
+        field_name:
+          title: Field Name
           type: string
-        invalid_parameters:
-          title: Invalid Parameters
+        errors:
+          title: Errors
           default: []
           type: array
           items:
-            $ref: '#/components/schemas/InvalidInputParameter'
+            type: string
       required:
-      - message
+      - field_name
       example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
+        field_name: field1
+        errors:
+        - This field is required.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

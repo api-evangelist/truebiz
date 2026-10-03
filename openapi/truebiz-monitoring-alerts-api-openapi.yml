@@ -274,21 +274,8 @@ paths:
       - PropelAuthBearer: []
 components:
   schemas:
-    FlaggedCategory:
-      title: FlaggedCategory
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-        description:
-          title: Description
-          type: string
-      required:
-      - name
-      - description
-    BadRequest:
-      title: BadRequest
+    Conflict:
+      title: Conflict
       type: object
       properties:
         message:
@@ -297,38 +284,7 @@ components:
       required:
       - message
       example:
-        message: Bad request.
-    PrevLink:
-      title: PrevLink
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        type:
-          title: Type
-          enum:
-          - io.truebiz.link.prev-items
-          type: string
-        href:
-          title: Href
-          type: string
-      required:
-      - id
-      - type
-      - href
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+        message: This resource is in conflict with another resource.
     Person:
       title: Person
       type: object
@@ -405,44 +361,8 @@ components:
           example: website
           allOf:
           - $ref: '#/components/schemas/DataSource'
-    PagedMonitoringAlert:
-      title: PagedMonitoringAlert
-      type: object
-      properties:
-        alerts:
-          title: Alerts
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitoringAlert'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-        prev_alerts_link:
-          $ref: '#/components/schemas/PrevLink'
-        next_alerts_link:
-          $ref: '#/components/schemas/NextLink'
-      required:
-      - alerts
-      - count
-      - limit
-      - offset
-    DataSource:
-      title: DataSource
-      description: An enumeration.
-      enum:
-      - website
-      - social
-      - other
-      - submitted
-      type: string
-    Conflict:
-      title: Conflict
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         message:
@@ -451,88 +371,7 @@ components:
       required:
       - message
       example:
-        message: This resource is in conflict with another resource.
-    Forbidden:
-      title: Forbidden
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Forbidden.
-    NoContent:
-      title: NoContent
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource does not contain any content.
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    FlaggedPageLink:
-      title: FlaggedPageLink
-      type: object
-      properties:
-        type:
-          title: Type
-          enum:
-          - io.truebiz.monitoring.link.page
-          type: string
-        href:
-          title: Href
-          type: string
-      required:
-      - type
-      - href
-    ResourceNotReady:
-      title: ResourceNotReady
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is not yet ready. Please try again in 10 seconds.
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
+        message: Bad request.
     NextLink:
       title: NextLink
       type: object
@@ -553,25 +392,19 @@ components:
       - id
       - type
       - href
-    InvalidInputParameter:
-      title: InvalidInputParameter
+    FlaggedCategory:
+      title: FlaggedCategory
       type: object
       properties:
-        field_name:
-          title: Field Name
+        name:
+          title: Name
           type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
+        description:
+          title: Description
+          type: string
       required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
+      - name
+      - description
     UIPortalLink:
       title: UIPortalLink
       type: object
@@ -587,28 +420,6 @@ components:
       required:
       - type
       - href
-    EmploymentRecord:
-      title: EmploymentRecord
-      type: object
-      properties:
-        company_name:
-          title: Company name
-          description: The company name.
-          example: ACME LLC.
-          type: string
-        title:
-          title: Job title
-          description: The job title.
-          example: Co-founder & CEO
-          type: string
-        start_date:
-          title: Start date
-          description: The date the person started at the job.
-          example: '2018-09-01'
-          type: string
-          format: date
-      required:
-      - company_name
     MonitoringAlert:
       title: MonitoringAlert
       type: object
@@ -658,18 +469,6 @@ components:
       - flagged_page_links
       - flagged_people
       - ui_portal_link
-    FlaggedContent:
-      title: FlaggedContent
-      type: object
-      properties:
-        link:
-          $ref: '#/components/schemas/FlaggedPageLink'
-        content:
-          title: Content
-          type: string
-      required:
-      - link
-      - content
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -694,6 +493,207 @@ components:
         - field_name: non_field_errors
           errors:
           - There's something strange in your input.
+    EmploymentRecord:
+      title: EmploymentRecord
+      type: object
+      properties:
+        company_name:
+          title: Company name
+          description: The company name.
+          example: ACME LLC.
+          type: string
+        title:
+          title: Job title
+          description: The job title.
+          example: Co-founder & CEO
+          type: string
+        start_date:
+          title: Start date
+          description: The date the person started at the job.
+          example: '2018-09-01'
+          type: string
+          format: date
+      required:
+      - company_name
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Forbidden.
+    FlaggedContent:
+      title: FlaggedContent
+      type: object
+      properties:
+        link:
+          $ref: '#/components/schemas/FlaggedPageLink'
+        content:
+          title: Content
+          type: string
+      required:
+      - link
+      - content
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    DataSource:
+      title: DataSource
+      description: An enumeration.
+      enum:
+      - website
+      - social
+      - other
+      - submitted
+      type: string
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    PagedMonitoringAlert:
+      title: PagedMonitoringAlert
+      type: object
+      properties:
+        alerts:
+          title: Alerts
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitoringAlert'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+        prev_alerts_link:
+          $ref: '#/components/schemas/PrevLink'
+        next_alerts_link:
+          $ref: '#/components/schemas/NextLink'
+      required:
+      - alerts
+      - count
+      - limit
+      - offset
+    PrevLink:
+      title: PrevLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.prev-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    FlaggedPageLink:
+      title: FlaggedPageLink
+      type: object
+      properties:
+        type:
+          title: Type
+          enum:
+          - io.truebiz.monitoring.link.page
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - type
+      - href
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

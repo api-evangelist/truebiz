@@ -196,720 +196,6 @@ paths:
       - PropelAuthBearer: []
 components:
   schemas:
-    Screenshot:
-      title: Screenshot
-      type: object
-      properties:
-        fullpage_image_link:
-          title: Fullpage Screenshot Image
-          description: A link to the full website screenshot image.
-          example: null
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-        cropped_image_link:
-          title: Cropped Screenshot Image
-          description: A link to a website screenshot image cropped to above-the-fold.
-          example: null
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-    Person:
-      title: Person
-      type: object
-      properties:
-        name:
-          title: Name
-          description: The person's full name.
-          maxLength: 1024
-          minLength: 1
-          example: Dara Khosrowshahi
-          type: string
-        job_title:
-          title: Job title
-          description: A name that describes someone's job or position.
-          maxLength: 255
-          minLength: 1
-          example: Chief Executive Officer
-          type: string
-        linkedin_url:
-          title: LinkedIn URL
-          description: The person's LinkedIn profile URL.
-          maxLength: 1024
-          minLength: 29
-          example: https://www.linkedin.com/in/dara-khosrowshahi-9b1a8b/
-          type: string
-        profile_picture:
-          title: LinkedIn photo URL
-          description: The URL of the person's LinkedIn profile photo.
-          maxLength: 1024
-          minLength: 34
-          example: https://media.licdn.com/dms/image/D4D03AQGDnwFEps6idg/profile-displayphoto-shrink_200_200/0/1673360179524?e=1688601600&v=beta&t=bpXAkQdRR7liIMck3FQ7maRE-XeMwtChfWt73oB7YZ0
-          type: string
-        state_province:
-          title: State
-          description: The state or province where the person is located.
-          maxLength: 255
-          minLength: 1
-          example: California
-          type: string
-        city:
-          title: City
-          description: The city where the person is located.
-          maxLength: 255
-          minLength: 1
-          example: San Francisco
-          type: string
-        country:
-          title: Country
-          description: The country where the person is located.
-          maxLength: 255
-          minLength: 1
-          example: United States
-          type: string
-        start_date:
-          title: Start date
-          description: The date the person started at the company.
-          example: '1995-07-14'
-          type:
-          - string
-          - 'null'
-          format: date
-        other_active_positions:
-          title: Other active positions
-          description: Other jobs listed as currently active.
-          example: '[{"title": "CEO", "company_name": "ACME LLC.", "start_date": "2018-09-01"}]'
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/EmploymentRecord'
-        source:
-          title: Source
-          description: The data source for this person.
-          example: website
-          allOf:
-          - $ref: '#/components/schemas/DataSource'
-    DataSource:
-      title: DataSource
-      description: An enumeration.
-      enum:
-      - website
-      - social
-      - other
-      - submitted
-      type: string
-    Recommendation:
-      title: Recommendation
-      type: object
-      properties:
-        decision:
-          title: Decision
-          description: TrueBiz's overall verdict on the business. `Pass` indicates the business cleared review; `Fail` indicates one or more risk indicators were severe enough to fail the business.
-          example: Pass
-          allOf:
-          - $ref: '#/components/schemas/Decision'
-      required:
-      - decision
-    ReferringSite:
-      title: ReferringSite
-      type: object
-      properties:
-        url:
-          title: URL
-          description: Link to the referring site.
-          example: null
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-        traffic_share:
-          title: Traffic Share
-          description: Share of total traffic coming from the referring traffic.
-          example: null
-          type: number
-        screenshot_image_link:
-          title: Screenshot Image
-          description: A link to the full website screenshot image.
-          example: null
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-    Application:
-      title: Application
-      type: object
-      properties:
-        phone_business_connections:
-          title: phone has business connections?
-          description: The submitted phone number was found to have associations with the business.
-          example: true
-          type: array
-          items:
-            $ref: '#/components/schemas/DataSource'
-        email_business_connections:
-          title: email has business connections?
-          description: The submitted email was found to have associations with the business.
-          example: true
-          type: array
-          items:
-            $ref: '#/components/schemas/DataSource'
-        address_business_connections:
-          title: address has business connections?
-          description: The submitted address was found to have associations with the business.
-          example: true
-          type: array
-          items:
-            $ref: '#/components/schemas/DataSource'
-        person_business_connections:
-          title: person has business connections?
-          description: The submitted person was found to have associations with the business.
-          example: true
-          type: array
-          items:
-            $ref: '#/components/schemas/DataSource'
-        description:
-          title: Description
-          description: Does the submitted description describe what the business does?
-          example:
-            text: A used bookstore that also sells coffee and records
-            match_type: Full match
-          allOf:
-          - $ref: '#/components/schemas/SubmittedDescriptionAnalysis'
-    SocialMediaProfile:
-      title: SocialMediaProfile
-      type: object
-      properties:
-        url:
-          title: url
-          description: The URL of the company's social media profile page.
-          example: https://www.facebook.com/uber
-          type:
-          - string
-          - 'null'
-        like_count:
-          title: Number of likes
-          description: The number of likes or followers of this social media page.
-          example: https://www.facebook.com/uber
-          type: integer
-        last_posted_content_at:
-          title: Last posted content at
-          description: The date and time of the last post made on this page.
-          example: '2023-06-04T11:05:00Z'
-          type: string
-          format: date-time
-        page_created_at:
-          title: Last posted content at
-          description: The date this page was created on.
-          example: '2010-01-04'
-          type: string
-          format: date
-        is_verified:
-          title: verified
-          description: Indicates whether the page is verified by the social provider.
-          example: true
-          type: boolean
-        is_business:
-          title: Business Profile
-          description: Indicates whether the page is a business account.
-          example: true
-          type: boolean
-        is_private:
-          title: Private
-          description: Indicates whether the page is private.
-          example: false
-          type: boolean
-        activity_level:
-          title: Activity Level
-          description: The activity level of the profile.
-          example: High
-          allOf:
-          - $ref: '#/components/schemas/ActivityLevel'
-        follower_count:
-          title: Follower Count
-          description: The number of followers of the profile.
-          example: 1000
-          type: integer
-        follow_ratio:
-          title: Follow Ratio
-          description: The follow ratio of the profile.
-          example: High
-          allOf:
-          - $ref: '#/components/schemas/FollowRatio'
-        post_quantity:
-          title: Post Quantity
-          description: The number of posts made by the profile.
-          example: 100
-          type: integer
-        average_engagement:
-          title: Average Engagement
-          description: The average engagement level of the profile.
-          example: Medium
-          allOf:
-          - $ref: '#/components/schemas/AverageEngagement'
-        is_age_restricted:
-          title: Age Restricted
-          description: Indicates whether the profile has age restrictions.
-          example: false
-          type: boolean
-        most_recent_post_url:
-          title: Most Recent Post URL
-          description: The URL of the most recent post made by the profile.
-          example: https://www.facebook.com/uber/posts/123456789
-          type: string
-        most_recent_post_text:
-          title: Most Recent Post Text
-          description: The text content of the most recent post made by the profile.
-          example: Excited to announce our new partnership!
-          type: string
-        most_recent_post_image:
-          title: Most Recent Post Image
-          description: The URL of the image in the most recent post made by the profile.
-          type: string
-        location:
-          title: Location
-          description: The location associated with the profile.
-          example: San Francisco, CA
-          type: string
-    CustomerReviewsData:
-      title: CustomerReviewsData
-      type: object
-      properties:
-        provider:
-          title: Provider
-          description: Unique ID of the review service providing the review data
-          type: string
-        meta:
-          title: Meta
-          description: Data describing the review data
-          allOf:
-          - $ref: '#/components/schemas/CustomerReviewsMeta'
-    Ecommerce:
-      title: Ecommerce
-      type: object
-      properties:
-        platform:
-          title: Ecommerce Platform
-          description: The ecommerce platform used by the company.
-          example: shopify
-          type:
-          - string
-          - 'null'
-        product_count:
-          title: Product Count
-          description: The number of products sold by the company.
-          example: 100
-          type:
-          - integer
-          - 'null'
-        vendor_count:
-          title: Vendor Count
-          description: The number of unique vendors sold by the company.
-          example: 20
-          type:
-          - integer
-          - 'null'
-        average_price:
-          title: Average Price
-          description: The average price of products for sale, in the currency of the 'currency_code' field.
-          example: 15.55
-          type:
-          - number
-          - 'null'
-        minimum_price:
-          title: Minumum Price
-          description: The lowest price of any product for sale, in the currency of the 'currency_code' field.
-          example: 9.99
-          type:
-          - number
-          - 'null'
-        maximum_price:
-          title: Maximum Price
-          description: The highest price of any product for sale, in the currency of the 'currency_code' field.
-          example: 100.99
-          type:
-          - number
-          - 'null'
-        currency_code:
-          title: Currency Code
-          description: The ISO code for the currency used.
-          example: USD
-          type:
-          - string
-          - 'null'
-        last_updated_date:
-          title: Last Updated Date
-          description: The date of the last update to the site.
-          example: '2023-03-23'
-          type:
-          - string
-          - 'null'
-          format: date
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
-    CompanyType:
-      title: CompanyType
-      description: An enumeration.
-      enum:
-      - Corporation
-      - General Partnership
-      - Limited
-      - Limited Liability Company
-      - Limited Partnership
-      - Limited Liability Partnership
-      - Limited Liability Limited Partnership
-      - No Liability
-      - Non-Profit
-      - Professional Corporation
-      - Professional Limited Liability Corporation
-      - Sole Proprietorship
-      - Unlimited
-      type: string
-    CompanyMatchBlockedDomain:
-      title: CompanyMatchBlockedDomain
-      type: object
-      properties:
-        created_at:
-          title: Blocked since
-          description: When the block was created
-          example: '2023-12-25T19:30:25.000+00:00'
-          type:
-          - string
-          - 'null'
-          format: date-time
-        expires_at:
-          title: Blocked until
-          description: When the block expires
-          example: '2030-12-29T23:59:59.000+00:00'
-          type:
-          - string
-          - 'null'
-          format: date-time
-        explanation:
-          title: Block explanation
-          description: Human-readable explanation for why the domain was blocked
-          type:
-          - string
-          - 'null'
-    PagedCompanyLookup:
-      title: PagedCompanyLookup
-      type: object
-      properties:
-        items:
-          title: Items
-          type: array
-          items:
-            $ref: '#/components/schemas/CompanyLookup'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - items
-      - count
-      - limit
-      - offset
-    Risk:
-      title: Risk
-      type: object
-      properties:
-        category:
-          title: Category
-          description: The general area this risk classification belongs to.
-          default: ''
-          example: website
-          minLength: 1
-          maxLength: 64
-          type: string
-        subcategory:
-          title: Subcategory
-          description: The subdivision of the category.
-          default: ''
-          example: security
-          minLength: 1
-          maxLength: 64
-          type: string
-        name:
-          title: Name
-          description: The machine-readable name of the risk element being considered.
-          default: ''
-          example: ssl_configuration
-          minLength: 1
-          maxLength: 255
-          type: string
-        display_name:
-          title: Display name
-          description: The human-readable name of the risk element being considered.
-          default: ''
-          example: Webserver SSL configuration
-          minLength: 1
-          maxLength: 255
-          type: string
-        score:
-          title: Score
-          description: The percentage score of how risky we consider the data for this item to be, denoted as a flat integer that should be divided by 100 (e.g. 1000 -> 10%). Higher numbers are more risky.
-          default: ''
-          example: 0
-          minimum: 0
-          maximum: 10000
-          type: integer
-        description:
-          title: Description
-          description: A plaintext explanation of the risk.
-          default: ''
-          example: The website's SSL configuration is not valid, indicating site security is not well maintained.
-          minLength: 1
-          maxLength: 512
-          type: string
-        classification_type:
-          title: Classification type
-          description: The classification type indicating whether the data point(s) find that this is an indicatorof validity, risk, or something your team should take notice of.
-          default: Validity
-          example: Validity
-          allOf:
-          - $ref: '#/components/schemas/RiskType'
-    WebsiteTraffic:
-      title: WebsiteTraffic
-      type: object
-      properties:
-        visits_per_month:
-          title: Visit per month
-          description: The number of website visits in the last full month.
-          example: 10000
-          type: integer
-        time_on_site:
-          title: Time on site
-          description: The average number of seconds a user spent on the site, during the last full month.
-          example: 15.55
-          type: number
-        pages_per_visit:
-          title: Pages per visit
-          description: The average number of pages visited, during the last full month.
-          example: 3.75
-          type: number
-        bounce_rate:
-          title: Bounce rate
-          description: The percentage of visitors that only visited a single page, during the last full month.
-          example: 15.55
-          type: number
-        historical_visits_per_month:
-          title: Historical visits per month
-          description: The count of monthly visits over the prior few months.
-          type: array
-          items:
-            $ref: '#/components/schemas/MonthlyVisits'
-        source_shares:
-          title: Source traffic share
-          description: 'A mapping to the share of traffic by source: search, social, paid, direct, referrals, and mail.'
-          allOf:
-          - $ref: '#/components/schemas/TrafficSources'
-        top_country_shares:
-          title: Country traffic share
-          description: A list of the top countries and their share of visits during the last full month.
-          type: array
-          items:
-            $ref: '#/components/schemas/CountryShare'
-        paid_search_share:
-          title: Paid search share
-          description: The percentage of search traffic that is paid.
-          example: 0.5
-          type: number
-        google_results_count:
-          title: Google results count
-          description: The number of google results when searching for "example.com"
-          example: 10000
-          type: integer
-        top_referring_sites:
-          title: Top referring sites
-          description: A list of sites referring at least 2.5% of total traffic
-          example:
-          - url: https://referrer.co
-            traffic_share: 0.35
-          type: array
-          items:
-            $ref: '#/components/schemas/ReferringSite'
-        paid_search_visits:
-          title: Paid search visits
-          description: The number of visits coming from paid search ads, during the last full month.
-          example: 1000
-          type: integer
-        top_keywords:
-          title: Top keywords
-          description: The top organic and paid keywords driving traffic to the site.
-          allOf:
-          - $ref: '#/components/schemas/TopKeywords'
-        anomalous_keywords:
-          title: Anomalous keywords
-          description: A list of keywords that are not related to the business description.
-          example:
-          - firearms
-          - gummy bears
-          type: array
-          items:
-            type: string
-    CountryShare:
-      title: CountryShare
-      description: A single country's share of total website traffic.
-      type: object
-      properties:
-        value:
-          title: Value
-          type: number
-        change:
-          title: Change
-          type: number
-        name:
-          title: Name
-          type: string
-        abbr:
-          title: Abbr
-          type: string
-    EmploymentRecord:
-      title: EmploymentRecord
-      type: object
-      properties:
-        company_name:
-          title: Company name
-          description: The company name.
-          example: ACME LLC.
-          type: string
-        title:
-          title: Job title
-          description: The job title.
-          example: Co-founder & CEO
-          type: string
-        start_date:
-          title: Start date
-          description: The date the person started at the job.
-          example: '2018-09-01'
-          type: string
-          format: date
-      required:
-      - company_name
-    NewsArticleTopicConcernType:
-      title: NewsArticleTopicConcernType
-      description: An enumeration.
-      enum:
-      - Fraud
-      - Legal
-      - Bankruptcy
-      type: string
-    CompanyRevenue:
-      title: CompanyRevenue
-      description: An enumeration.
-      enum:
-      - 0-1M
-      - 1M-10M
-      - 10M-50M
-      - 50M-100M
-      - 100M-1B
-      - 1B+
-      type: string
-    Industry:
-      title: Industry
-      type: object
-      properties:
-        primary_industry:
-          title: Primary industry
-          description: The primary industry the company operates in.
-          example: Iron and Steel Forging
-          minLength: 1
-          maxLength: 512
-          type:
-          - string
-          - 'null'
-        tags:
-          title: Tags
-          description: A list of short, descriptive phrases indicating what the company does.
-          default: []
-          example:
-          - Steelworks
-          - Anvils
-          - Coyotes
-          type: array
-          items:
-            type: string
-        primary_naics:
-          title: Primary NAICS code
-          description: A single code that is considered to be the primary business classification of the company according to the North American Industry Classification System (NAICS).
-          example: '332111'
-          type: string
-        additional_naics_codes:
-          title: NAICS codes
-          description: A list of codes indicating the industry classification of the company according to the North American Industry Classification System (NAICS).
-          default: []
-          example:
-          - '512110'
-          type: array
-          items:
-            type: string
-        primary_sic:
-          title: Primary SIC code
-          description: A single code that is considered to be the primary SIC of the company according to the Standard Industry Classification (SIC) system.
-          example: '3462'
-          type: string
-        additional_sic_codes:
-          title: SIC codes
-          description: A list of codes indicating the industry classification of the company according to the Standard Industry Classification (SIC) system.
-          default: []
-          example:
-          - '7819'
-          type: array
-          items:
-            type: string
-        primary_mcc:
-          title: Primary MCC code
-          description: A single code most likely to represent the company's merchant classification according to the Merchant Category Code (MCC) system.
-          example:
-            code: '3499'
-            description: Fabricated Metal Products, Not Elsewhere Classified
-          type: object
-        additional_mcc_codes:
-          title: SIC codes
-          description: A list of codes indicating other possible merchant classifications of the company according to the Merchant Category Code (MCC) system.
-          default: []
-          example:
-          - code: '7812'
-            description: Motion Picture and Video Tape Production and Distribution
-          type: array
-          items:
-            type: object
-    HostingProvider:
-      title: HostingProvider
-      type: object
-      properties:
-        name:
-          title: Hosting provider name
-          description: The name of the servers' internet service provider.
-          default: ''
-          example: Google
-          minLength: 1
-          maxLength: 2048
-          type: string
-        country:
-          title: Hosting provider country
-          description: The country the hosting provider's server(s) are located in.
-          default: ''
-          example: United States
-          minLength: 1
-          maxLength: 2048
-          type: string
     BadRequest:
       title: BadRequest
       type: object
@@ -921,108 +207,54 @@ components:
       - message
       example:
         message: Bad request.
-    PhoneLink:
-      title: PhoneLink
+    MonthlyVisits:
+      title: MonthlyVisits
+      description: Visit count for a single calendar month.
       type: object
       properties:
-        type:
-          title: Link type
-          description: The type of link between this number and the company
-          example: direct
-          allOf:
-          - $ref: '#/components/schemas/PhoneLinkType'
-        duration:
-          title: Link duration
-          description: The approximate length of time the link has existed (formatted as an ISO 8601 duration)
-          example: P2Y5M
+        year:
+          title: Year
+          type: integer
+        month:
+          title: Month
+          type: integer
+        visits:
+          title: Visits
+          type: integer
+      required:
+      - year
+      - month
+      - visits
+    Registrar:
+      title: Registrar
+      type: object
+      properties:
+        name:
+          title: Registrar name
+          description: The name of the registrar.
+          default: ''
+          example: MarkMonitor, Inc.
+          minLength: 1
+          maxLength: 2048
+          type: string
+        country:
+          title: Registrar country
+          description: The country the registrar is primarily located in.
+          default: ''
+          example: United States
+          minLength: 1
+          maxLength: 2048
+          type: string
+        website:
+          title: Registrar website
+          description: The primary website of the registrar.
+          example: https://markmonitor.com
+          minLength: 1
+          maxLength: 2083
+          format: uri
           type:
           - string
           - 'null'
-    CustomerReviewsMeta:
-      title: CustomerReviewsMeta
-      type: object
-      properties:
-        last_review_date:
-          title: Last review date
-          description: The date the last review was made
-          type: string
-          format: date
-        url:
-          title: url
-          description: The URL of the company profile page
-          type: string
-        name:
-          title: Name
-          description: The name of the company as it appears on the company profile page
-          type: string
-        review_count:
-          title: Review count
-          description: The number of reviews for the company
-          default: 0
-          type: integer
-        review_average:
-          title: Review count
-          description: The average review rating
-          default: 0.0
-          type: number
-    LineType:
-      title: LineType
-      description: An enumeration.
-      enum:
-      - Landline
-      - Mobile
-      - FixedVOIP
-      - NonFixedVOIP
-      - TollFree
-      - Other
-      - Voicemail
-      - ''
-      type: string
-    FraudRisk:
-      title: FraudRisk
-      description: An enumeration.
-      enum:
-      - LOW
-      - MEDIUM
-      - HIGH
-      type: string
-    NewsArticle:
-      title: NewsArticle
-      type: object
-      properties:
-        title:
-          title: Title
-          type: string
-        link:
-          title: Link
-          type: string
-        date:
-          title: Date
-          type: string
-          format: date-time
-        snippet:
-          title: Snippet
-          type: string
-        source:
-          title: Source
-          type: string
-        concerns:
-          type: array
-          items:
-            $ref: '#/components/schemas/NewsArticleTopicConcernType'
-      required:
-      - concerns
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
     ContentFlagDetail:
       title: ContentFlagDetail
       description: Structured detail for a triggered content flag.
@@ -1045,370 +277,13 @@ components:
           type: string
       required:
       - flag
-    SubmittedDescriptionAnalysis:
-      title: SubmittedDescriptionAnalysis
-      type: object
-      properties:
-        text:
-          title: Text
-          type: string
-        match_type:
-          $ref: '#/components/schemas/SubmittedDescriptionMatchType'
-      required:
-      - text
-      - match_type
-    InvalidInputParameter:
-      title: InvalidInputParameter
-      type: object
-      properties:
-        field_name:
-          title: Field Name
-          type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
-      required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
-    CompanyLookup:
-      title: CompanyLookup
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        status:
-          $ref: '#/components/schemas/CompanyMatchRequestStatuses'
-        search_term:
-          title: Search Term
-          type: string
-        search_query:
-          $ref: '#/components/schemas/CompanyQuery'
-        search_model:
-          $ref: '#/components/schemas/SearchModel'
-        response_code:
-          title: Response Code
-          type: integer
-        response_data:
-          title: Response Data
-          anyOf:
-          - $ref: '#/components/schemas/Company'
-          - type: object
-      required:
-      - id
-      - created_at
-      - response_code
-      - response_data
-      additionalProperties: false
-    CredentialMatchDomain:
-      title: CredentialMatchDomain
-      type: object
-      properties:
-        domain:
-          title: Domain
-          description: The year of the record.
-          example: example.com
-          type: string
-        technologies:
-          title: Technologies
-          description: Labels for the technologies that have shared credentials with this domain and searched website.
-          example:
-          - google-analytics
-          - olark
-          type: array
-          items:
-            type: string
-      required:
-      - domain
-      - technologies
-    Phone:
-      title: Phone
-      type: object
-      properties:
-        number:
-          title: Phone number
-          description: The E.164 formatted phone number.
-          example: '+13105555555'
-          type: string
-        is_valid:
-          title: Phone is valid?
-          description: A phone number that fits with known patterns such as area codes and carrier ranges.
-          example: true
-          type:
-          - boolean
-          - 'null'
-        line_type:
-          title: Phone line type
-          description: The type of phone line associated with this number
-          example: Mobile
-          allOf:
-          - $ref: '#/components/schemas/LineType'
-        country_code:
-          title: Country Code
-          description: ISO country code of country this phone number is from
-          example: US
-          type:
-          - string
-          - 'null'
-        country_name:
-          title: Country Name
-          description: The name of the country this phone number is from
-          example: United States
-          type:
-          - string
-          - 'null'
-        links_to_company:
-          title: Company linkages
-          description: Any current associations found between this number and the company
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/PhoneLink'
-        source:
-          title: Source
-          description: The data source for this number.
-          example: website
-          allOf:
-          - $ref: '#/components/schemas/DataSource'
-    Domain:
-      title: Domain
-      description: 'this has come to be a collection of technical data points, rather than anything intuitively related to the "Domain"
-
-        err on having things that could be in website_content being more intelligable to non-technical users
-
-        and technical stuff directly in domain'
-      type: object
-      properties:
-        name:
-          title: Domain name
-          description: The fully qualified domain name.
-          example: acme.com
-          minLength: 1
-          maxLength: 2048
-          type:
-          - string
-          - 'null'
-        registration_date:
-          title: Registration date
-          description: The date the domain was initially registered on.
-          example: '1992-07-14'
-          type:
-          - string
-          - 'null'
-          format: date
-        last_update_date:
-          title: Last update date
-          description: The date the domain's registration info was last updated on.
-          example: '2021-12-15'
-          type:
-          - string
-          - 'null'
-          format: date
-        expiration_date:
-          title: Expiration date
-          description: The date on which the domain's registration info is due to expire. If the expiration date has passed, this adds risk as the domain can be reassigned to a new company.
-          example: '2028-07-12'
-          type:
-          - string
-          - 'null'
-          format: date
-        is_resolvable:
-          title: Is resolvable?
-          description: A domain that responded with a valid A, AAAA, or CNAME record at the time of lookup. Unresolvable domains are frequently caused by typos on input.
-          example: true
-          type: boolean
-        is_registered:
-          title: Is registered?
-          description: A domain that was present in the ICANN registry at the time of lookup. Unregistered domains can be purchased at any time, and thus are risky. This is frequently caused by typos on input.
-          example: true
-          type: boolean
-        is_parked:
-          title: Is parked?
-          description: A domain that is registered, but not connected to a legitimate site. It is instead pointed at a parking page, typically owned by the registrar.
-          example: false
-          type: boolean
-        is_known_free_email_host:
-          title: Is known free email host?
-          description: A domain known for providing free email signups.  Typically, a corporate representative of google (or another hosted domain provider) will use their corporate email address, not their public email service domain.
-          example: false
-          type: boolean
-        is_known_social_media_domain:
-          title: Is known social media domain?
-          description: A domain that is registered to a known social media entity.
-          example: false
-          type: boolean
-        is_known_marketplace_domain:
-          title: Is known marketplace domain?
-          description: A domain that is registered to a known marketplace entity (e.g. alibaba, amazon, fiverr).
-          example: false
-          type: boolean
-        is_known_top_domain:
-          title: Is known top domain?
-          description: A domain that is known to be one of the most popular sites on the internet.
-          example: false
-          type: boolean
-        is_known_hosting_provider_domain:
-          title: Is known hosting provider domain?
-          description: A domain that is known to be registered to a known hosting provider (e.g. company.hostingprovider.com and not company.com).
-          example: false
-          type: boolean
-        is_non_business:
-          title: Is non business?
-          description: A domain with a top level domain that indicates it is unlikely to be a business (e.g. .edu, .gov).
-          example: false
-          type: boolean
-        is_ssl_valid:
-          title: Is SSL valid?
-          description: A domain for which SSL was properly configured at the time of the check.
-          example: true
-          type: boolean
-        is_webserver_responsive:
-          title: Is webserver responsive?
-          description: A domain for which the responding web server(s) responds to a simple HTTP or HTTPS request on port 80 or 443.
-          example: true
-          type: boolean
-        screenshot:
-          title: Screenshot
-          description: Links to download a screenshot of the domain in multiple sizes.
-          allOf:
-          - $ref: '#/components/schemas/Screenshot'
-        historical_archives:
-          title: Historical archives
-          description: Archives of the website from past dates.
-          type: array
-          items:
-            $ref: '#/components/schemas/HistoricalArchive'
-        registrar:
-          title: Registrar
-          description: Information about the domain's registrar
-          allOf:
-          - $ref: '#/components/schemas/Registrar'
-        hosting_providers:
-          title: Hosting providers
-          description: Information about the host(s) of the webserver(s) used by the company's website
-          example:
-          - name: Google
-            country: United States
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/HostingProvider'
-        has_robots_txt:
-          title: Has a valid robots.txt?
-          description: A website sophistication signal that indicates content scraping permissibility.
-          default: true
-          example: true
-          type:
-          - boolean
-          - 'null'
-        has_apex_and_www:
-          title: Has apex and www?
-          description: Indicates both the apex domain (e.g. example.com) and www subdomain (e.g. www.example.com) work or correctly forward traffic.
-          default: true
-          example: true
-          type:
-          - boolean
-          - 'null'
-        estimated_tech_spend:
-          title: Estimated tech spend
-          description: An estimage of the monthly spend on website technologies derived from the visible premium libraries and tools.
-          example: 1000
-          type:
-          - integer
-          - 'null'
-        estimated_tech_spend_history:
-          title: Estimated tech spend history
-          description: Estimates of the monthly spend based on the website technologies used as times in the past.
-          example:
-          - spend: 850
-            detected_date: '2022-06-01'
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TechSpendRecord'
-        website_tech_activity:
-          title: Website tech activity
-          description: The number of total, added, and removed website technologies by month.
-          example:
-          - year: 2023
-            month: 6
-            added: 4
-            removed: 1
-            total: 25
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/TechActivityMonth'
-        domains_with_matching_credentials:
-          title: Domains with matching credentials
-          description: Domains that share technology credentials with the website.
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/CredentialMatchDomain'
-        inbound_linking_domains_count:
-          title: Inbound linking domains count
-          description: The number of unique domains that have links to the website (aka backlinks).
-          example: 5
-          type:
-          - integer
-          - 'null'
-        inbound_redirects:
-          title: Redirects
-          description: A list of domains that redirect to the website.
-          example:
-          - example.xyz
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        cohosted_domains:
-          title: Co-hosted domains
-          description: A list of domains that are hosted on the same IP address as the website, and likely are owned or managed by the same entity.
-          example:
-          - example.xyz
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-    SearchModel:
-      title: SearchModel
+    AverageEngagement:
+      title: AverageEngagement
       description: An enumeration.
       enum:
-      - STANDARD
-      - DEEP
-      type: string
-    RiskAnalysis:
-      title: RiskAnalysis
-      type: object
-      properties:
-        fraud_risk:
-          $ref: '#/components/schemas/FraudRisk'
-    CompanyMatchRequestStatuses:
-      title: CompanyMatchRequestStatuses
-      description: An enumeration.
-      enum:
-      - QUEUED
-      - PROCESSING
-      - FINISHED
-      - ERROR
+      - Low
+      - Medium
+      - High
       type: string
     CompanyQuery:
       title: CompanyQuery
@@ -1541,240 +416,101 @@ components:
         submitted_full_name: Bob Smith
         external_tracking_ref: abc_defg12345678
         match_profile_id: 00000000-0000-0000-0000-000000000000
-    Registrar:
-      title: Registrar
+    Ecommerce:
+      title: Ecommerce
       type: object
       properties:
-        name:
-          title: Registrar name
-          description: The name of the registrar.
-          default: ''
-          example: MarkMonitor, Inc.
-          minLength: 1
-          maxLength: 2048
-          type: string
-        country:
-          title: Registrar country
-          description: The country the registrar is primarily located in.
-          default: ''
-          example: United States
-          minLength: 1
-          maxLength: 2048
-          type: string
-        website:
-          title: Registrar website
-          description: The primary website of the registrar.
-          example: https://markmonitor.com
-          minLength: 1
-          maxLength: 2083
-          format: uri
+        platform:
+          title: Ecommerce Platform
+          description: The ecommerce platform used by the company.
+          example: shopify
           type:
           - string
           - 'null'
-    PostalServiceFlag:
-      title: PostalServiceFlag
-      description: '"residential" indicates that the address is a residential address.
-
-        "po_box" indicates that the address is a Postoffice Box rather than a physical address.
-
-        "virtual_address" indicates that the address is a private business receiving mail for clients.
-
-        "vacant" indicates that the USPS has marked the address as being vacant.
-
-        "inactive" indicates that the USPS does not deliver to this address.
-
-        "unreliable" indicates that that there was not enough address information to validate a specific address.
-
-        "unconfirmed" indicates that the USPS does not maintain Delivery Point Validation data for this address.'
-      enum:
-      - residential
-      - po_box
-      - virtual_address
-      - vacant
-      - inactive
-      - general_delivery
-      - unreliable
-      - unconfirmed
-      type: string
-    core__api__schemas__customer_review__Analysis:
-      title: Analysis
-      type: object
-      properties:
-        text:
-          title: Text
-          description: The text of the analysis
-          type: string
-        level_of_concern:
-          title: Level of concern
-          description: The level of concern based on the analysis
-          allOf:
-          - $ref: '#/components/schemas/LevelOfConcern'
-        flags:
-          title: Flags
-          description: A list of flags indicating which concerns were raised in the analysis
-          type: array
-          items:
-            $ref: '#/components/schemas/ConcernFlag'
-      required:
-      - text
-    AverageEngagement:
-      title: AverageEngagement
-      description: An enumeration.
-      enum:
-      - Low
-      - Medium
-      - High
-      type: string
-    PolicyAnalysis:
-      title: PolicyAnalysis
-      type: object
-      properties:
-        sources:
-          title: Evaluated sources
-          description: A list of sources used in the analysis.
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicySource'
-        analyses:
-          title: Analyses
-          description: A list of analytical findings from the source materials.
-          type: array
-          items:
-            $ref: '#/components/schemas/core__api__schemas__policy_analysis__Analysis'
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    FootTraffic:
-      title: FootTraffic
-      type: object
-      properties:
-        projections:
-          title: Projections
-          description: List of daily projections zero-indexed starting on Monday
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectionDay'
-        traffic_score:
-          description: Score of the location's foot traffic
-          default: UNKNOWN
-          allOf:
-          - $ref: '#/components/schemas/TrafficScore'
-        hours_open:
-          title: Hours Open
-          description: Zero-indexed list of days starting with monday, each containg a list of hours the location is open
-          type: array
-          items:
-            type: array
-            items:
-              type: integer
-    CustomerReviews:
-      title: CustomerReviews
-      type: object
-      properties:
-        analysis:
-          title: Analysis
-          description: An analysis of the review data gathered from providers
-          allOf:
-          - $ref: '#/components/schemas/core__api__schemas__customer_review__Analysis'
-        providers:
-          title: Providers
-          description: A list of review data from different providers
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomerReviewsData'
-    TechSpendRecord:
-      title: TechSpendRecord
-      type: object
-      properties:
-        spend:
-          title: Spend
-          description: The estimated technology spend at a historical date.
-          example: 1000
-          type: integer
-        detected_date:
-          title: Date
-          description: The date of the estimate.
-          example: '2021-12-15'
-          type: string
+        product_count:
+          title: Product Count
+          description: The number of products sold by the company.
+          example: 100
+          type:
+          - integer
+          - 'null'
+        vendor_count:
+          title: Vendor Count
+          description: The number of unique vendors sold by the company.
+          example: 20
+          type:
+          - integer
+          - 'null'
+        average_price:
+          title: Average Price
+          description: The average price of products for sale, in the currency of the 'currency_code' field.
+          example: 15.55
+          type:
+          - number
+          - 'null'
+        minimum_price:
+          title: Minumum Price
+          description: The lowest price of any product for sale, in the currency of the 'currency_code' field.
+          example: 9.99
+          type:
+          - number
+          - 'null'
+        maximum_price:
+          title: Maximum Price
+          description: The highest price of any product for sale, in the currency of the 'currency_code' field.
+          example: 100.99
+          type:
+          - number
+          - 'null'
+        currency_code:
+          title: Currency Code
+          description: The ISO code for the currency used.
+          example: USD
+          type:
+          - string
+          - 'null'
+        last_updated_date:
+          title: Last Updated Date
+          description: The date of the last update to the site.
+          example: '2023-03-23'
+          type:
+          - string
+          - 'null'
           format: date
-    ConnectedEntity:
-      title: ConnectedEntity
+    ProjectionDay:
+      title: ProjectionDay
       type: object
       properties:
         name:
           title: Name
-          description: Name of the connected entity.
-          example: Acme Consulting Inc.
+          description: Day of the week
           type: string
-        domain:
-          title: URL
-          description: domain of the connected entity.
-          example: example.com
-          type: string
-        sources:
-          title: Source
-          description: The data source that establishes the connection.
-          default: []
-          example: Duplicate website text
+        hours:
+          title: Hours
+          description: List of projection hours
           type: array
-          items:
-            $ref: '#/components/schemas/ConnectionSource'
-        content_flags:
-          title: Content flags
-          description: A list of potentially concerning flags in the web content.
-          example:
-          - Animal Cruelty
-          type: array
-          items:
-            type: string
-        multi_level_marketing_name:
-          title: Multi level marketing name
-          description: The name of a known multi-level-marketing brand found in the web content.
-          example: Amway
-          type: string
-        primary_language:
-          title: Primary language
-          description: Evaluation of the primary language used for web content.
-          example: English
-          type: string
-        is_webserver_responsive:
-          title: Webserver responsive
-          description: Indicates whether the entity's webserver is responsive.
-          example: true
-          type: boolean
-    ActivityLevel:
-      title: ActivityLevel
-      description: An enumeration.
-      enum:
-      - Low
-      - Medium
-      - High
-      type: string
-    Metrics:
-      title: Metrics
+          items: {}
+      required:
+      - name
+      - hours
+    HistoricalArchive:
+      title: HistoricalArchive
       type: object
       properties:
-        estimated_employee_count_range:
-          title: Estimated employee count range
-          description: An estimated range showing the number of people working at the company.
-          example: 5,000+
-          allOf:
-          - $ref: '#/components/schemas/CompanySize'
-        estimated_annual_revenue_range:
-          title: Estimated annual revenue range
-          description: An estimated range showing the revenue of the company.
-          example: 1B+
-          allOf:
-          - $ref: '#/components/schemas/CompanyRevenue'
+        url:
+          title: URL
+          description: The URL to access an archive.
+          example: '2021-12-15'
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
+        taken_date:
+          title: Taken date
+          description: The date the archive was captured.
+          example: '2021-12-15'
+          type: string
+          format: date
     WebsiteContent:
       title: WebsiteContent
       type: object
@@ -1940,259 +676,6 @@ components:
           description: The name of a known multi-level-marketing brand found in the web content.
           example: Amway
           type: string
-    DuplicateMatch:
-      title: DuplicateMatch
-      type: object
-      properties:
-        url:
-          title: URL
-          description: URL of a website with matching text.
-          example: https://www.duplicate.com
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-        percent_matched:
-          title: Percent Matched
-          description: The share of words matched out .
-          example: 88
-          type: integer
-        screenshot_image_link:
-          title: Screenshot Image Link
-          description: A link to a screenshot with the matched text highlighted.
-          example: null
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-    RiskIndicators:
-      title: RiskIndicators
-      type: object
-      properties:
-        validity:
-          title: Validity indicators
-          description: A list of data points that indicate the business's legitimacy.
-          default: []
-          example: []
-          type: array
-          items:
-            $ref: '#/components/schemas/Risk'
-        notice:
-          title: Notice indicators
-          description: A list of data points that indicate information you may want to take heed of before interacting with the business.
-          default: []
-          example: []
-          type: array
-          items:
-            $ref: '#/components/schemas/Risk'
-        risk:
-          title: Risk indicators
-          description: A list of data points that indicate the risk of interacting with the business.
-          default: []
-          example: []
-          type: array
-          items:
-            $ref: '#/components/schemas/Risk'
-    Decision:
-      title: Decision
-      description: An enumeration.
-      enum:
-      - Pass
-      - Fail
-      type: string
-    RiskType:
-      title: RiskType
-      description: An enumeration.
-      enum:
-      - Validity
-      - Notice
-      - Risk
-      type: string
-    CompanySize:
-      title: CompanySize
-      description: An enumeration.
-      enum:
-      - 1-10
-      - 11-50
-      - 51-200
-      - 201-500
-      - 500-1,000
-      - 1,001-5,000
-      - 5,000+
-      type: string
-    FollowRatio:
-      title: FollowRatio
-      description: An enumeration.
-      enum:
-      - Low
-      - Medium
-      - High
-      type: string
-    InvalidRequest:
-      title: InvalidRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
-      required:
-      - message
-      example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
-    Email:
-      title: Email
-      type: object
-      properties:
-        address:
-          title: Email address
-          description: The email address.
-          example: null
-          type: string
-        is_valid:
-          title: Email is valid?
-          description: An email that is not disposable, on a free host, and whose domain has DNS properly configured to receive emails.
-          example: true
-          type:
-          - boolean
-          - 'null'
-        internal_source_urls:
-          title: Internal Source URLs
-          description: A list of URLs where the email address was found within the searched website.
-          default: []
-          example:
-          - https://example.com/contact
-          type: array
-          items:
-            type: string
-        external_source_urls:
-          title: External Source URLs
-          description: A list of URLs where the email address was found, outside the searched website.
-          default: []
-          example:
-          - https://zoominfo.com/123
-          type: array
-          items:
-            type: string
-        source:
-          title: Source
-          description: The data source for this email.
-          example: website
-          allOf:
-          - $ref: '#/components/schemas/DataSource'
-        date_first_seen:
-          title: Date first seen
-          description: The date the email was first seen.
-          example: '2000-06-06'
-          type:
-          - string
-          - 'null'
-          format: date
-        velocity:
-          title: Velocity
-          description: A score representing activity over the last 6 months, out of 10.
-          example: 7
-          type:
-          - integer
-          - 'null'
-        popularity:
-          title: Popularity
-          description: A score representing breadth of interaction over the last 12 months, out of 10.
-          example: 9
-          type:
-          - integer
-          - 'null'
-    TrafficScore:
-      title: TrafficScore
-      description: An enumeration.
-      enum:
-      - UNKNOWN
-      - LOW
-      - MEDIUM
-      - HIGH
-      type: string
-    ConnectionSource:
-      title: ConnectionSource
-      type: object
-      properties:
-        type:
-          title: Name
-          description: Name of the connected entity.
-          example: Acme Consulting Inc.
-          allOf:
-          - $ref: '#/components/schemas/ConnectionSourceType'
-        context:
-          title: Context
-          description: Data on the connection.
-          example: example.com is also located at 123 Main Street, Chicago, IL
-          type: string
-        url:
-          title: URL
-          description: The URL of the source.
-          example: https://example.com
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-    TopKeywords:
-      title: TopKeywords
-      type: object
-      properties:
-        organic:
-          title: Organic keywords
-          description: The top organic keywords driving traffic to the site.
-          example:
-          - anvils
-          - cartoon anvils
-          type: array
-          items:
-            type: string
-        paid:
-          title: Paid keywords
-          description: The top paid keywords driving traffic to the site.
-          example:
-          - example
-          - example2
-          type: array
-          items:
-            type: string
-    HistoricalArchive:
-      title: HistoricalArchive
-      type: object
-      properties:
-        url:
-          title: URL
-          description: The URL to access an archive.
-          example: '2021-12-15'
-          minLength: 1
-          maxLength: 65536
-          format: uri
-          type: string
-        taken_date:
-          title: Taken date
-          description: The date the archive was captured.
-          example: '2021-12-15'
-          type: string
-          format: date
-    AddressCoordinatesAccuracy:
-      title: AddressCoordinatesAccuracy
-      description: Order matters here, list from least to most accurate
-      enum:
-      - APPROXIMATE
-      - ROOFTOP
-      type: string
     Company:
       title: Company
       type: object
@@ -2590,6 +1073,104 @@ components:
           type:
           - string
           - 'null'
+    Risk:
+      title: Risk
+      type: object
+      properties:
+        category:
+          title: Category
+          description: The general area this risk classification belongs to.
+          default: ''
+          example: website
+          minLength: 1
+          maxLength: 64
+          type: string
+        subcategory:
+          title: Subcategory
+          description: The subdivision of the category.
+          default: ''
+          example: security
+          minLength: 1
+          maxLength: 64
+          type: string
+        name:
+          title: Name
+          description: The machine-readable name of the risk element being considered.
+          default: ''
+          example: ssl_configuration
+          minLength: 1
+          maxLength: 255
+          type: string
+        display_name:
+          title: Display name
+          description: The human-readable name of the risk element being considered.
+          default: ''
+          example: Webserver SSL configuration
+          minLength: 1
+          maxLength: 255
+          type: string
+        score:
+          title: Score
+          description: The percentage score of how risky we consider the data for this item to be, denoted as a flat integer that should be divided by 100 (e.g. 1000 -> 10%). Higher numbers are more risky.
+          default: ''
+          example: 0
+          minimum: 0
+          maximum: 10000
+          type: integer
+        description:
+          title: Description
+          description: A plaintext explanation of the risk.
+          default: ''
+          example: The website's SSL configuration is not valid, indicating site security is not well maintained.
+          minLength: 1
+          maxLength: 512
+          type: string
+        classification_type:
+          title: Classification type
+          description: The classification type indicating whether the data point(s) find that this is an indicatorof validity, risk, or something your team should take notice of.
+          default: Validity
+          example: Validity
+          allOf:
+          - $ref: '#/components/schemas/RiskType'
+    FollowRatio:
+      title: FollowRatio
+      description: An enumeration.
+      enum:
+      - Low
+      - Medium
+      - High
+      type: string
+    PhoneLinkType:
+      title: PhoneLinkType
+      description: An enumeration.
+      enum:
+      - direct
+      - employee
+      - address
+      type: string
+    TrafficSources:
+      title: TrafficSources
+      description: Traffic source breakdown as shares summing to ~1.0.
+      type: object
+      properties:
+        search:
+          title: Search
+          type: number
+        social:
+          title: Social
+          type: number
+        display_ads:
+          title: Display Ads
+          type: number
+        direct:
+          title: Direct
+          type: number
+        referrals:
+          title: Referrals
+          type: number
+        mail:
+          title: Mail
+          type: number
     TooManyRequests:
       title: TooManyRequests
       type: object
@@ -2601,6 +1182,896 @@ components:
       - message
       example:
         message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    FraudRisk:
+      title: FraudRisk
+      description: An enumeration.
+      enum:
+      - LOW
+      - MEDIUM
+      - HIGH
+      type: string
+    CustomerReviews:
+      title: CustomerReviews
+      type: object
+      properties:
+        analysis:
+          title: Analysis
+          description: An analysis of the review data gathered from providers
+          allOf:
+          - $ref: '#/components/schemas/core__api__schemas__customer_review__Analysis'
+        providers:
+          title: Providers
+          description: A list of review data from different providers
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerReviewsData'
+    ContentFlagName:
+      title: ContentFlagName
+      description: An enumeration.
+      enum:
+      - Adoption
+      - Adult
+      - Alcohol
+      - Animal Entertainment
+      - Asset Management
+      - Auctions
+      - Cannabis
+      - Career Placement Services
+      - Commodities or Securities Trading
+      - Counterfeit Goods and IP Infringement
+      - Credit Monitoring and Identity Protection Services
+      - Crowdfunding
+      - Cruise lines
+      - Crypto
+      - Cryptocurrency
+      - Dating
+      - Debt
+      - Discount and Rebate Services
+      - Endangered Animals
+      - Firearms
+      - Fireworks
+      - Fundraising
+      - Gambling
+      - Hazardous Materials
+      - High Risk Legal Services
+      - High Value Assets
+      - Informercials
+      - Insurance
+      - International Customs Services
+      - Lead Generation
+      - Leather and Taxidermy
+      - Lending
+      - Medical Devices
+      - Nutraceuticals
+      - Oil and gas
+      - Pet Stores
+      - Pharmaceuticals
+      - Pornography
+      - Prepaid Telephony
+      - Psychics and Fortune Tellers
+      - Real Estate
+      - Religious and Political Groups
+      - Scams and Scamware
+      - Scrap Metal
+      - Sex work
+      - Shell Companies
+      - Social Media Manipulation
+      - Solar
+      - Telehealth
+      - Telemarketing
+      - Timeshares
+      - Tobacco
+      - Weapons
+      - Web Hosting
+      - Government
+      type: string
+    RiskIndicators:
+      title: RiskIndicators
+      type: object
+      properties:
+        validity:
+          title: Validity indicators
+          description: A list of data points that indicate the business's legitimacy.
+          default: []
+          example: []
+          type: array
+          items:
+            $ref: '#/components/schemas/Risk'
+        notice:
+          title: Notice indicators
+          description: A list of data points that indicate information you may want to take heed of before interacting with the business.
+          default: []
+          example: []
+          type: array
+          items:
+            $ref: '#/components/schemas/Risk'
+        risk:
+          title: Risk indicators
+          description: A list of data points that indicate the risk of interacting with the business.
+          default: []
+          example: []
+          type: array
+          items:
+            $ref: '#/components/schemas/Risk'
+    PhoneLink:
+      title: PhoneLink
+      type: object
+      properties:
+        type:
+          title: Link type
+          description: The type of link between this number and the company
+          example: direct
+          allOf:
+          - $ref: '#/components/schemas/PhoneLinkType'
+        duration:
+          title: Link duration
+          description: The approximate length of time the link has existed (formatted as an ISO 8601 duration)
+          example: P2Y5M
+          type:
+          - string
+          - 'null'
+    CredentialMatchDomain:
+      title: CredentialMatchDomain
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The year of the record.
+          example: example.com
+          type: string
+        technologies:
+          title: Technologies
+          description: Labels for the technologies that have shared credentials with this domain and searched website.
+          example:
+          - google-analytics
+          - olark
+          type: array
+          items:
+            type: string
+      required:
+      - domain
+      - technologies
+    ActivityLevel:
+      title: ActivityLevel
+      description: An enumeration.
+      enum:
+      - Low
+      - Medium
+      - High
+      type: string
+    CompanyRevenue:
+      title: CompanyRevenue
+      description: An enumeration.
+      enum:
+      - 0-1M
+      - 1M-10M
+      - 10M-50M
+      - 50M-100M
+      - 100M-1B
+      - 1B+
+      type: string
+    ReferringSite:
+      title: ReferringSite
+      type: object
+      properties:
+        url:
+          title: URL
+          description: Link to the referring site.
+          example: null
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
+        traffic_share:
+          title: Traffic Share
+          description: Share of total traffic coming from the referring traffic.
+          example: null
+          type: number
+        screenshot_image_link:
+          title: Screenshot Image
+          description: A link to the full website screenshot image.
+          example: null
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
+    Phone:
+      title: Phone
+      type: object
+      properties:
+        number:
+          title: Phone number
+          description: The E.164 formatted phone number.
+          example: '+13105555555'
+          type: string
+        is_valid:
+          title: Phone is valid?
+          description: A phone number that fits with known patterns such as area codes and carrier ranges.
+          example: true
+          type:
+          - boolean
+          - 'null'
+        line_type:
+          title: Phone line type
+          description: The type of phone line associated with this number
+          example: Mobile
+          allOf:
+          - $ref: '#/components/schemas/LineType'
+        country_code:
+          title: Country Code
+          description: ISO country code of country this phone number is from
+          example: US
+          type:
+          - string
+          - 'null'
+        country_name:
+          title: Country Name
+          description: The name of the country this phone number is from
+          example: United States
+          type:
+          - string
+          - 'null'
+        links_to_company:
+          title: Company linkages
+          description: Any current associations found between this number and the company
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneLink'
+        source:
+          title: Source
+          description: The data source for this number.
+          example: website
+          allOf:
+          - $ref: '#/components/schemas/DataSource'
+    TechActivityMonth:
+      title: TechActivityMonth
+      type: object
+      properties:
+        year:
+          title: Year
+          description: The year of the record.
+          example: 2022
+          type: integer
+        month:
+          title: Month
+          description: The month of the record.
+          example: 11
+          type: integer
+        added:
+          title: Added
+          description: The number of added website technologies during this month.
+          example: 5
+          type: integer
+        removed:
+          title: Removed
+          description: The number of removed website technologies during this month.
+          example: 5
+          type: integer
+        total:
+          title: total
+          description: The number of active website technologies during this month.
+          example: 5
+          type: integer
+    Domain:
+      title: Domain
+      description: 'this has come to be a collection of technical data points, rather than anything intuitively related to the "Domain"
+
+        err on having things that could be in website_content being more intelligable to non-technical users
+
+        and technical stuff directly in domain'
+      type: object
+      properties:
+        name:
+          title: Domain name
+          description: The fully qualified domain name.
+          example: acme.com
+          minLength: 1
+          maxLength: 2048
+          type:
+          - string
+          - 'null'
+        registration_date:
+          title: Registration date
+          description: The date the domain was initially registered on.
+          example: '1992-07-14'
+          type:
+          - string
+          - 'null'
+          format: date
+        last_update_date:
+          title: Last update date
+          description: The date the domain's registration info was last updated on.
+          example: '2021-12-15'
+          type:
+          - string
+          - 'null'
+          format: date
+        expiration_date:
+          title: Expiration date
+          description: The date on which the domain's registration info is due to expire. If the expiration date has passed, this adds risk as the domain can be reassigned to a new company.
+          example: '2028-07-12'
+          type:
+          - string
+          - 'null'
+          format: date
+        is_resolvable:
+          title: Is resolvable?
+          description: A domain that responded with a valid A, AAAA, or CNAME record at the time of lookup. Unresolvable domains are frequently caused by typos on input.
+          example: true
+          type: boolean
+        is_registered:
+          title: Is registered?
+          description: A domain that was present in the ICANN registry at the time of lookup. Unregistered domains can be purchased at any time, and thus are risky. This is frequently caused by typos on input.
+          example: true
+          type: boolean
+        is_parked:
+          title: Is parked?
+          description: A domain that is registered, but not connected to a legitimate site. It is instead pointed at a parking page, typically owned by the registrar.
+          example: false
+          type: boolean
+        is_known_free_email_host:
+          title: Is known free email host?
+          description: A domain known for providing free email signups.  Typically, a corporate representative of google (or another hosted domain provider) will use their corporate email address, not their public email service domain.
+          example: false
+          type: boolean
+        is_known_social_media_domain:
+          title: Is known social media domain?
+          description: A domain that is registered to a known social media entity.
+          example: false
+          type: boolean
+        is_known_marketplace_domain:
+          title: Is known marketplace domain?
+          description: A domain that is registered to a known marketplace entity (e.g. alibaba, amazon, fiverr).
+          example: false
+          type: boolean
+        is_known_top_domain:
+          title: Is known top domain?
+          description: A domain that is known to be one of the most popular sites on the internet.
+          example: false
+          type: boolean
+        is_known_hosting_provider_domain:
+          title: Is known hosting provider domain?
+          description: A domain that is known to be registered to a known hosting provider (e.g. company.hostingprovider.com and not company.com).
+          example: false
+          type: boolean
+        is_non_business:
+          title: Is non business?
+          description: A domain with a top level domain that indicates it is unlikely to be a business (e.g. .edu, .gov).
+          example: false
+          type: boolean
+        is_ssl_valid:
+          title: Is SSL valid?
+          description: A domain for which SSL was properly configured at the time of the check.
+          example: true
+          type: boolean
+        is_webserver_responsive:
+          title: Is webserver responsive?
+          description: A domain for which the responding web server(s) responds to a simple HTTP or HTTPS request on port 80 or 443.
+          example: true
+          type: boolean
+        screenshot:
+          title: Screenshot
+          description: Links to download a screenshot of the domain in multiple sizes.
+          allOf:
+          - $ref: '#/components/schemas/Screenshot'
+        historical_archives:
+          title: Historical archives
+          description: Archives of the website from past dates.
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoricalArchive'
+        registrar:
+          title: Registrar
+          description: Information about the domain's registrar
+          allOf:
+          - $ref: '#/components/schemas/Registrar'
+        hosting_providers:
+          title: Hosting providers
+          description: Information about the host(s) of the webserver(s) used by the company's website
+          example:
+          - name: Google
+            country: United States
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/HostingProvider'
+        has_robots_txt:
+          title: Has a valid robots.txt?
+          description: A website sophistication signal that indicates content scraping permissibility.
+          default: true
+          example: true
+          type:
+          - boolean
+          - 'null'
+        has_apex_and_www:
+          title: Has apex and www?
+          description: Indicates both the apex domain (e.g. example.com) and www subdomain (e.g. www.example.com) work or correctly forward traffic.
+          default: true
+          example: true
+          type:
+          - boolean
+          - 'null'
+        estimated_tech_spend:
+          title: Estimated tech spend
+          description: An estimage of the monthly spend on website technologies derived from the visible premium libraries and tools.
+          example: 1000
+          type:
+          - integer
+          - 'null'
+        estimated_tech_spend_history:
+          title: Estimated tech spend history
+          description: Estimates of the monthly spend based on the website technologies used as times in the past.
+          example:
+          - spend: 850
+            detected_date: '2022-06-01'
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TechSpendRecord'
+        website_tech_activity:
+          title: Website tech activity
+          description: The number of total, added, and removed website technologies by month.
+          example:
+          - year: 2023
+            month: 6
+            added: 4
+            removed: 1
+            total: 25
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TechActivityMonth'
+        domains_with_matching_credentials:
+          title: Domains with matching credentials
+          description: Domains that share technology credentials with the website.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CredentialMatchDomain'
+        inbound_linking_domains_count:
+          title: Inbound linking domains count
+          description: The number of unique domains that have links to the website (aka backlinks).
+          example: 5
+          type:
+          - integer
+          - 'null'
+        inbound_redirects:
+          title: Redirects
+          description: A list of domains that redirect to the website.
+          example:
+          - example.xyz
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        cohosted_domains:
+          title: Co-hosted domains
+          description: A list of domains that are hosted on the same IP address as the website, and likely are owned or managed by the same entity.
+          example:
+          - example.xyz
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+    PolicySource:
+      title: PolicySource
+      type: object
+      properties:
+        type:
+          title: Source type
+          description: The type of source.
+          example: Privacy Policy
+          type: string
+        url:
+          title: Source URL
+          description: The URL of the source.
+          example: https://www.example.com/privacy
+          minLength: 1
+          maxLength: 2083
+          format: uri
+          type: string
+        title:
+          title: Source title
+          description: The title of the source.
+          example: Acme Inc. Privacy Policy
+          type: string
+        company_name:
+          title: Company name
+          description: The name of the company as it appears in the source.
+          example: Acme Inc.
+          type: string
+        language:
+          title: Source language
+          description: The language of the source.
+          example: en
+          type: string
+        last_updated:
+          title: Last updated
+          description: The date the source was last updated.
+          example: '2021-01-01'
+          type: string
+        change_policy:
+          title: Change policy
+          description: The policy for changes to the source.
+          example: Example Co reserves the right to make changes to this Privacy Policy. Any updates will be posted on our website.
+          type: string
+        policy_contact:
+          title: Contact
+          description: The contact information for the source.
+          example: support@example.com
+          type: string
+        synopsis:
+          title: Synopsis
+          description: A brief synopsis of the source.
+          example: This privacy policy outlines the types of personal information that is received and collected and how it is used. It also outlines the steps we take to protect your personal information.
+          type: string
+        has_placeholder_text:
+          title: Has placeholder text?
+          description: Indicates whether the source contains placeholder text.
+          example: false
+          type: boolean
+      required:
+      - type
+      - url
+    Industry:
+      title: Industry
+      type: object
+      properties:
+        primary_industry:
+          title: Primary industry
+          description: The primary industry the company operates in.
+          example: Iron and Steel Forging
+          minLength: 1
+          maxLength: 512
+          type:
+          - string
+          - 'null'
+        tags:
+          title: Tags
+          description: A list of short, descriptive phrases indicating what the company does.
+          default: []
+          example:
+          - Steelworks
+          - Anvils
+          - Coyotes
+          type: array
+          items:
+            type: string
+        primary_naics:
+          title: Primary NAICS code
+          description: A single code that is considered to be the primary business classification of the company according to the North American Industry Classification System (NAICS).
+          example: '332111'
+          type: string
+        additional_naics_codes:
+          title: NAICS codes
+          description: A list of codes indicating the industry classification of the company according to the North American Industry Classification System (NAICS).
+          default: []
+          example:
+          - '512110'
+          type: array
+          items:
+            type: string
+        primary_sic:
+          title: Primary SIC code
+          description: A single code that is considered to be the primary SIC of the company according to the Standard Industry Classification (SIC) system.
+          example: '3462'
+          type: string
+        additional_sic_codes:
+          title: SIC codes
+          description: A list of codes indicating the industry classification of the company according to the Standard Industry Classification (SIC) system.
+          default: []
+          example:
+          - '7819'
+          type: array
+          items:
+            type: string
+        primary_mcc:
+          title: Primary MCC code
+          description: A single code most likely to represent the company's merchant classification according to the Merchant Category Code (MCC) system.
+          example:
+            code: '3499'
+            description: Fabricated Metal Products, Not Elsewhere Classified
+          type: object
+        additional_mcc_codes:
+          title: SIC codes
+          description: A list of codes indicating other possible merchant classifications of the company according to the Merchant Category Code (MCC) system.
+          default: []
+          example:
+          - code: '7812'
+            description: Motion Picture and Video Tape Production and Distribution
+          type: array
+          items:
+            type: object
+    ConnectionSource:
+      title: ConnectionSource
+      type: object
+      properties:
+        type:
+          title: Name
+          description: Name of the connected entity.
+          example: Acme Consulting Inc.
+          allOf:
+          - $ref: '#/components/schemas/ConnectionSourceType'
+        context:
+          title: Context
+          description: Data on the connection.
+          example: example.com is also located at 123 Main Street, Chicago, IL
+          type: string
+        url:
+          title: URL
+          description: The URL of the source.
+          example: https://example.com
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    PostalServiceFlag:
+      title: PostalServiceFlag
+      description: '"residential" indicates that the address is a residential address.
+
+        "po_box" indicates that the address is a Postoffice Box rather than a physical address.
+
+        "virtual_address" indicates that the address is a private business receiving mail for clients.
+
+        "vacant" indicates that the USPS has marked the address as being vacant.
+
+        "inactive" indicates that the USPS does not deliver to this address.
+
+        "unreliable" indicates that that there was not enough address information to validate a specific address.
+
+        "unconfirmed" indicates that the USPS does not maintain Delivery Point Validation data for this address.'
+      enum:
+      - residential
+      - po_box
+      - virtual_address
+      - vacant
+      - inactive
+      - general_delivery
+      - unreliable
+      - unconfirmed
+      type: string
+    Decision:
+      title: Decision
+      description: An enumeration.
+      enum:
+      - Pass
+      - Fail
+      type: string
+    Application:
+      title: Application
+      type: object
+      properties:
+        phone_business_connections:
+          title: phone has business connections?
+          description: The submitted phone number was found to have associations with the business.
+          example: true
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+        email_business_connections:
+          title: email has business connections?
+          description: The submitted email was found to have associations with the business.
+          example: true
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+        address_business_connections:
+          title: address has business connections?
+          description: The submitted address was found to have associations with the business.
+          example: true
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+        person_business_connections:
+          title: person has business connections?
+          description: The submitted person was found to have associations with the business.
+          example: true
+          type: array
+          items:
+            $ref: '#/components/schemas/DataSource'
+        description:
+          title: Description
+          description: Does the submitted description describe what the business does?
+          example:
+            text: A used bookstore that also sells coffee and records
+            match_type: Full match
+          allOf:
+          - $ref: '#/components/schemas/SubmittedDescriptionAnalysis'
+    Email:
+      title: Email
+      type: object
+      properties:
+        address:
+          title: Email address
+          description: The email address.
+          example: null
+          type: string
+        is_valid:
+          title: Email is valid?
+          description: An email that is not disposable, on a free host, and whose domain has DNS properly configured to receive emails.
+          example: true
+          type:
+          - boolean
+          - 'null'
+        internal_source_urls:
+          title: Internal Source URLs
+          description: A list of URLs where the email address was found within the searched website.
+          default: []
+          example:
+          - https://example.com/contact
+          type: array
+          items:
+            type: string
+        external_source_urls:
+          title: External Source URLs
+          description: A list of URLs where the email address was found, outside the searched website.
+          default: []
+          example:
+          - https://zoominfo.com/123
+          type: array
+          items:
+            type: string
+        source:
+          title: Source
+          description: The data source for this email.
+          example: website
+          allOf:
+          - $ref: '#/components/schemas/DataSource'
+        date_first_seen:
+          title: Date first seen
+          description: The date the email was first seen.
+          example: '2000-06-06'
+          type:
+          - string
+          - 'null'
+          format: date
+        velocity:
+          title: Velocity
+          description: A score representing activity over the last 6 months, out of 10.
+          example: 7
+          type:
+          - integer
+          - 'null'
+        popularity:
+          title: Popularity
+          description: A score representing breadth of interaction over the last 12 months, out of 10.
+          example: 9
+          type:
+          - integer
+          - 'null'
+    DataSource:
+      title: DataSource
+      description: An enumeration.
+      enum:
+      - website
+      - social
+      - other
+      - submitted
+      type: string
+    TechSpendRecord:
+      title: TechSpendRecord
+      type: object
+      properties:
+        spend:
+          title: Spend
+          description: The estimated technology spend at a historical date.
+          example: 1000
+          type: integer
+        detected_date:
+          title: Date
+          description: The date of the estimate.
+          example: '2021-12-15'
+          type: string
+          format: date
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    core__api__schemas__policy_analysis__Analysis:
+      title: Analysis
+      type: object
+      properties:
+        question:
+          title: Question
+          description: The question that was asked.
+          example: Does the policy detail the website's privacy policy and how the data of customers is protected, used or disclosed?
+          type: string
+        answer:
+          title: Answer
+          description: The answer to the question.
+          example: 'Yes'
+          type: string
+        sources:
+          title: Sources
+          description: The sources of the answer.
+          example:
+          - https://www.acme.com/privacy
+          - https://www.acme.com/privacy2
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 2083
+            format: uri
+      required:
+      - question
+      - sources
+    CountryShare:
+      title: CountryShare
+      description: A single country's share of total website traffic.
+      type: object
+      properties:
+        value:
+          title: Value
+          type: number
+        change:
+          title: Change
+          type: number
+        name:
+          title: Name
+          type: string
+        abbr:
+          title: Abbr
+          type: string
+    Screenshot:
+      title: Screenshot
+      type: object
+      properties:
+        fullpage_image_link:
+          title: Fullpage Screenshot Image
+          description: A link to the full website screenshot image.
+          example: null
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
+        cropped_image_link:
+          title: Cropped Screenshot Image
+          description: A link to a website screenshot image cropped to above-the-fold.
+          example: null
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
     Address:
       title: Address
       type: object
@@ -2720,66 +2191,6 @@ components:
           example: website
           allOf:
           - $ref: '#/components/schemas/DataSource'
-    ContentFlagName:
-      title: ContentFlagName
-      description: An enumeration.
-      enum:
-      - Adoption
-      - Adult
-      - Alcohol
-      - Animal Entertainment
-      - Asset Management
-      - Auctions
-      - Cannabis
-      - Career Placement Services
-      - Commodities or Securities Trading
-      - Counterfeit Goods and IP Infringement
-      - Credit Monitoring and Identity Protection Services
-      - Crowdfunding
-      - Cruise lines
-      - Crypto
-      - Cryptocurrency
-      - Dating
-      - Debt
-      - Discount and Rebate Services
-      - Endangered Animals
-      - Firearms
-      - Fireworks
-      - Fundraising
-      - Gambling
-      - Hazardous Materials
-      - High Risk Legal Services
-      - High Value Assets
-      - Informercials
-      - Insurance
-      - International Customs Services
-      - Lead Generation
-      - Leather and Taxidermy
-      - Lending
-      - Medical Devices
-      - Nutraceuticals
-      - Oil and gas
-      - Pet Stores
-      - Pharmaceuticals
-      - Pornography
-      - Prepaid Telephony
-      - Psychics and Fortune Tellers
-      - Real Estate
-      - Religious and Political Groups
-      - Scams and Scamware
-      - Scrap Metal
-      - Sex work
-      - Shell Companies
-      - Social Media Manipulation
-      - Solar
-      - Telehealth
-      - Telemarketing
-      - Timeshares
-      - Tobacco
-      - Weapons
-      - Web Hosting
-      - Government
-      type: string
     ConcernFlag:
       title: ConcernFlag
       description: An enumeration.
@@ -2791,62 +2202,191 @@ components:
       - return_or_refund_concerns
       - fraud_concerns
       type: string
-    TechActivityMonth:
-      title: TechActivityMonth
+    NewsArticleTopicConcernType:
+      title: NewsArticleTopicConcernType
+      description: An enumeration.
+      enum:
+      - Fraud
+      - Legal
+      - Bankruptcy
+      type: string
+    PolicyAnalysis:
+      title: PolicyAnalysis
       type: object
       properties:
-        year:
-          title: Year
-          description: The year of the record.
-          example: 2022
+        sources:
+          title: Evaluated sources
+          description: A list of sources used in the analysis.
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicySource'
+        analyses:
+          title: Analyses
+          description: A list of analytical findings from the source materials.
+          type: array
+          items:
+            $ref: '#/components/schemas/core__api__schemas__policy_analysis__Analysis'
+    FootTraffic:
+      title: FootTraffic
+      type: object
+      properties:
+        projections:
+          title: Projections
+          description: List of daily projections zero-indexed starting on Monday
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectionDay'
+        traffic_score:
+          description: Score of the location's foot traffic
+          default: UNKNOWN
+          allOf:
+          - $ref: '#/components/schemas/TrafficScore'
+        hours_open:
+          title: Hours Open
+          description: Zero-indexed list of days starting with monday, each containg a list of hours the location is open
+          type: array
+          items:
+            type: array
+            items:
+              type: integer
+    HostingProvider:
+      title: HostingProvider
+      type: object
+      properties:
+        name:
+          title: Hosting provider name
+          description: The name of the servers' internet service provider.
+          default: ''
+          example: Google
+          minLength: 1
+          maxLength: 2048
+          type: string
+        country:
+          title: Hosting provider country
+          description: The country the hosting provider's server(s) are located in.
+          default: ''
+          example: United States
+          minLength: 1
+          maxLength: 2048
+          type: string
+    WebsiteTraffic:
+      title: WebsiteTraffic
+      type: object
+      properties:
+        visits_per_month:
+          title: Visit per month
+          description: The number of website visits in the last full month.
+          example: 10000
           type: integer
-        month:
-          title: Month
-          description: The month of the record.
-          example: 11
+        time_on_site:
+          title: Time on site
+          description: The average number of seconds a user spent on the site, during the last full month.
+          example: 15.55
+          type: number
+        pages_per_visit:
+          title: Pages per visit
+          description: The average number of pages visited, during the last full month.
+          example: 3.75
+          type: number
+        bounce_rate:
+          title: Bounce rate
+          description: The percentage of visitors that only visited a single page, during the last full month.
+          example: 15.55
+          type: number
+        historical_visits_per_month:
+          title: Historical visits per month
+          description: The count of monthly visits over the prior few months.
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlyVisits'
+        source_shares:
+          title: Source traffic share
+          description: 'A mapping to the share of traffic by source: search, social, paid, direct, referrals, and mail.'
+          allOf:
+          - $ref: '#/components/schemas/TrafficSources'
+        top_country_shares:
+          title: Country traffic share
+          description: A list of the top countries and their share of visits during the last full month.
+          type: array
+          items:
+            $ref: '#/components/schemas/CountryShare'
+        paid_search_share:
+          title: Paid search share
+          description: The percentage of search traffic that is paid.
+          example: 0.5
+          type: number
+        google_results_count:
+          title: Google results count
+          description: The number of google results when searching for "example.com"
+          example: 10000
           type: integer
-        added:
-          title: Added
-          description: The number of added website technologies during this month.
-          example: 5
+        top_referring_sites:
+          title: Top referring sites
+          description: A list of sites referring at least 2.5% of total traffic
+          example:
+          - url: https://referrer.co
+            traffic_share: 0.35
+          type: array
+          items:
+            $ref: '#/components/schemas/ReferringSite'
+        paid_search_visits:
+          title: Paid search visits
+          description: The number of visits coming from paid search ads, during the last full month.
+          example: 1000
           type: integer
-        removed:
-          title: Removed
-          description: The number of removed website technologies during this month.
-          example: 5
+        top_keywords:
+          title: Top keywords
+          description: The top organic and paid keywords driving traffic to the site.
+          allOf:
+          - $ref: '#/components/schemas/TopKeywords'
+        anomalous_keywords:
+          title: Anomalous keywords
+          description: A list of keywords that are not related to the business description.
+          example:
+          - firearms
+          - gummy bears
+          type: array
+          items:
+            type: string
+    Recommendation:
+      title: Recommendation
+      type: object
+      properties:
+        decision:
+          title: Decision
+          description: TrueBiz's overall verdict on the business. `Pass` indicates the business cleared review; `Fail` indicates one or more risk indicators were severe enough to fail the business.
+          example: Pass
+          allOf:
+          - $ref: '#/components/schemas/Decision'
+      required:
+      - decision
+    CustomerReviewsMeta:
+      title: CustomerReviewsMeta
+      type: object
+      properties:
+        last_review_date:
+          title: Last review date
+          description: The date the last review was made
+          type: string
+          format: date
+        url:
+          title: url
+          description: The URL of the company profile page
+          type: string
+        name:
+          title: Name
+          description: The name of the company as it appears on the company profile page
+          type: string
+        review_count:
+          title: Review count
+          description: The number of reviews for the company
+          default: 0
           type: integer
-        total:
-          title: total
-          description: The number of active website technologies during this month.
-          example: 5
-          type: integer
-    PhoneLinkType:
-      title: PhoneLinkType
-      description: An enumeration.
-      enum:
-      - direct
-      - employee
-      - address
-      type: string
-    ConnectionSourceType:
-      title: ConnectionSourceType
-      description: An enumeration.
-      enum:
-      - Referring site
-      - Duplicate website text
-      - External email domain
-      - Shared executive
-      - Shared phone number
-      - Shared credentials
-      - Cohosted domain
-      - Redirect domain
-      - Searched domain redirects
-      - Associated person
-      - Phone owner
-      - Shared address
-      - Shared email
-      - Associated web page
-      type: string
+        review_average:
+          title: Review count
+          description: The average review rating
+          default: 0.0
+          type: number
     DetectedBrand:
       title: DetectedBrand
       type: object
@@ -2870,35 +2410,221 @@ components:
       - name
       - count
       - action
-    core__api__schemas__policy_analysis__Analysis:
-      title: Analysis
+    CustomerReviewsData:
+      title: CustomerReviewsData
       type: object
       properties:
-        question:
-          title: Question
-          description: The question that was asked.
-          example: Does the policy detail the website's privacy policy and how the data of customers is protected, used or disclosed?
+        provider:
+          title: Provider
+          description: Unique ID of the review service providing the review data
           type: string
-        answer:
-          title: Answer
-          description: The answer to the question.
-          example: 'Yes'
+        meta:
+          title: Meta
+          description: Data describing the review data
+          allOf:
+          - $ref: '#/components/schemas/CustomerReviewsMeta'
+    RiskType:
+      title: RiskType
+      description: An enumeration.
+      enum:
+      - Validity
+      - Notice
+      - Risk
+      type: string
+    SubmittedDescriptionMatchType:
+      title: SubmittedDescriptionMatchType
+      description: An enumeration.
+      enum:
+      - Full match
+      - Partial match
+      - No match
+      type: string
+    ConnectedEntity:
+      title: ConnectedEntity
+      type: object
+      properties:
+        name:
+          title: Name
+          description: Name of the connected entity.
+          example: Acme Consulting Inc.
+          type: string
+        domain:
+          title: URL
+          description: domain of the connected entity.
+          example: example.com
           type: string
         sources:
-          title: Sources
-          description: The sources of the answer.
+          title: Source
+          description: The data source that establishes the connection.
+          default: []
+          example: Duplicate website text
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectionSource'
+        content_flags:
+          title: Content flags
+          description: A list of potentially concerning flags in the web content.
           example:
-          - https://www.acme.com/privacy
-          - https://www.acme.com/privacy2
+          - Animal Cruelty
           type: array
           items:
             type: string
-            minLength: 1
-            maxLength: 2083
-            format: uri
+        multi_level_marketing_name:
+          title: Multi level marketing name
+          description: The name of a known multi-level-marketing brand found in the web content.
+          example: Amway
+          type: string
+        primary_language:
+          title: Primary language
+          description: Evaluation of the primary language used for web content.
+          example: English
+          type: string
+        is_webserver_responsive:
+          title: Webserver responsive
+          description: Indicates whether the entity's webserver is responsive.
+          example: true
+          type: boolean
+    core__api__schemas__customer_review__Analysis:
+      title: Analysis
+      type: object
+      properties:
+        text:
+          title: Text
+          description: The text of the analysis
+          type: string
+        level_of_concern:
+          title: Level of concern
+          description: The level of concern based on the analysis
+          allOf:
+          - $ref: '#/components/schemas/LevelOfConcern'
+        flags:
+          title: Flags
+          description: A list of flags indicating which concerns were raised in the analysis
+          type: array
+          items:
+            $ref: '#/components/schemas/ConcernFlag'
       required:
-      - question
-      - sources
+      - text
+    CompanyMatchBlockedDomain:
+      title: CompanyMatchBlockedDomain
+      type: object
+      properties:
+        created_at:
+          title: Blocked since
+          description: When the block was created
+          example: '2023-12-25T19:30:25.000+00:00'
+          type:
+          - string
+          - 'null'
+          format: date-time
+        expires_at:
+          title: Blocked until
+          description: When the block expires
+          example: '2030-12-29T23:59:59.000+00:00'
+          type:
+          - string
+          - 'null'
+          format: date-time
+        explanation:
+          title: Block explanation
+          description: Human-readable explanation for why the domain was blocked
+          type:
+          - string
+          - 'null'
+    NewsArticle:
+      title: NewsArticle
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+        link:
+          title: Link
+          type: string
+        date:
+          title: Date
+          type: string
+          format: date-time
+        snippet:
+          title: Snippet
+          type: string
+        source:
+          title: Source
+          type: string
+        concerns:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewsArticleTopicConcernType'
+      required:
+      - concerns
+    CompanySize:
+      title: CompanySize
+      description: An enumeration.
+      enum:
+      - 1-10
+      - 11-50
+      - 51-200
+      - 201-500
+      - 500-1,000
+      - 1,001-5,000
+      - 5,000+
+      type: string
+    EmploymentRecord:
+      title: EmploymentRecord
+      type: object
+      properties:
+        company_name:
+          title: Company name
+          description: The company name.
+          example: ACME LLC.
+          type: string
+        title:
+          title: Job title
+          description: The job title.
+          example: Co-founder & CEO
+          type: string
+        start_date:
+          title: Start date
+          description: The date the person started at the job.
+          example: '2018-09-01'
+          type: string
+          format: date
+      required:
+      - company_name
+    SearchModel:
+      title: SearchModel
+      description: An enumeration.
+      enum:
+      - STANDARD
+      - DEEP
+      type: string
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    Metrics:
+      title: Metrics
+      type: object
+      properties:
+        estimated_employee_count_range:
+          title: Estimated employee count range
+          description: An estimated range showing the number of people working at the company.
+          example: 5,000+
+          allOf:
+          - $ref: '#/components/schemas/CompanySize'
+        estimated_annual_revenue_range:
+          title: Estimated annual revenue range
+          description: An estimated range showing the revenue of the company.
+          example: 1B+
+          allOf:
+          - $ref: '#/components/schemas/CompanyRevenue'
     Coordinates:
       title: Coordinates
       type: object
@@ -2912,92 +2638,394 @@ components:
       required:
       - lat
       - lon
-    PolicySource:
-      title: PolicySource
+    Person:
+      title: Person
       type: object
       properties:
-        type:
-          title: Source type
-          description: The type of source.
-          example: Privacy Policy
-          type: string
-        url:
-          title: Source URL
-          description: The URL of the source.
-          example: https://www.example.com/privacy
+        name:
+          title: Name
+          description: The person's full name.
+          maxLength: 1024
           minLength: 1
-          maxLength: 2083
-          format: uri
+          example: Dara Khosrowshahi
           type: string
-        title:
-          title: Source title
-          description: The title of the source.
-          example: Acme Inc. Privacy Policy
+        job_title:
+          title: Job title
+          description: A name that describes someone's job or position.
+          maxLength: 255
+          minLength: 1
+          example: Chief Executive Officer
           type: string
-        company_name:
-          title: Company name
-          description: The name of the company as it appears in the source.
-          example: Acme Inc.
+        linkedin_url:
+          title: LinkedIn URL
+          description: The person's LinkedIn profile URL.
+          maxLength: 1024
+          minLength: 29
+          example: https://www.linkedin.com/in/dara-khosrowshahi-9b1a8b/
           type: string
-        language:
-          title: Source language
-          description: The language of the source.
-          example: en
+        profile_picture:
+          title: LinkedIn photo URL
+          description: The URL of the person's LinkedIn profile photo.
+          maxLength: 1024
+          minLength: 34
+          example: https://media.licdn.com/dms/image/D4D03AQGDnwFEps6idg/profile-displayphoto-shrink_200_200/0/1673360179524?e=1688601600&v=beta&t=bpXAkQdRR7liIMck3FQ7maRE-XeMwtChfWt73oB7YZ0
           type: string
-        last_updated:
-          title: Last updated
-          description: The date the source was last updated.
-          example: '2021-01-01'
+        state_province:
+          title: State
+          description: The state or province where the person is located.
+          maxLength: 255
+          minLength: 1
+          example: California
           type: string
-        change_policy:
-          title: Change policy
-          description: The policy for changes to the source.
-          example: Example Co reserves the right to make changes to this Privacy Policy. Any updates will be posted on our website.
+        city:
+          title: City
+          description: The city where the person is located.
+          maxLength: 255
+          minLength: 1
+          example: San Francisco
           type: string
-        policy_contact:
-          title: Contact
-          description: The contact information for the source.
-          example: support@example.com
+        country:
+          title: Country
+          description: The country where the person is located.
+          maxLength: 255
+          minLength: 1
+          example: United States
           type: string
-        synopsis:
-          title: Synopsis
-          description: A brief synopsis of the source.
-          example: This privacy policy outlines the types of personal information that is received and collected and how it is used. It also outlines the steps we take to protect your personal information.
-          type: string
-        has_placeholder_text:
-          title: Has placeholder text?
-          description: Indicates whether the source contains placeholder text.
-          example: false
-          type: boolean
-      required:
-      - type
-      - url
-    SubmittedDescriptionMatchType:
-      title: SubmittedDescriptionMatchType
+        start_date:
+          title: Start date
+          description: The date the person started at the company.
+          example: '1995-07-14'
+          type:
+          - string
+          - 'null'
+          format: date
+        other_active_positions:
+          title: Other active positions
+          description: Other jobs listed as currently active.
+          example: '[{"title": "CEO", "company_name": "ACME LLC.", "start_date": "2018-09-01"}]'
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/EmploymentRecord'
+        source:
+          title: Source
+          description: The data source for this person.
+          example: website
+          allOf:
+          - $ref: '#/components/schemas/DataSource'
+    LineType:
+      title: LineType
       description: An enumeration.
       enum:
-      - Full match
-      - Partial match
-      - No match
+      - Landline
+      - Mobile
+      - FixedVOIP
+      - NonFixedVOIP
+      - TollFree
+      - Other
+      - Voicemail
+      - ''
       type: string
-    MonthlyVisits:
-      title: MonthlyVisits
-      description: Visit count for a single calendar month.
+    SocialMediaProfile:
+      title: SocialMediaProfile
       type: object
       properties:
-        year:
-          title: Year
+        url:
+          title: url
+          description: The URL of the company's social media profile page.
+          example: https://www.facebook.com/uber
+          type:
+          - string
+          - 'null'
+        like_count:
+          title: Number of likes
+          description: The number of likes or followers of this social media page.
+          example: https://www.facebook.com/uber
           type: integer
-        month:
-          title: Month
+        last_posted_content_at:
+          title: Last posted content at
+          description: The date and time of the last post made on this page.
+          example: '2023-06-04T11:05:00Z'
+          type: string
+          format: date-time
+        page_created_at:
+          title: Last posted content at
+          description: The date this page was created on.
+          example: '2010-01-04'
+          type: string
+          format: date
+        is_verified:
+          title: verified
+          description: Indicates whether the page is verified by the social provider.
+          example: true
+          type: boolean
+        is_business:
+          title: Business Profile
+          description: Indicates whether the page is a business account.
+          example: true
+          type: boolean
+        is_private:
+          title: Private
+          description: Indicates whether the page is private.
+          example: false
+          type: boolean
+        activity_level:
+          title: Activity Level
+          description: The activity level of the profile.
+          example: High
+          allOf:
+          - $ref: '#/components/schemas/ActivityLevel'
+        follower_count:
+          title: Follower Count
+          description: The number of followers of the profile.
+          example: 1000
           type: integer
-        visits:
-          title: Visits
+        follow_ratio:
+          title: Follow Ratio
+          description: The follow ratio of the profile.
+          example: High
+          allOf:
+          - $ref: '#/components/schemas/FollowRatio'
+        post_quantity:
+          title: Post Quantity
+          description: The number of posts made by the profile.
+          example: 100
+          type: integer
+        average_engagement:
+          title: Average Engagement
+          description: The average engagement level of the profile.
+          example: Medium
+          allOf:
+          - $ref: '#/components/schemas/AverageEngagement'
+        is_age_restricted:
+          title: Age Restricted
+          description: Indicates whether the profile has age restrictions.
+          example: false
+          type: boolean
+        most_recent_post_url:
+          title: Most Recent Post URL
+          description: The URL of the most recent post made by the profile.
+          example: https://www.facebook.com/uber/posts/123456789
+          type: string
+        most_recent_post_text:
+          title: Most Recent Post Text
+          description: The text content of the most recent post made by the profile.
+          example: Excited to announce our new partnership!
+          type: string
+        most_recent_post_image:
+          title: Most Recent Post Image
+          description: The URL of the image in the most recent post made by the profile.
+          type: string
+        location:
+          title: Location
+          description: The location associated with the profile.
+          example: San Francisco, CA
+          type: string
+    TrafficScore:
+      title: TrafficScore
+      description: An enumeration.
+      enum:
+      - UNKNOWN
+      - LOW
+      - MEDIUM
+      - HIGH
+      type: string
+    ConnectionSourceType:
+      title: ConnectionSourceType
+      description: An enumeration.
+      enum:
+      - Referring site
+      - Duplicate website text
+      - External email domain
+      - Shared executive
+      - Shared phone number
+      - Shared credentials
+      - Cohosted domain
+      - Redirect domain
+      - Searched domain redirects
+      - Associated person
+      - Phone owner
+      - Shared address
+      - Shared email
+      - Associated web page
+      type: string
+    CompanyLookup:
+      title: CompanyLookup
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/CompanyMatchRequestStatuses'
+        search_term:
+          title: Search Term
+          type: string
+        search_query:
+          $ref: '#/components/schemas/CompanyQuery'
+        search_model:
+          $ref: '#/components/schemas/SearchModel'
+        response_code:
+          title: Response Code
+          type: integer
+        response_data:
+          title: Response Data
+          anyOf:
+          - $ref: '#/components/schemas/Company'
+          - type: object
+      required:
+      - id
+      - created_at
+      - response_code
+      - response_data
+      additionalProperties: false
+    RiskAnalysis:
+      title: RiskAnalysis
+      type: object
+      properties:
+        fraud_risk:
+          $ref: '#/components/schemas/FraudRisk'
+    PagedCompanyLookup:
+      title: PagedCompanyLookup
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyLookup'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
           type: integer
       required:
-      - year
-      - month
-      - visits
+      - items
+      - count
+      - limit
+      - offset
+    TopKeywords:
+      title: TopKeywords
+      type: object
+      properties:
+        organic:
+          title: Organic keywords
+          description: The top organic keywords driving traffic to the site.
+          example:
+          - anvils
+          - cartoon anvils
+          type: array
+          items:
+            type: string
+        paid:
+          title: Paid keywords
+          description: The top paid keywords driving traffic to the site.
+          example:
+          - example
+          - example2
+          type: array
+          items:
+            type: string
+    AddressCoordinatesAccuracy:
+      title: AddressCoordinatesAccuracy
+      description: Order matters here, list from least to most accurate
+      enum:
+      - APPROXIMATE
+      - ROOFTOP
+      type: string
+    DuplicateMatch:
+      title: DuplicateMatch
+      type: object
+      properties:
+        url:
+          title: URL
+          description: URL of a website with matching text.
+          example: https://www.duplicate.com
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
+        percent_matched:
+          title: Percent Matched
+          description: The share of words matched out .
+          example: 88
+          type: integer
+        screenshot_image_link:
+          title: Screenshot Image Link
+          description: A link to a screenshot with the matched text highlighted.
+          example: null
+          minLength: 1
+          maxLength: 65536
+          format: uri
+          type: string
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    SubmittedDescriptionAnalysis:
+      title: SubmittedDescriptionAnalysis
+      type: object
+      properties:
+        text:
+          title: Text
+          type: string
+        match_type:
+          $ref: '#/components/schemas/SubmittedDescriptionMatchType'
+      required:
+      - text
+      - match_type
+    CompanyType:
+      title: CompanyType
+      description: An enumeration.
+      enum:
+      - Corporation
+      - General Partnership
+      - Limited
+      - Limited Liability Company
+      - Limited Partnership
+      - Limited Liability Partnership
+      - Limited Liability Limited Partnership
+      - No Liability
+      - Non-Profit
+      - Professional Corporation
+      - Professional Limited Liability Corporation
+      - Sole Proprietorship
+      - Unlimited
+      type: string
+    CompanyMatchRequestStatuses:
+      title: CompanyMatchRequestStatuses
+      description: An enumeration.
+      enum:
+      - QUEUED
+      - PROCESSING
+      - FINISHED
+      - ERROR
+      type: string
     LevelOfConcern:
       title: LevelOfConcern
       description: An enumeration.
@@ -3007,45 +3035,17 @@ components:
       - high
       - critical
       type: string
-    ProjectionDay:
-      title: ProjectionDay
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
-        name:
-          title: Name
-          description: Day of the week
+        message:
+          title: Message
           type: string
-        hours:
-          title: Hours
-          description: List of projection hours
-          type: array
-          items: {}
       required:
-      - name
-      - hours
-    TrafficSources:
-      title: TrafficSources
-      description: Traffic source breakdown as shares summing to ~1.0.
-      type: object
-      properties:
-        search:
-          title: Search
-          type: number
-        social:
-          title: Social
-          type: number
-        display_ads:
-          title: Display Ads
-          type: number
-        direct:
-          title: Direct
-          type: number
-        referrals:
-          title: Referrals
-          type: number
-        mail:
-          title: Mail
-          type: number
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

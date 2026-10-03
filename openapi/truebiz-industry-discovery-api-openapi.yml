@@ -314,94 +314,8 @@ paths:
       - PropelAuthBearer: []
 components:
   schemas:
-    BusinessSearchResult:
-      title: BusinessSearchResult
-      type: object
-      properties:
-        business_name:
-          title: Business Name
-          description: The name of the business.
-          type: string
-        business_description:
-          title: Business Description
-          description: A description of the business.
-          type: string
-        business_address:
-          title: Business Address
-          description: The long-form address of the business.
-          required: false
-          type:
-          - string
-          - 'null'
-        website:
-          title: Website
-          description: The website of the business.
-          type:
-          - string
-          - 'null'
-        primary_mcc:
-          $ref: '#/components/schemas/MCC'
-        additional_mccs:
-          title: Additional Mccs
-          type: array
-          items:
-            $ref: '#/components/schemas/MCC'
-      required:
-      - business_name
-      - business_description
-    PagedBusinessSearch:
-      title: PagedBusinessSearch
-      type: object
-      properties:
-        searches:
-          title: Searches
-          type: array
-          items:
-            $ref: '#/components/schemas/BusinessSearch'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-        prev_searches_link:
-          $ref: '#/components/schemas/PrevLink'
-        next_searches_link:
-          $ref: '#/components/schemas/NextLink'
-      required:
-      - searches
-      - count
-      - limit
-      - offset
-    InvalidRequest:
-      title: InvalidRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
-      required:
-      - message
-      example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
-    BadRequest:
-      title: BadRequest
+    Conflict:
+      title: Conflict
       type: object
       properties:
         message:
@@ -410,72 +324,7 @@ components:
       required:
       - message
       example:
-        message: Bad request.
-    InvalidInputParameter:
-      title: InvalidInputParameter
-      type: object
-      properties:
-        field_name:
-          title: Field Name
-          type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
-      required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
-    MCC:
-      title: MCC
-      type: object
-      properties:
-        code:
-          title: Code
-          description: The Merchant Category Code.
-          type: string
-        description:
-          title: Description
-          description: The description of the Merchant Category.
-          type: string
-      required:
-      - code
-      - description
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    PrevLink:
-      title: PrevLink
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        type:
-          title: Type
-          enum:
-          - io.truebiz.link.prev-items
-          type: string
-        href:
-          title: Href
-          type: string
-      required:
-      - id
-      - type
-      - href
+        message: This resource is in conflict with another resource.
     CreateSearchInput:
       title: CreateSearchInput
       type: object
@@ -518,8 +367,28 @@ components:
       required:
       - submitted_business_name
       - country
-    NoContent:
-      title: NoContent
+    NextLink:
+      title: NextLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.next-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    Forbidden:
+      title: Forbidden
       type: object
       properties:
         message:
@@ -528,18 +397,7 @@ components:
       required:
       - message
       example:
-        message: This resource does not contain any content.
-    ResourceNotReady:
-      title: ResourceNotReady
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is not yet ready. Please try again in 10 seconds.
+        message: Forbidden.
     Unauthorized:
       title: Unauthorized
       type: object
@@ -551,6 +409,182 @@ components:
       - message
       example:
         message: Unauthorized.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    BusinessSearchResult:
+      title: BusinessSearchResult
+      type: object
+      properties:
+        business_name:
+          title: Business Name
+          description: The name of the business.
+          type: string
+        business_description:
+          title: Business Description
+          description: A description of the business.
+          type: string
+        business_address:
+          title: Business Address
+          description: The long-form address of the business.
+          required: false
+          type:
+          - string
+          - 'null'
+        website:
+          title: Website
+          description: The website of the business.
+          type:
+          - string
+          - 'null'
+        primary_mcc:
+          $ref: '#/components/schemas/MCC'
+        additional_mccs:
+          title: Additional Mccs
+          type: array
+          items:
+            $ref: '#/components/schemas/MCC'
+      required:
+      - business_name
+      - business_description
+    MCC:
+      title: MCC
+      type: object
+      properties:
+        code:
+          title: Code
+          description: The Merchant Category Code.
+          type: string
+        description:
+          title: Description
+          description: The description of the Merchant Category.
+          type: string
+      required:
+      - code
+      - description
+    PrevLink:
+      title: PrevLink
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        type:
+          title: Type
+          enum:
+          - io.truebiz.link.prev-items
+          type: string
+        href:
+          title: Href
+          type: string
+      required:
+      - id
+      - type
+      - href
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    PagedBusinessSearch:
+      title: PagedBusinessSearch
+      type: object
+      properties:
+        searches:
+          title: Searches
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessSearch'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+        prev_searches_link:
+          $ref: '#/components/schemas/PrevLink'
+        next_searches_link:
+          $ref: '#/components/schemas/NextLink'
+      required:
+      - searches
+      - count
+      - limit
+      - offset
     BusinessSearch:
       title: BusinessSearch
       type: object
@@ -597,8 +631,8 @@ components:
       - status
       - status_description
       - query
-    TooManyRequests:
-      title: TooManyRequests
+    NoContent:
+      title: NoContent
       type: object
       properties:
         message:
@@ -607,60 +641,26 @@ components:
       required:
       - message
       example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    InternalServerError:
-      title: InternalServerError
+        message: This resource does not contain any content.
+    InvalidInputParameter:
+      title: InvalidInputParameter
       type: object
       properties:
-        message:
-          title: Message
+        field_name:
+          title: Field Name
           type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
       required:
-      - message
+      - field_name
       example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    NextLink:
-      title: NextLink
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        type:
-          title: Type
-          enum:
-          - io.truebiz.link.next-items
-          type: string
-        href:
-          title: Href
-          type: string
-      required:
-      - id
-      - type
-      - href
-    Conflict:
-      title: Conflict
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: This resource is in conflict with another resource.
-    Forbidden:
-      title: Forbidden
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Forbidden.
+        field_name: field1
+        errors:
+        - This field is required.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

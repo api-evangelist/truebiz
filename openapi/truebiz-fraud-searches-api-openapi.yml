@@ -270,69 +270,6 @@ paths:
       - Fraud Searches
 components:
   schemas:
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Bad request.
-    PostalServiceFlag:
-      title: PostalServiceFlag
-      description: '"residential" indicates that the address is a residential address.
-
-        "po_box" indicates that the address is a Postoffice Box rather than a physical address.
-
-        "virtual_address" indicates that the address is a private business receiving mail for clients.
-
-        "vacant" indicates that the USPS has marked the address as being vacant.
-
-        "inactive" indicates that the USPS does not deliver to this address.
-
-        "unreliable" indicates that that there was not enough address information to validate a specific address.
-
-        "unconfirmed" indicates that the USPS does not maintain Delivery Point Validation data for this address.'
-      enum:
-      - residential
-      - po_box
-      - virtual_address
-      - vacant
-      - inactive
-      - general_delivery
-      - unreliable
-      - unconfirmed
-      type: string
-    AddressCoordinatesAccuracy:
-      title: AddressCoordinatesAccuracy
-      description: Order matters here, list from least to most accurate
-      enum:
-      - APPROXIMATE
-      - ROOFTOP
-      type: string
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    DataSource:
-      title: DataSource
-      description: An enumeration.
-      enum:
-      - website
-      - social
-      - other
-      - submitted
-      type: string
     Conflict:
       title: Conflict
       type: object
@@ -344,8 +281,8 @@ components:
       - message
       example:
         message: This resource is in conflict with another resource.
-    Forbidden:
-      title: Forbidden
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         message:
@@ -354,54 +291,30 @@ components:
       required:
       - message
       example:
-        message: Forbidden.
-    NoContent:
-      title: NoContent
+        message: Bad request.
+    PagedFraudSearch:
+      title: PagedFraudSearch
       type: object
       properties:
-        message:
-          title: Message
-          type: string
+        searches:
+          title: Searches
+          type: array
+          items:
+            $ref: '#/components/schemas/FraudSearch'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
       required:
-      - message
-      example:
-        message: This resource does not contain any content.
-    FraudSearchResult:
-      title: FraudSearchResult
-      type: object
-      properties:
-        business_name:
-          title: Business Name
-          type: string
-        business_description:
-          title: Business Description
-          type: string
-        business_address:
-          $ref: '#/components/schemas/Address'
-        website:
-          title: Website
-          type: string
-        fraud_likelihood_risk:
-          title: Fraud Likelihood Risk
-          enum:
-          - LOW
-          - MEDIUM
-          - HIGH
-          type: string
-        fraud_likelihood_summary:
-          title: Fraud Likelihood Summary
-          type: string
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+      - searches
+      - count
+      - limit
+      - offset
     Address:
       title: Address
       type: object
@@ -521,62 +434,34 @@ components:
           example: website
           allOf:
           - $ref: '#/components/schemas/DataSource'
-    ResourceNotReady:
-      title: ResourceNotReady
+    CreateFraudSearchInput:
+      title: CreateFraudSearchInput
       type: object
       properties:
-        message:
-          title: Message
+        business_name:
+          title: Business Name
+          type: string
+        website:
+          title: Website
+          type: string
+        city:
+          title: City
+          type: string
+        state_province:
+          title: State Province
+          type: string
+        postal_code:
+          title: Postal Code
+          type: string
+        country:
+          title: Country
+          type: string
+        external_tracking_ref:
+          title: External Tracking Ref
           type: string
       required:
-      - message
-      example:
-        message: This resource is not yet ready. Please try again in 10 seconds.
-    PagedFraudSearch:
-      title: PagedFraudSearch
-      type: object
-      properties:
-        searches:
-          title: Searches
-          type: array
-          items:
-            $ref: '#/components/schemas/FraudSearch'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - searches
-      - count
-      - limit
-      - offset
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
+      - business_name
+      - country
     FraudSearch:
       title: FraudSearch
       type: object
@@ -612,66 +497,63 @@ components:
       - created_at
       - updated_at
       - status
-    CreateFraudSearchInput:
-      title: CreateFraudSearchInput
+    FraudSearchResult:
+      title: FraudSearchResult
       type: object
       properties:
         business_name:
           title: Business Name
           type: string
+        business_description:
+          title: Business Description
+          type: string
+        business_address:
+          $ref: '#/components/schemas/Address'
         website:
           title: Website
           type: string
-        city:
-          title: City
+        fraud_likelihood_risk:
+          title: Fraud Likelihood Risk
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
           type: string
-        state_province:
-          title: State Province
+        fraud_likelihood_summary:
+          title: Fraud Likelihood Summary
           type: string
-        postal_code:
-          title: Postal Code
-          type: string
-        country:
-          title: Country
-          type: string
-        external_tracking_ref:
-          title: External Tracking Ref
-          type: string
-      required:
-      - business_name
-      - country
-    Coordinates:
-      title: Coordinates
-      type: object
-      properties:
-        lat:
-          title: Lat
-          type: number
-        lon:
-          title: Lon
-          type: number
-      required:
-      - lat
-      - lon
-    InvalidInputParameter:
-      title: InvalidInputParameter
-      type: object
-      properties:
-        field_name:
-          title: Field Name
-          type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
-      required:
-      - field_name
-      example:
-        field_name: field1
-        errors:
-        - This field is required.
+    AddressCoordinatesAccuracy:
+      title: AddressCoordinatesAccuracy
+      description: Order matters here, list from least to most accurate
+      enum:
+      - APPROXIMATE
+      - ROOFTOP
+      type: string
+    PostalServiceFlag:
+      title: PostalServiceFlag
+      description: '"residential" indicates that the address is a residential address.
+
+        "po_box" indicates that the address is a Postoffice Box rather than a physical address.
+
+        "virtual_address" indicates that the address is a private business receiving mail for clients.
+
+        "vacant" indicates that the USPS has marked the address as being vacant.
+
+        "inactive" indicates that the USPS does not deliver to this address.
+
+        "unreliable" indicates that that there was not enough address information to validate a specific address.
+
+        "unconfirmed" indicates that the USPS does not maintain Delivery Point Validation data for this address.'
+      enum:
+      - residential
+      - po_box
+      - virtual_address
+      - vacant
+      - inactive
+      - general_delivery
+      - unreliable
+      - unconfirmed
+      type: string
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -696,6 +578,124 @@ components:
         - field_name: non_field_errors
           errors:
           - There's something strange in your input.
+    Forbidden:
+      title: Forbidden
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Forbidden.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
+    DataSource:
+      title: DataSource
+      description: An enumeration.
+      enum:
+      - website
+      - social
+      - other
+      - submitted
+      type: string
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    ResourceNotReady:
+      title: ResourceNotReady
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource is not yet ready. Please try again in 10 seconds.
+    Coordinates:
+      title: Coordinates
+      type: object
+      properties:
+        lat:
+          title: Lat
+          type: number
+        lon:
+          title: Lon
+          type: number
+      required:
+      - lat
+      - lon
+    NoContent:
+      title: NoContent
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: This resource does not contain any content.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey
