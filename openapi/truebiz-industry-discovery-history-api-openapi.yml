@@ -190,101 +190,6 @@ components:
       - message
       example:
         message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Bad request.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    InvalidRequest:
-      title: InvalidRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-        invalid_parameters:
-          title: Invalid Parameters
-          default: []
-          type: array
-          items:
-            $ref: '#/components/schemas/InvalidInputParameter'
-      required:
-      - message
-      example:
-        message: Invalid input.
-        invalid_parameters:
-        - field_name: field1
-          errors:
-          - This field is required.
-        - field_name: non_field_errors
-          errors:
-          - There's something strange in your input.
-    PagedIndustryLookup:
-      title: PagedIndustryLookup
-      type: object
-      properties:
-        items:
-          title: Items
-          type: array
-          items:
-            $ref: '#/components/schemas/IndustryLookup'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - items
-      - count
-      - limit
-      - offset
-    MCC:
-      title: MCC
-      type: object
-      properties:
-        code:
-          title: Code
-          description: The Merchant Category Code.
-          type: string
-        description:
-          title: Description
-          description: The description of the Merchant Category.
-          type: string
-      required:
-      - code
-      - description
     InternalServerError:
       title: InternalServerError
       type: object
@@ -296,6 +201,41 @@ components:
       - message
       example:
         message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
+    IndustryLookup:
+      title: IndustryLookup
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          format: uuid
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        status:
+          title: Status
+          enum:
+          - PROCESSING
+          - FINISHED
+          - ERROR
+          - QUEUED
+          type: string
+        search_term:
+          title: Search Term
+          type: string
+        search_query:
+          $ref: '#/components/schemas/CreateSearchInputExtended'
+        response_code:
+          title: Response Code
+          type: integer
+        response_data:
+          $ref: '#/components/schemas/BusinessSearchResultExtended'
+      required:
+      - id
+      - created_at
+      - response_code
+      additionalProperties: false
     CreateSearchInputExtended:
       title: CreateSearchInputExtended
       description: Extends CreateSearchInput to allow optional business name for lookup.
@@ -337,6 +277,101 @@ components:
           type: string
       required:
       - country
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    Unauthorized:
+      title: Unauthorized
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    PagedIndustryLookup:
+      title: PagedIndustryLookup
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/IndustryLookup'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    InvalidRequest:
+      title: InvalidRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+        invalid_parameters:
+          title: Invalid Parameters
+          default: []
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidInputParameter'
+      required:
+      - message
+      example:
+        message: Invalid input.
+        invalid_parameters:
+        - field_name: field1
+          errors:
+          - This field is required.
+        - field_name: non_field_errors
+          errors:
+          - There's something strange in your input.
+    MCC:
+      title: MCC
+      type: object
+      properties:
+        code:
+          title: Code
+          description: The Merchant Category Code.
+          type: string
+        description:
+          title: Description
+          description: The description of the Merchant Category.
+          type: string
+      required:
+      - code
+      - description
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -356,41 +391,6 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    IndustryLookup:
-      title: IndustryLookup
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          format: uuid
-        created_at:
-          title: Created At
-          type: string
-          format: date-time
-        status:
-          title: Status
-          enum:
-          - PROCESSING
-          - FINISHED
-          - ERROR
-          - QUEUED
-          type: string
-        search_term:
-          title: Search Term
-          type: string
-        search_query:
-          $ref: '#/components/schemas/CreateSearchInputExtended'
-        response_code:
-          title: Response Code
-          type: integer
-        response_data:
-          $ref: '#/components/schemas/BusinessSearchResultExtended'
-      required:
-      - id
-      - created_at
-      - response_code
-      additionalProperties: false
     BusinessSearchResultExtended:
       title: BusinessSearchResultExtended
       description: Extends BusinessSearchResult to allow optional business_name and business_description for lookup.
