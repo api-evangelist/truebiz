@@ -265,8 +265,8 @@ paths:
       - PropelAuthBearer: []
 components:
   schemas:
-    BlockMessage:
-      title: BlockMessage
+    TooManyRequests:
+      title: TooManyRequests
       type: object
       properties:
         message:
@@ -275,42 +275,7 @@ components:
       required:
       - message
       example:
-        message: Block created for example.net.
-    BlockReason:
-      title: BlockReason
-      description: An enumeration.
-      enum:
-      - Credit and Financial Risk
-      - Compliance and Regulatory
-      - Business Profile Risk
-      - Internal Policy
-      - Fraudulent Application
-      - Fraudulent Business
-      - Other
-      type: string
-    PagedBlockedDomain:
-      title: PagedBlockedDomain
-      type: object
-      properties:
-        items:
-          title: Items
-          type: array
-          items:
-            $ref: '#/components/schemas/BlockedDomain'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - items
-      - count
-      - limit
-      - offset
+        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
     BlockedDomain:
       title: BlockedDomain
       type: object
@@ -346,6 +311,102 @@ components:
       - domain
       - created_at
       - reason
+    EvaluateBlockInput:
+      title: EvaluateBlockInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          type:
+          - string
+          - 'null'
+        phone:
+          title: Phone
+          description: The phone number to be blocked.
+          example: '3136739082'
+          type:
+          - string
+          - 'null'
+        email:
+          title: Email
+          description: The email to be blocked.
+          example: test@truebiz.io
+          type:
+          - string
+          - 'null'
+        address_line_1:
+          title: Address Line 1
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          type:
+          - string
+          - 'null'
+        address_line_2:
+          title: Address Line 2
+          description: The address to be blocked.
+          example: 104 Truebiz Lane
+          type:
+          - string
+          - 'null'
+        city:
+          title: Address
+          description: The city to be blocked.
+          example: Detroit
+          type:
+          - string
+          - 'null'
+        state:
+          title: State
+          description: The state which the address belongs too
+          example: MI
+          type:
+          - string
+          - 'null'
+        zipcode:
+          title: Zip Code
+          description: The zip code to which the address belongs too.
+          example: '48178'
+          type:
+          - string
+          - 'null'
+        country:
+          title: Country Code
+          description: The country which the address belongs too.
+          example: US
+          type:
+          - string
+          - 'null'
+        phone_without_country_code:
+          title: Phone without country code
+          description: Phone number without country code
+          example: US
+          type:
+          - string
+          - 'null'
+    DeleteBlockInput:
+      title: DeleteBlockInput
+      type: object
+      properties:
+        domain:
+          title: Domain
+          description: The domain to be blocked.
+          example: example.net
+          type: string
+      required:
+      - domain
+    InternalServerError:
+      title: InternalServerError
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     BlockInput:
       title: BlockInput
       type: object
@@ -441,72 +502,6 @@ components:
       required:
       - domain
       - reason
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Bad request.
-    DeleteBlockInput:
-      title: DeleteBlockInput
-      type: object
-      properties:
-        domain:
-          title: Domain
-          description: The domain to be blocked.
-          example: example.net
-          type: string
-      required:
-      - domain
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Not found.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -531,6 +526,40 @@ components:
         - field_name: non_field_errors
           errors:
           - There's something strange in your input.
+    PagedBlockedDomain:
+      title: PagedBlockedDomain
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockedDomain'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
     EvaluateBlockResponse:
       title: EvaluateBlockResponse
       type: object
@@ -570,6 +599,28 @@ components:
           type:
           - string
           - 'null'
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Bad request.
+    BlockMessage:
+      title: BlockMessage
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Block created for example.net.
     InvalidInputParameter:
       title: InvalidInputParameter
       type: object
@@ -589,80 +640,29 @@ components:
         field_name: field1
         errors:
         - This field is required.
-    EvaluateBlockInput:
-      title: EvaluateBlockInput
+    Unauthorized:
+      title: Unauthorized
       type: object
       properties:
-        domain:
-          title: Domain
-          description: The domain to be blocked.
-          example: example.net
-          type:
-          - string
-          - 'null'
-        phone:
-          title: Phone
-          description: The phone number to be blocked.
-          example: '3136739082'
-          type:
-          - string
-          - 'null'
-        email:
-          title: Email
-          description: The email to be blocked.
-          example: test@truebiz.io
-          type:
-          - string
-          - 'null'
-        address_line_1:
-          title: Address Line 1
-          description: The address to be blocked.
-          example: 104 Truebiz Lane
-          type:
-          - string
-          - 'null'
-        address_line_2:
-          title: Address Line 2
-          description: The address to be blocked.
-          example: 104 Truebiz Lane
-          type:
-          - string
-          - 'null'
-        city:
-          title: Address
-          description: The city to be blocked.
-          example: Detroit
-          type:
-          - string
-          - 'null'
-        state:
-          title: State
-          description: The state which the address belongs too
-          example: MI
-          type:
-          - string
-          - 'null'
-        zipcode:
-          title: Zip Code
-          description: The zip code to which the address belongs too.
-          example: '48178'
-          type:
-          - string
-          - 'null'
-        country:
-          title: Country Code
-          description: The country which the address belongs too.
-          example: US
-          type:
-          - string
-          - 'null'
-        phone_without_country_code:
-          title: Phone without country code
-          description: Phone number without country code
-          example: US
-          type:
-          - string
-          - 'null'
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Unauthorized.
+    BlockReason:
+      title: BlockReason
+      description: An enumeration.
+      enum:
+      - Credit and Financial Risk
+      - Compliance and Regulatory
+      - Business Profile Risk
+      - Internal Policy
+      - Fraudulent Application
+      - Fraudulent Business
+      - Other
+      type: string
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey

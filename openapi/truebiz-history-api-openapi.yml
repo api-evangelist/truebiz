@@ -132,40 +132,6 @@ components:
       - message
       example:
         message: You have exceeded your current quota of 10 requests/second for this api endpoint.  Please slow down.
-    InternalServerError:
-      title: InternalServerError
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
-    PagedCombinedMetaLookup:
-      title: PagedCombinedMetaLookup
-      type: object
-      properties:
-        items:
-          title: Items
-          type: array
-          items:
-            $ref: '#/components/schemas/CombinedMetaLookup'
-        count:
-          title: Count
-          type: integer
-        limit:
-          title: Limit
-          type: integer
-        offset:
-          title: Offset
-          type: integer
-      required:
-      - items
-      - count
-      - limit
-      - offset
     BadRequest:
       title: BadRequest
       type: object
@@ -177,8 +143,8 @@ components:
       - message
       example:
         message: Bad request.
-    NotFound:
-      title: NotFound
+    InternalServerError:
+      title: InternalServerError
       type: object
       properties:
         message:
@@ -187,18 +153,7 @@ components:
       required:
       - message
       example:
-        message: Not found.
-    Unauthorized:
-      title: Unauthorized
-      type: object
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      example:
-        message: Unauthorized.
+        message: An internal server error occurred.  Our support team has already been notified.  Please try again later.  If you continue to get this error, please reach out to your account manager.
     InvalidRequest:
       title: InvalidRequest
       type: object
@@ -223,6 +178,59 @@ components:
         - field_name: non_field_errors
           errors:
           - There's something strange in your input.
+    PagedCombinedMetaLookup:
+      title: PagedCombinedMetaLookup
+      type: object
+      properties:
+        items:
+          title: Items
+          type: array
+          items:
+            $ref: '#/components/schemas/CombinedMetaLookup'
+        count:
+          title: Count
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+      required:
+      - items
+      - count
+      - limit
+      - offset
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      example:
+        message: Not found.
+    InvalidInputParameter:
+      title: InvalidInputParameter
+      type: object
+      properties:
+        field_name:
+          title: Field Name
+          type: string
+        errors:
+          title: Errors
+          default: []
+          type: array
+          items:
+            type: string
+      required:
+      - field_name
+      example:
+        field_name: field1
+        errors:
+        - This field is required.
     CombinedMetaLookup:
       title: CombinedMetaLookup
       type: object
@@ -258,25 +266,17 @@ components:
       - created_at
       - status
       - report_type
-    InvalidInputParameter:
-      title: InvalidInputParameter
+    Unauthorized:
+      title: Unauthorized
       type: object
       properties:
-        field_name:
-          title: Field Name
+        message:
+          title: Message
           type: string
-        errors:
-          title: Errors
-          default: []
-          type: array
-          items:
-            type: string
       required:
-      - field_name
+      - message
       example:
-        field_name: field1
-        errors:
-        - This field is required.
+        message: Unauthorized.
   securitySchemes:
     AsyncApiKeyAuth:
       type: apiKey
