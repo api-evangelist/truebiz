@@ -64,6 +64,125 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-TrueBiz is a company surfaced as a portfolio company of homebrew and added to the API Evangelist network as a stub for enrichment. Sector: security. This profile is a lead awaiting the enrichment pipeline.
+TrueBiz automates merchant risk assessment by analyzing a business's internet footprint. Its Web Presence Review API scores a merchant's legitimacy and risk from a domain plus submitted business details, returning a rich Company profile with fraud-risk analysis, website content flags, customer reviews, connected people and entities, and domain/hosting intelligence. A Monitoring API watches domains continuously and raises alerts, and Blocklist, Industry Discovery, and Fraud Search endpoints round out the platform. Payments providers and financial institutions use TrueBiz to streamline underwriting and ongoing merchant due diligence. The REST API authenticates with an X-API-KEY header and is documented with an OpenAPI 3.0.2 specification.
 
-Backed by: homebrew — https://truebiz.io
+**Areas:** Company · Security · Fraud Prevention · Business Verification · Merchant Risk · KYB · Underwriting · Payments · Monitoring
+
+## TrueBiz on APIs.io
+
+Everything profiled for TrueBiz is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/truebiz/](https://apis.io/providers/truebiz/)** — or go straight to one of the APIs or properties below.
+
+### APIs (11)
+
+- [TrueBiz Async Web Presence Review API](https://apis.io/apis/truebiz/truebiz-async-web-presence-review-api/) — Web Presence Review endpoints allow you to provide information about a business for TrueBiz to review. We look at the content on the website, find social…
+- [TrueBiz Fraud Searches API](https://apis.io/apis/truebiz/truebiz-fraud-searches-api/) — The Fraud Searches API from TrueBiz — 2 operation(s) for fraud searches.
+- [TrueBiz History API](https://apis.io/apis/truebiz/truebiz-history-api/) — The History API from TrueBiz — 1 operation(s) for history.
+- [TrueBiz Industry Discovery API](https://apis.io/apis/truebiz/truebiz-industry-discovery-api/) — The Industry Discovery API from TrueBiz — 2 operation(s) for industry discovery.
+- [TrueBiz Industry Discovery History API](https://apis.io/apis/truebiz/truebiz-industry-discovery-history-api/) — The Industry Discovery History API from TrueBiz — 2 operation(s) for industry discovery history.
+- [TrueBiz Monitoring Alerts API](https://apis.io/apis/truebiz/truebiz-monitoring-alerts-api/) — Monitoring alerts endpoints allow you to see what alerts TrueBiz has found during monitoring.
+- [TrueBiz Monitoring Domains API](https://apis.io/apis/truebiz/truebiz-monitoring-domains-api/) — Monitored domain endpoints allow you to see what domains TrueBiz is currently monitoring.
+- [TrueBiz Web Presence Review API](https://apis.io/apis/truebiz/truebiz-web-presence-review-api/) — Web Presence Review endpoints allow you to provide information about a business for TrueBiz to review. We look at the content on the website, find social…
+- [TrueBiz Web Presence Review Blocklist API](https://apis.io/apis/truebiz/truebiz-web-presence-review-blocklist-api/) — Web Presence Review endpoints allow you to provide an input like a domain, url, or email associated with a website for TrueBiz to review. For business or…
+- [TrueBiz Web Presence Review History API](https://apis.io/apis/truebiz/truebiz-web-presence-review-history-api/) — Web Presence Review results are stored with TrueBiz until you request their deletion. These endpoints are designed to allow you to access these historical…
+- [TrueBiz Website Status API](https://apis.io/apis/truebiz/truebiz-website-status-api/) — Our website status endpoints help with checking to see if a provided URL is up and that it is not part of a website grouping that TrueBiz does not support.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [truebiz](https://apis.io/servers/truebiz/truebiz/)
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [TrueBiz Web Presence Review Async Web Presence Review Fraud Searches API](https://apis.io/collections/truebiz/open-truebiz-fraud-searches-api/)
+- [TrueBiz Web Presence Review Async Web Presence Review History API](https://apis.io/collections/truebiz/open-truebiz-history-api/)
+- [TrueBiz Web Presence Review Async Web Presence Review Industry Discovery API](https://apis.io/collections/truebiz/open-truebiz-industry-discovery-api/)
+- [TrueBiz Web Presence Review Async Web Presence Review Industry Discovery History API](https://apis.io/collections/truebiz/open-truebiz-industry-discovery-history-api/)
+- [TrueBiz Web Presence Review Async Web Presence Review Monitoring Alerts API](https://apis.io/collections/truebiz/open-truebiz-monitoring-alerts-api/)
+- [TrueBiz Web Presence Review Async Web Presence Review Monitoring Domains API](https://apis.io/collections/truebiz/open-truebiz-monitoring-domains-api/)
+- [TrueBiz Web Presence Review Async Web Presence Review Website Status API](https://apis.io/collections/truebiz/open-truebiz-website-status-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Truebiz Openapi Overlay](https://apis.io/overlays/truebiz/truebiz-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Truebiz Authentication](https://apis.io/security/truebiz/truebiz-authentication/)
+- [Truebiz Domain Security](https://apis.io/security/truebiz/truebiz-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://truebiz.io)
+- [Documentation](https://docs.truebiz.io)
+- [API reference](https://ae.truebiz.io/api/v1/docs)
+- [Support](https://truebiz.io/contact-us)
+- [Blog](https://truebiz.io/blog)
+- [Terms of service](https://truebiz.io/terms-of-service)
+- [Privacy policy](https://truebiz.io/privacy)
+- [GitHub](https://github.com/truebiz)
+
+## API Evangelist rating
+
+**Kin Score 32.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 47.9 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 27.6 |
+
+**Agent readiness 22.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.3** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/truebiz/](https://apis.io/providers/truebiz/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for TrueBiz: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/truebiz/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
